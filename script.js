@@ -1,66 +1,88 @@
-const dinoTypes = ['T-Rex', 'Triceratops', 'Stegosaurus', 'Pterodactyl', 'Brachiosaurus'];
+// Dino types available
+const tiposDeDinos = ['T-Rex', 'Stego', 'Ptera', 'Tricera', 'Bronto'];
 
-let score = 0;
+// Player's current hand
+let mano = [];
 
-function createDino(name) {
-  const div = document.createElement('div');
-  div.className = 'dino';
-  div.textContent = name;
-  div.setAttribute('draggable', true);
+// Player's zoo per zone
+let zoologico = {
+  campo: [],
+  montevideo: [],
+  obelisco: [],
+  moscu: [],
+  cheliabinsk: [],
+  transiberiano: []
+};
 
-  div.addEventListener('dragstart', () => {
-    div.classList.add('dragging');
-    div.dataset.dragging = name;
-  });
-
-  div.addEventListener('dragend', () => {
-    div.classList.remove('dragging');
-    delete div.dataset.dragging;
-  });
-
-  return div;
+// Get a random dino
+function obtenerDinoAleatorio() {
+  return tiposDeDinos[Math.floor(Math.random() * tiposDeDinos.length)];
 }
 
-function drawHand() {
-  const handContainer = document.getElementById('hand-container');
-  handContainer.innerHTML = '';
+// Generate 3 random dinos for the hand
+function generarMano() {
+  mano = [];
+  for (let i = 0; i < 3; i++) mano.push(obtenerDinoAleatorio());
+  actualizarMano();
+}
 
-  const dinos = [];
-  for (let i = 0; i < 3; i++) {
-    const dinoName = dinoTypes[Math.floor(Math.random() * dinoTypes.length)];
-    const dino = createDino(dinoName);
-    dinos.push(dino);
-    handContainer.appendChild(dino);
+// Update UI for hand
+function actualizarMano() {
+  const contenedor = document.getElementById('contenedor-mano');
+  contenedor.innerHTML = '';
+  mano.forEach((dino, indice) => {
+    const div = document.createElement('div');
+    div.className = 'dino';
+    div.textContent = dino;
+    div.onclick = () => seleccionarDino(indice);
+    contenedor.appendChild(div);
+  });
+}
+
+// When player clicks a dino to place it
+function seleccionarDino(indice) {
+  const seleccionado = mano[indice];
+  const zona = prompt("¿Dónde colocar el dinosaurio? (campo, montevideo, obelisco, moscu, cheliabinsk, transiberiano)");
+  if (!zoologico[zona]) {
+    alert("Zona inválida.");
+    return;
   }
+  zoologico[zona].push(seleccionado);
+  mano.splice(indice, 1);
+  actualizarMano();
+  actualizarPuntuacion();
 }
 
-function setupZones() {
-  const zones = document.querySelectorAll('.zone');
+// Calculate score based on all zones
+function actualizarPuntuacion() {
+  let puntuacion = 0;
 
-  zones.forEach(zone => {
-    zone.addEventListener('dragover', e => {
-      e.preventDefault();
-    });
+  // Campo: 7 points for every 3 dinos
+  puntuacion += Math.floor(zoologico.campo.length / 3) * 7;
 
-    zone.addEventListener('drop', e => {
-      const draggingDino = document.querySelector('.dino.dragging');
-      if (draggingDino) {
-        zone.appendChild(draggingDino);
-        updateScore();
-      }
-    });
-  });
+  // Montevideo: if between 1–6 dinos, +5
+  if (zoologico.montevideo.length > 0 && zoologico.montevideo.length <= 6)
+    puntuacion += 5;
+
+  // Obelisco: bonus if count is 2, 4, 8, 12, etc.
+  const ob = zoologico.obelisco.length;
+  if ([2, 4, 8, 12, 18, 24].includes(ob)) puntuacion += ob;
+
+  // Moscú: step progression (1,3,6,10,...)
+  const cantidadMoscu = zoologico.moscu.length;
+  const pasos = [1, 3, 6, 10, 15, 21];
+  for (let paso of pasos) {
+    if (cantidadMoscu >= paso) puntuacion += 1;
+  }
+
+  // Cheliábinsk: exactly 1 dino = +7
+  if (zoologico.cheliabinsk.length === 1) puntuacion += 7;
+
+  // Transiberiano: 1 dino = 👑 = 7
+  if (zoologico.transiberiano.length === 1) puntuacion += 7;
+
+  document.getElementById('puntuacion').textContent = `Puntuación: ${puntuacion}`;
 }
 
-function updateScore() {
-  const zooZones = document.querySelectorAll('.zone');
-  let total = 0;
-  zooZones.forEach(zone => {
-    total += zone.querySelectorAll('.dino').length;
-  });
-  score = total;
-  document.getElementById('score').textContent = `Score: ${score}`;
-}
-
-drawHand();
-setupZones();
+// Start the game by giving the first hand
+generarMano();
