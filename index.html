@@ -1,28 +1,28 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Draftosaurus</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <title>Draftosaurus — Gira Mundial</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Draftosaurus</h1>
+  <h1>🌍 Draftosaurus — Gira Mundial</h1>
 
-  <div id="dino-hand">
-    <h2>Your hand</h2>
-    <div class="dino-container" id="hand-container"></div>
+  <div id="mapa">
+    <div class="zona" data-zona="campo">Campo (3 = 7)</div>
+    <div class="zona" data-zona="montevideo">Montevideo (❤ 1–6 = 5)</div>
+    <div class="zona" data-zona="obelisco">Obelisco 🇧🇷 (2/4/8...)</div>
+    <div class="zona" data-zona="moscu">Moscú (1,3,6...)</div>
+    <div class="zona" data-zona="cheliabinsk">Cheliábinsk (❤ = 7)</div>
+    <div class="zona" data-zona="transiberiano">Transiberiano (👑 = 7)</div>
   </div>
 
-  <div id="zoo">
-    <h2>Your Zoo</h2>
-    <div class="zone" data-zone="forest">Forest</div>
-    <div class="zone" data-zone="river">River</div>
-    <div class="zone" data-zone="plains">Plains</div>
+  <div id="mano">
+    <h2>Tu Mano</h2>
+    <div id="contenedor-mano" class="contenedor-dinos"></div>
   </div>
 
-  <p id="score">Score: 0</p>
-
+  <p id="puntuacion">Puntuación: 0</p>
   <script src="script.js"></script>
 </body>
 </html>
