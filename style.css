@@ -1,0 +1,35 @@
+body {
+  font-family: sans-serif;
+  text-align: center;
+  background-color: #f0f8ff;
+}
+
+.dino-container, .zone {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  padding: 10px;
+  margin: 10px;
+}
+
+.zone {
+  border: 2px dashed #aaa;
+  padding: 20px;
+  min-height: 80px;
+  background-color: #fff;
+  cursor: pointer;
+}
+
+.dino {
+  padding: 10px 15px;
+  border-radius: 5px;
+  background-color: #7fc97f;
+  color: white;
+  font-weight: bold;
+  cursor: grab;
+}
+
+.dino.dragging {
+  opacity: 0.5;
+}
