@@ -1,9 +1,34 @@
 body {
-  font-family: sans-serif;
-  background: #111;
-  color: white;
+  font-family: 'Orbitron', sans-serif;
+  background: #0d0d0d;
+  color: #00ffe7;
   text-align: center;
   padding: 20px;
+  text-shadow: 0 0 5px #00ffe7;
+}
+
+h1, h2, p {
+  color: #00ffe7;
+  text-shadow: 0 0 10px #00ffe7, 0 0 20px #00ffe7;
+}
+
+button {
+  background: black;
+  border: 2px solid #00ffe7;
+  color: #00ffe7;
+  padding: 10px 20px;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 8px;
+  text-shadow: 0 0 10px #00ffe7;
+  box-shadow: 0 0 10px #00ffe7;
+  transition: all 0.3s ease-in-out;
+}
+
+button:hover {
+  background: #00ffe7;
+  color: black;
+  box-shadow: 0 0 20px #00ffe7, 0 0 30px #00ffe7;
 }
 
 #mapa {
@@ -14,16 +39,27 @@ body {
 }
 
 .zona {
-  background: #222;
-  border: 2px solid #555;
+  background: #1a1a1a;
+  border: 2px solid #00ffe7;
   padding: 20px;
   min-height: 100px;
   border-radius: 10px;
   cursor: pointer;
+  transition: background 0.3s;
+  box-shadow: 0 0 10px #00ffe7;
+  text-shadow: 0 0 5px #00ffe7;
 }
 
 .zona:hover {
-  background: #333;
+  background: #222;
+  box-shadow: 0 0 15px #00ffe7;
+}
+
+.zona img {
+  width: 30px;
+  height: 30px;
+  margin: 3px;
+  filter: drop-shadow(0 0 5px #00ffe7);
 }
 
 .contenedor-dinos {
@@ -33,9 +69,26 @@ body {
 }
 
 .dino {
-  padding: 10px 14px;
-  background: #7fc97f;
-  border-radius: 6px;
+  background: #1e1e1e;
+  border: 2px solid #00ffe7;
+  border-radius: 8px;
   font-weight: bold;
-  cursor: pointer;
+  cursor: grab;
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 10px #00ffe7;
+  transition: transform 0.2s;
+}
+
+.dino:hover {
+  transform: scale(1.1);
+}
+
+.dino img {
+  width: 40px;
+  height: 40px;
+  display: block;
+  filter: drop-shadow(0 0 10px #00ffe7);
 }
