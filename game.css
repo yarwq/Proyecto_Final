@@ -1,4 +1,4 @@
-body {
+body { 
   font-family: 'Orbitron', sans-serif;
   background: #0d0d0d;
   color: #00ffe7;
@@ -32,27 +32,42 @@ button:hover {
 }
 
 #mapa {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-  gap: 15px;
-  margin-bottom: 30px;
+  position: relative;
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto 20px;
+}
+
+#mapa-fondo {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 20px;
+  box-shadow: 0 0 20px #00ffe7;
 }
 
 .zona {
-  background: #1a1a1a;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  padding: 100px 100px;
+  border-radius: 8px;
+  background: rgba(0,0,0,0.6);
   border: 2px solid #00ffe7;
-  padding: 20px;
-  min-height: 100px;
-  border-radius: 10px;
+  color: #00ffe7;
+  font-size: 14px;
+  text-align: center;
   cursor: pointer;
-  transition: background 0.3s;
-  box-shadow: 0 0 10px #00ffe7;
-  text-shadow: 0 0 5px #00ffe7;
+  min-width: 70px;
+  transition: 0.3s;
 }
 
-.zona:hover {
-  background: #222;
-  box-shadow: 0 0 15px #00ffe7;
+.zona.valid {
+  background: rgba(0,255,0,0.4);
+  box-shadow: 0 0 15px #0f0;
+}
+
+.zona.invalid {
+  opacity: 0.4;
 }
 
 .zona img {
@@ -62,17 +77,18 @@ button:hover {
   filter: drop-shadow(0 0 5px #00ffe7);
 }
 
+
 .contenedor-dinos {
   display: flex;
   justify-content: center;
   gap: 10px;
+  flex-wrap: wrap;
 }
 
 .dino {
   background: #1e1e1e;
   border: 2px solid #00ffe7;
   border-radius: 8px;
-  font-weight: bold;
   cursor: grab;
   padding: 5px;
   display: flex;
@@ -82,13 +98,16 @@ button:hover {
   transition: transform 0.2s;
 }
 
-.dino:hover {
-  transform: scale(1.1);
-}
+.dino:hover { transform: scale(1.1); }
+.dino.selected { box-shadow: 0 0 15px lime; }
 
 .dino img {
   width: 40px;
   height: 40px;
   display: block;
   filter: drop-shadow(0 0 10px #00ffe7);
+}
+
+.controles {
+  margin: 10px 0;
 }
