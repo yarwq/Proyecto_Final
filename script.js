@@ -1,51 +1,60 @@
+// Draftosaurus — lógica de juego completa con 6 dinos y pase de mano y visualización
+
 const tiposDeDinos = [
   { nombre: 'T-Rex', imagen: 'red.png', tipo: 'fósil' },
   { nombre: 'Triceratops', imagen: 'green.png', tipo: 'campo' },
-  { nombre: 'Stego', imagen: 'light blue.png', tipo: 'uruguay' },
+  { nombre: 'Stego', imagen: 'lightblue.png', tipo: 'uruguay' },
   { nombre: 'Ptera', imagen: 'blue.png', tipo: 'rusia' },
   { nombre: 'Bronto', imagen: 'yellow.png', tipo: 'ciudad' },
   { nombre: 'Raptor', imagen: 'violet.png', tipo: 'ciudad' }
 ];
 
-let mano = [];
-let turno = 1;
 let jugadorActual = 1;
-let prohibidoTRex = false;
+let turno = 1;
+let seleccionado = null;
 let ultimoDado = null;
 
-let zoologico = {
-  campo: [],
-  montevideo: [],
-  obelisco: [],
-  moscu: [],
-  cheliabinsk: [],
-  transiberiano: []
+// Zoológicos de jugadores
+let zoologicos = {
+  1: { campo: [], montevideo: [], rivera: [], moscu: [], cheliabinsk: [], transiberiano: [], rio: [] },
+  2: { campo: [], montevideo: [], rivera: [], moscu: [], cheliabinsk: [], transiberiano: [], rio: [] }
 };
 
-// reglas de dado -> zonas válidas
+// Manos de jugadores
+let manos = { 1: [], 2: [] };
+
+// Buffers para pasar las manos después de cada ronda
+let buffer = { 1: [], 2: [] };
+
+// Reglas del dado
 const reglasDado = {
-  1: ['campo', 'montevideo'],
-  2: ['obelisco', 'montevideo'],
-  3: ['campo', 'moscu', 'transiberiano'],
-  4: ['obelisco', 'cheliabinsk'],
-  5: ['moscu', 'obelisco', 'montevideo'],
-  6: ['transiberiano', 'cheliabinsk', 'campo']
+  1: ['moscu', 'cheliabinsk', 'montevideo', 'rivera'],
+  2: ['rivera', 'campo', 'montevideo'],
+  3: ['campo', 'transiberiano'],
+  4: ['moscu', 'cheliabinsk'],
+  5: ['campo', 'transiberiano'],
+  6: ['moscu','cheliabinsk','montevideo','rivera','campo','transiberiano'] // Prohibido TRex
 };
 
+// Función para obtener un dinosaurio aleatorio
 function obtenerDinoAleatorio() {
   return tiposDeDinos[Math.floor(Math.random() * tiposDeDinos.length)];
 }
 
-function generarMano() {
-  mano = [];
-  for (let i = 0; i < 3; i++) mano.push(obtenerDinoAleatorio());
+// Repartir 6 dinos a cada jugador al inicio
+function repartirDinos() {
+  for (let j = 1; j <= 2; j++) {
+    manos[j] = [];
+    for (let i = 0; i < 6; i++) manos[j].push(obtenerDinoAleatorio());
+  }
   actualizarMano();
 }
 
+// Mostrar mano actual del jugador
 function actualizarMano() {
   const contenedor = document.getElementById('contenedor-mano');
   contenedor.innerHTML = '';
-  mano.forEach((dino, indice) => {
+  manos[jugadorActual].forEach((dino, indice) => {
     const div = document.createElement('div');
     div.className = 'dino';
     div.draggable = true;
@@ -54,6 +63,8 @@ function actualizarMano() {
     const img = document.createElement('img');
     img.src = 'assets/' + dino.imagen;
     img.alt = dino.nombre;
+    img.style.width = '50px';
+    img.style.height = '50px';
 
     div.appendChild(img);
     div.addEventListener('dragstart', e => {
@@ -65,7 +76,7 @@ function actualizarMano() {
   });
 }
 
-let seleccionado = null;
+// Seleccionar dinosaurio de la mano
 function seleccionarDino(indice) {
   seleccionado = indice;
   document.querySelectorAll('.dino').forEach(d =>
@@ -74,19 +85,23 @@ function seleccionarDino(indice) {
   actualizarZonasValidas();
 }
 
+// Tirar dado una vez por ronda
 function tirarDado() {
+  if (ultimoDado !== null) return; 
   ultimoDado = Math.floor(Math.random() * 6) + 1;
   document.getElementById('valor-dado').textContent = `🎲 Cubo: ${ultimoDado}`;
   actualizarZonasValidas();
 }
 
+// Marcar zonas válidas según el dado y reglas
 function actualizarZonasValidas() {
   document.querySelectorAll('.zona').forEach(div => {
     div.classList.remove('valid', 'invalid');
     if (seleccionado === null || ultimoDado === null) return;
     const validas = reglasDado[ultimoDado];
-    const dino = mano[seleccionado];
-    if (validas.includes(div.dataset.zona) && cumpleReglasZona(div.dataset.zona, dino)) {
+    const dino = manos[jugadorActual][seleccionado];
+    const zona = div.dataset.zona;
+    if (validas.includes(zona) && cumpleReglasZona(zona, dino)) {
       div.classList.add('valid');
     } else {
       div.classList.add('invalid');
@@ -94,113 +109,118 @@ function actualizarZonasValidas() {
   });
 }
 
+// Colocar dinosaurio en zona
 function colocarDinoEnZona(indice, zona) {
-  const dino = mano[indice];
+  const dino = manos[jugadorActual][indice];
   if (!dino) return;
-
-  if (!cumpleReglasZona(zona, dino)) {
-    alert('❌ No puedes colocar este dinosaurio aquí según las reglas.');
+  if (ultimoDado === null) {
+    alert('🎲 Lanza el dado antes.');
     return;
   }
 
-  zoologico[zona].push(dino);
-  mano.splice(indice, 1);
+  const validas = reglasDado[ultimoDado];
+  if (!validas.includes(zona)) {
+    alert('❌ Zona no permitida por el dado.');
+    return;
+  }
+
+  if (!cumpleReglasZona(zona, dino)) {
+    alert('❌ No puedes colocar este dinosaurio aquí.');
+    return;
+  }
+
+  zoologicos[jugadorActual][zona].push(dino);
+
+  // Guardar el resto de la mano en buffer para el intercambio
+  buffer[jugadorActual] = manos[jugadorActual].filter((_, i) => i !== indice);
+  manos[jugadorActual] = []; // mano limpia hasta el intercambio
+
   seleccionado = null;
-  ultimoDado = null;
-  document.getElementById('valor-dado').textContent = '🎲 Cubo: —';
+  actualizarMano();
+  actualizarZonas();
+  actualizarPuntuacion();
+
+  // Cambiar jugador
+  jugadorActual = jugadorActual === 1 ? 2 : 1;
+
+  // Si ambos jugadores ya colocaron su dinosaurio, intercambiar manos
+  if (manos[jugadorActual].length === 0 && buffer[1].length + buffer[2].length > 0) {
+    manos[1] = buffer[2];
+    manos[2] = buffer[1];
+    buffer[1] = [];
+    buffer[2] = [];
+    turno++;
+    alert(`Ronda completada! Ahora comienza el turno ${turno}.`);
+    // Tirar dado de nuevo para la nueva ronda
+    ultimoDado = null;
+    document.getElementById('valor-dado').textContent = `🎲 Cubo: —`;
+  }
 
   actualizarMano();
   actualizarZonas();
   actualizarPuntuacion();
 }
 
+// Comprobar reglas de zona
 function cumpleReglasZona(zona, dino) {
-  const ladoIzquierdo = ['campo', 'montevideo', 'obelisco'];
-  const ladoDerecho = ['moscu', 'cheliabinsk', 'transiberiano'];
-
-  if (dino.nombre === 'T-Rex' && prohibidoTRex) return false;
-  if (dino.tipo === 'ciudad' && !['moscu','obelisco','montevideo'].includes(zona)) return false;
-  if (dino.tipo === 'uruguay' && !ladoIzquierdo.includes(zona)) return false;
-  if (dino.tipo === 'rusia' && !ladoDerecho.includes(zona)) return false;
-  if (dino.tipo === 'fósil' && zoologico[zona].length !== 0) return false;
-  if (dino.tipo === 'campo' && zona !== 'campo') return false;
-
-  // Reglas específicas de zonas
-  switch(zona){
-    case 'campo': return zoologico[zona].length < 3;
-    case 'montevideo': return zoologico[zona].length < 6 && (zoologico[zona].length % 2 === 0 || zoologico[zona].some(d=>d.nombre===dino.nombre));
-    case 'obelisco': return zoologico[zona].every(d=>d.nombre===dino.nombre);
-    case 'moscu': return !zoologico[zona].some(d=>d.nombre===dino.nombre);
-    case 'cheliabinsk': return !Object.values(zoologico).flat().some(d=>d.nombre===dino.nombre);
-    case 'transiberiano': return zoologico[zona].length === 0;
-  }
+  const zoo = zoologicos[jugadorActual];
+  if (dino.tipo === 'ciudad' && !['moscu','cheliabinsk','montevideo','rivera'].includes(zona)) return false;
+  if (dino.tipo === 'uruguay' && !['rivera','campo','montevideo'].includes(zona)) return false;
+  if (dino.tipo === 'fósil' && zoo[zona].length !== 0) return false;
+  if (dino.tipo === 'rusia' && !['moscu','cheliabinsk'].includes(zona)) return false;
+  if (dino.tipo === 'campo' && !['campo','transiberiano'].includes(zona)) return false;
+  if (ultimoDado === 6 && zoo[zona].some(d=>d.nombre==='T-Rex')) return false;
   return true;
 }
 
+// Actualizar visualización de zonas
 function actualizarZonas() {
   document.querySelectorAll('.zona').forEach(div => {
     const zona = div.dataset.zona;
     div.innerHTML = `<strong>${zona}</strong><br>`;
-    zoologico[zona].forEach(dino => {
-      const img = document.createElement('img');
-      img.src = 'assets/' + dino.imagen;
-      img.alt = dino.nombre;
-      img.style.width = '30px';
-      img.style.height = '30px';
-      div.appendChild(img);
+    [1,2].forEach(j => {
+      zoologicos[j][zona].forEach(dino => {
+        const img = document.createElement('img');
+        img.src = 'assets/' + dino.imagen;
+        img.alt = dino.nombre;
+        img.style.width = '30px';
+        img.style.height = '30px';
+        div.appendChild(img);
+      });
     });
   });
 }
 
-function actualizarPuntuacion() {
-  let puntuacion = 0;
-
-  // Campo: exactamente 3 dinos → 7 pts
-  if (zoologico.campo.length === 3) puntuacion += 7;
-
-  // Montevideo: parejas
+// Calcular puntos de un zoológico
+function calcularPuntos(zoo) {
+  let puntos = 0;
+  if (zoo.campo.length === 3) puntos += 7;
   const pares = {};
-  zoologico.montevideo.forEach(d=>pares[d.nombre]=(pares[d.nombre]||0)+1);
-  for(let n in pares) puntuacion += Math.floor(pares[n]/2)*5;
-
-  // Obelisco: todos mismo tipo → 1 pts por dino
-  if (zoologico.obelisco.length > 0 && zoologico.obelisco.every(d=>d.nombre===zoologico.obelisco[0].nombre))
-    puntuacion += zoologico.obelisco.length;
-
-  // Moscu: dinos distintos → 2 pts por cada
-  puntuacion += zoologico.moscu.length*2;
-
-  // Cheliabinsk: único → 7 pts si solo ese tipo
-  if (zoologico.cheliabinsk.length===1) puntuacion += 7;
-
-  // Transiberiano: 7 pts si más que все
-  if (zoologico.transiberiano.length===1){
-    const tipo = zoologico.transiberiano[0].nombre;
+  zoo.montevideo.forEach(d=>pares[d.nombre]=(pares[d.nombre]||0)+1);
+  for(let n in pares) puntos += Math.floor(pares[n]/2)*5;
+  if (zoo.rivera.length > 0 && zoo.rivera.every(d=>d.nombre===zoo.rivera[0].nombre)) puntos += zoo.rivera.length;
+  if (zoo.transiberiano.length===1){
+    const especie = zoo.transiberiano[0].nombre;
     let max = 0;
-    for(let z in zoologico){
-      max = Math.max(max, zoologico[z].filter(d=>d.nombre===tipo).length);
-    }
-    if (zoologico.transiberiano.filter(d=>d.nombre===tipo).length===max) puntuacion +=7;
+    for(let z in zoo) max = Math.max(max, zoo[z].filter(d=>d.nombre===especie).length);
+    if (zoo.transiberiano.filter(d=>d.nombre===especie).length===max) puntos +=7;
   }
+  puntos += zoo.moscu.length*2;
+  if (zoo.cheliabinsk.length===1) puntos += 7;
+  if (zoo.rio) puntos += zoo.rio.length;
+  for(let z in zoo) if(zoo[z].some(d=>d.nombre==='T-Rex')) puntos += 1;
+  return puntos;
+}
 
-  // T-Rex bonus: +1 por zona con T-Rex
-  for(let z in zoologico){
-    if(zoologico[z].some(d=>d.nombre==='T-Rex')) puntuacion += 1;
-  }
-
-  document.getElementById('puntuacion').textContent = `Puntuación: ${puntuacion}`;
+// Actualizar puntuación en pantalla
+function actualizarPuntuacion() {
+  const puntos1 = calcularPuntos(zoologicos[1]);
+  const puntos2 = calcularPuntos(zoologicos[2]);
+  document.getElementById('puntuacion').textContent = `P1: ${puntos1} pts | P2: ${puntos2} pts`;
   document.getElementById('jugador').textContent = `Jugador ${jugadorActual} — Turno ${turno}`;
 }
 
-function siguienteTurno() {
-  turno++;
-  jugadorActual = jugadorActual === 1 ? 2 : 1;
-  prohibidoTRex = Math.random() < 0.5;
-  generarMano();
-  actualizarZonas();
-  actualizarPuntuacion();
-}
-
+// Agregar listeners para drag & drop
 function agregarDropTargets() {
   document.querySelectorAll('.zona').forEach(div => {
     div.addEventListener('dragover', e => e.preventDefault());
@@ -215,10 +235,9 @@ function agregarDropTargets() {
   });
 }
 
-document.getElementById('siguiente-turno').addEventListener('click', siguienteTurno);
+// Inicialización
 document.getElementById('tirar-dado').addEventListener('click', tirarDado);
-
-generarMano();
+repartirDinos();
 agregarDropTargets();
 actualizarZonas();
 actualizarPuntuacion();

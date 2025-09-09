@@ -43,6 +43,6 @@ $_SESSION["email"] = $email;
 $stmt->close();
 
 
-header("Location: game.html");
+header("Location: menu_principal.php");
 exit;
 ?>
