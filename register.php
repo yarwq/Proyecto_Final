@@ -8,11 +8,16 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
 }
 
 $email = filter_var(trim($_POST["email"] ?? ""), FILTER_VALIDATE_EMAIL);
+$username = trim($_POST["username"] ?? "");
 $password = trim($_POST["password"] ?? "");
 $confirm = trim($_POST["confirm"] ?? "");
 
 if (!$email) {
     die("Email inválido.");
+}
+
+if (strlen($username) < 3) {
+    die("El nombre de usuario debe tener al menos 3 caracteres.");
 }
 
 if (strlen($password) < 6) {
@@ -35,17 +40,16 @@ if ($check->num_rows > 0) {
 }
 $check->close();
 
-// insert user
+// insert user with username
 $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-$stmt = $conn->prepare("INSERT INTO users (email, password) VALUES (?, ?)");
+$stmt = $conn->prepare("INSERT INTO users (email, username, password) VALUES (?, ?, ?)");
 if (!$stmt) {
     die("Prepare error: " . $conn->error);
 }
-$stmt->bind_param("ss", $email, $hashedPassword);
+$stmt->bind_param("sss", $email, $username, $hashedPassword);
 
 if ($stmt->execute()) {
     $stmt->close();
-    
     header("Location: login.html");
     exit;
 } else {
