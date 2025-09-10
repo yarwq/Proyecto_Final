@@ -4,7 +4,9 @@ if (!isset($_SESSION["user_id"])) {
     header("Location: login.html");
     exit;
 }
-$user = $_SESSION["email"]; 
+
+$user = $_SESSION["username"]; 
+
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -19,7 +21,8 @@ $user = $_SESSION["email"];
     <div class="logo-box">
         <img src="assets/logo.png" alt="logo">
     </div>
-    <h1 class="bienvenido">Bienvenido <span><?php echo htmlspecialchars($user); ?></span></h1>
+        <h1 class="bienvenido">Bienvenido <span><?php echo htmlspecialchars($user); ?></span></h1>
+
 
     <div class="buttons">
         <a href="herramienta_apoyo.php" class="btn">Herramienta de apoyo</a>
