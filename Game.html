@@ -1,45 +1,53 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
   <title>Draftosaurus — Gira Mundial</title>
   <link rel="stylesheet" href="game.css">
+
 </head>
+
 <body>
   <h1>🌍 Draftosaurus — Gira Mundial</h1>
 
-<div id="mapa">
-  <img src="assets/map_juega.png" id="mapa-fondo" alt="Mapa de juego">
-
-
-  <!-- Fila superior -->
-  <div class="zona" data-zona="rivera" style="top:15%; left:20%;">Rivera</div>
-  <div class="zona" data-zona="transiberiano" style="top:15%; left:80%;">Transiberiano</div>
-  
-  <!-- Fila media -->
-  <div class="zona" data-zona="campo" style="top:45%; left:20%;">Campo</div>
-  <div class="zona" data-zona="moscu" style="top:45%; left:80%;">Moscú</div>
-
-  <!-- Fila inferior -->
-  <div class="zona" data-zona="montevideo" style="top:75%; left:20%;">Montevideo</div>
-  <div class="zona" data-zona="cheliabinsk" style="top:75%; left:80%;">Cheliabinsk</div>
-</div>
-
-
-  <div id="mano">
-    <h2>Tu Mano</h2>
-    <div id="contenedor-mano" class="contenedor-dinos"></div>
+  <!-- Pantalla de selección de jugadores -->
+  <div id="seleccion-jugadores">
+    <h2>Selecciona el número de jugadores (2-6)</h2>
+    <input type="number" id="num-jugadores" min="2" max="6" value="2">
+    <button id="iniciar-juego">Iniciar Juego</button>
   </div>
 
-  <div class="controles">
-    <button id="tirar-dado">Lanzar dado</button>
-    <span id="valor-dado">🎲 Cubo: —</span>
-    <button id="siguiente-turno">Siguiente turno</button>
-  </div>
+  <!-- Contenedor del juego oculto al inicio -->
+  <div id="juego" style="display:none;">
+    <div id="mapa">
+      <img src="assets/map_juega.png" id="mapa-fondo" alt="Mapa de juego">
 
-  <p id="jugador">Jugador 1 — Turno 1</p>
-  <p id="puntuacion">Puntuación: 0</p>
+      <!-- Zonas -->
+      <div class="zona" data-zona="rivera" style="top:15%; left:20%;">Rivera</div>
+      <div class="zona" data-zona="transiberiano" style="top:15%; left:80%;">Transiberiano</div>
+      <div class="zona" data-zona="campo" style="top:45%; left:20%;">Campo</div>
+      <div class="zona" data-zona="moscu" style="top:45%; left:80%;">Moscú</div>
+      <div class="zona" data-zona="montevideo" style="top:75%; left:10%;">Montevideo</div>
+      <div class="zona" data-zona="rio" style="top:75%; left:45%;">Río</div>
+      <div class="zona" data-zona="cheliabinsk" style="top:75%; left:80%;">Cheliabinsk</div>
+    </div>
+
+    <div id="mano">
+      <h2>Tu Mano</h2>
+      <div id="contenedor-mano" class="contenedor-dinos"></div>
+    </div>
+
+    <div class="controles">
+      <button id="tirar-dado">Lanzar dado</button>
+      <span id="valor-dado">🎲 Cubo: —</span>
+    </div>
+
+    <p id="jugador">Jugador 1 — Turno 1</p>
+    <p id="puntuacion">Puntuación: 0</p>
+  </div>
 
   <script src="script.js"></script>
 </body>
+
 </html>
