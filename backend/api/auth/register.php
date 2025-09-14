@@ -1,9 +1,13 @@
 <?php
+// backend/api/auth/register.php
 session_start();
-require "config.php";
+require __DIR__ . "/../../config/db.php";
+
+header('Content-Type: application/json');
 
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
-    header("Location: register.html");
+    http_response_code(405);
+    echo json_encode(["error" => "Método no permitido."]);
     exit;
 }
 
@@ -13,22 +17,22 @@ $password = trim($_POST["password"] ?? "");
 $confirm = trim($_POST["confirm"] ?? "");
 
 if (!$email) {
-    die("Email inválido.");
+    echo json_encode(["error" => "Email inválido."]);
+    exit;
 }
-
 if (strlen($username) < 3) {
-    die("El nombre de usuario debe tener al menos 3 caracteres.");
+    echo json_encode(["error" => "El nombre de usuario debe tener al menos 3 caracteres."]);
+    exit;
 }
-
 if (strlen($password) < 6) {
-    die("La contraseña debe tener al menos 6 caracteres.");
+    echo json_encode(["error" => "La contraseña debe tener al menos 6 caracteres."]);
+    exit;
 }
-
 if ($password !== $confirm) {
-    die("Las contraseñas no coinciden.");
+    echo json_encode(["error" => "Las contraseñas no coinciden."]);
+    exit;
 }
 
-// check if email exists
 $check = $conn->prepare("SELECT id FROM users WHERE email = ?");
 $check->bind_param("s", $email);
 $check->execute();
@@ -36,24 +40,24 @@ $check->store_result();
 
 if ($check->num_rows > 0) {
     $check->close();
-    die("Email ya registrado.");
+    echo json_encode(["error" => "Email ya registrado."]);
+    exit;
 }
 $check->close();
 
-// insert user with username
 $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 $stmt = $conn->prepare("INSERT INTO users (email, username, password) VALUES (?, ?, ?)");
 if (!$stmt) {
-    die("Prepare error: " . $conn->error);
+    echo json_encode(["error" => "Error de preparación de la consulta."]);
+    exit;
 }
 $stmt->bind_param("sss", $email, $username, $hashedPassword);
 
 if ($stmt->execute()) {
-    $stmt->close();
-    header("Location: login.html");
-    exit;
+    echo json_encode(["success" => true, "message" => "Usuario registrado con éxito."]);
 } else {
-    $stmt->close();
-    die("Error de registro: " . $conn->error);
+    echo json_encode(["error" => "Error al registrar usuario: " . $stmt->error]);
 }
+$stmt->close();
+$conn->close();
 ?>

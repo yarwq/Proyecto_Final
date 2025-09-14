@@ -1,18 +1,18 @@
-/* frontend/css/menu.css */
+/* frontend/css/main.css */
 body {
     margin: 0;
     padding: 0;
     font-family: 'Orbitron', sans-serif;
     background: linear-gradient(to bottom, #0d0d0d, #1c1c1c);
     color: #fff;
+    height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
 }
 .container {
     text-align: center;
-    width: 90%;
+    width: 100%;
     max-width: 400px;
     padding: 20px;
     border-radius: 20px;
@@ -23,28 +23,26 @@ body {
     margin-bottom: 20px;
     filter: drop-shadow(0 0 20px #ff00ff);
 }
-.bienvenido {
-    font-size: 22px;
-    margin-bottom: 30px;
+.page-title {
+    font-size: 24px;
+    margin-bottom: 20px;
     background: linear-gradient(to right, #00c6ff, #ff00ff);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
-.bienvenido span {
-    font-weight: bold;
-}
-.text {
-    font-size: 14px;
-    margin-bottom: 30px;
-    background: linear-gradient(to right, #00c6ff, #ff00ff);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-.buttons {
+.form {
     display: flex;
     flex-direction: column;
     gap: 15px;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
+}
+.form input {
+    padding: 15px;
+    border: none;
+    border-radius: 30px;
+    outline: none;
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
 }
 .btn {
     padding: 15px;
@@ -59,9 +57,21 @@ body {
     background-image: linear-gradient(black, black), linear-gradient(90deg, #ff00ff, #00ffe7);
     background-origin: border-box;
     background-clip: content-box, border-box;
-    text-decoration: none;
     transition: 0.3s;
+    display: block;
+    text-align: center;
+    text-decoration: none;
 }
 .btn:hover {
     background-image: linear-gradient(90deg, #ff00ff, #00ffe7), linear-gradient(90deg, #ff00ff, #00ffe7);
+    color: black;
+}
+.switch {
+    color: #fff;
+    font-size: 14px;
+}
+.switch a {
+    color: #00c6ff;
+    text-decoration: none;
+    font-weight: bold;
 }

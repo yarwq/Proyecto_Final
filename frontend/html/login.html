@@ -1,26 +1,24 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>Iniciar Sesion</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <title>Iniciar Sesión</title>
+    <link rel="stylesheet" href="../css/main.css">
 </head>
 <body>
-  <div class="container">
-    <div class="logo-box">
-      <img src="assets/logo.png" alt="logo">
+    <div class="container">
+        <div class="logo-box">
+            <img src="../../assets/logo/logo.png" alt="logo">
+        </div>
+        <h2 class="page-title">Iniciar <span>sesión</span></h2>
+        <form id="login-form" class="form">
+            <input type="email" name="email" placeholder="Email" required>
+            <input type="password" name="password" placeholder="Contraseña" required>
+            <button type="submit" class="btn">Iniciar sesión</button>
+        </form>
+        <p class="switch">¿No tienes una cuenta? <a href="register.html">Regístrate</a></p>
     </div>
-
-    <h2 class="page-title">Iniciar <span>sesion</span></h2>
-
-<form class="form" action="login.php" method="POST">
-  <input type="email" name="email" placeholder="Email" required>
-  <input type="password" name="password" placeholder="Contraseña" required>
-  <button type="submit" class="btn">Iniciar sesion</button>
-</form>
-
-
-    <p class="switch">No tienes una cuenta? <a href="register.html">Registrate</a></p>
-  </div>
+    <script src="../js/api.js"></script>
+    <script src="../js/main.js"></script>
 </body>
 </html>
