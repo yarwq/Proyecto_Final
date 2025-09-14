@@ -1,7 +1,7 @@
 // frontend/js/api.js
 
 async function callApi(endpoint, options = {}) {
-    const baseUrl = 'D:\Xampp\mysql\draftosaurus/backend/public/index.php';
+    const baseUrl = 'D:/Xampp/mysql/draftosaurus/backend/public/index.php';
     const url = `${baseUrl}?path=${endpoint}`;
 
     try {
