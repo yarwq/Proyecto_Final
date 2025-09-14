@@ -4,9 +4,9 @@
 const tiposDeDinos = [
   { nombre: 'T-Rex', imagen: 'red.png', tipo: 'fósil' },
   { nombre: 'Triceratops', imagen: 'green.png', tipo: 'campo' },
-  { nombre: 'Stego', imagen: 'light_blue.png', tipo: 'uruguay' },
+  { nombre: 'Stego', imagen: 'light blue.png', tipo: 'uruguay' },
   { nombre: 'Ptera', imagen: 'blue.png', tipo: 'rusia' },
-  { nombre: 'Bronto', imagen: 'yellow.png', tipo: 'ciudad' },
+  { nombre: 'Bronto', imagen: 'Yellow.png', tipo: 'ciudad' },
   { nombre: 'Raptor', imagen: 'violet.png', tipo: 'ciudad' }
 ];
 
@@ -77,7 +77,7 @@ function actualizarMano() {
     div.dataset.index = indice;
 
     const img = document.createElement('img');
-    img.src = 'assets/' + dino.imagen;
+    img.src = '../assets/' + dino.imagen;
     img.alt = dino.nombre;
 
     div.appendChild(img);
@@ -220,7 +220,7 @@ function actualizarZonas() {
 
     zoologicos[jugadorActual][zona].forEach(dino => {
       const img = document.createElement('img');
-      img.src = 'assets/' + dino.imagen;
+      img.src = '../assets/' + dino.imagen;
       img.alt = dino.nombre;
       img.style.width = '30px';
       img.style.height = '30px';
