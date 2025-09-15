@@ -2,18 +2,18 @@
 namespace Controllers;
 
 require_once __DIR__ . "/../Repository/User.php";
-require_once __DIR__ . "/../Servicio/UserServicio.php";
 use Repository\User;
-use Servicio\UserServicio;
 
-
+require_once __DIR__ . "/../Servicio/UserServicio.php";
+use Servicio\UserService;
 
 class UserController {  
   private $userService;
 
-    public function __construct() {
-        $this->userService = new UserService();
-    }
+  public function __construct() {
+      $this->userService = new UserService();   
+  }
+
 public function register() {
     header("Access-Control-Allow-Origin: *");
     header("Access-Control-Allow-Methods: POST, OPTIONS");
@@ -31,12 +31,13 @@ public function register() {
     $password = trim($data['password'] ?? "");
     $confirm = trim($data['confirm'] ?? "");
 
-try {
-    $ok = $this->userRepo->register($username, $hashedPassword, $email);
-} catch (\Exception $e) {
-    echo json_encode(['error' => $e->getMessage()]);
-    exit;
-}
+    try {
+        $ok = $this->userService->registerUser($username, $password, $confirm, $email);
+    } catch (\Exception $e) {
+        http_response_code(500);
+        echo json_encode(['error' => $e->getMessage()]);
+        exit;
+    }
 
     if ($ok) {
         echo json_encode(["success" => true]);
@@ -45,7 +46,6 @@ try {
         echo json_encode(["error" => "No se pudo registrar"]);
     }
 }
-
 
     public function login() {
         header("Access-Control-Allow-Origin: *");
