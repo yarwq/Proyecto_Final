@@ -189,6 +189,12 @@ function colocarDinoEnZona(indice, zona) {
 // ==================== Reglas de zonas ====================
 function cumpleReglasZona(zona, dino) {
   const zoo = zoologicos[jugadorActual];
+
+  if (ultimoDado === 6) {
+   
+    return !zoo[zona].some(d => d.nombre === 'T-Rex');
+  }
+  
   if (zona === 'rio') return true;
 
   if (ultimoDado === 3 && dino.tipo === 'fósil' && zoo[zona].length > 0) return false;
