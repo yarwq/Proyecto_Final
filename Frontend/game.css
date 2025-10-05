@@ -5,11 +5,13 @@ body {
   text-align: center;
   padding: 20px;
   text-shadow: 0 0 5px #00ffe7;
+  margin: 0;
 }
 
 h1, h2, p {
   color: #00ffe7;
   text-shadow: 0 0 10px #00ffe7, 0 0 20px #00ffe7;
+  margin: 10px 0;
 }
 
 button {
@@ -49,7 +51,7 @@ button:hover {
 .zona {
   position: absolute;
   transform: translate(-50%, -50%);
-  padding: 100px 100px;
+  padding: 60px 60px;
   border-radius: 8px;
   background: rgba(0,0,0,0.6);
   border: 2px solid #00ffe7;
@@ -57,7 +59,7 @@ button:hover {
   font-size: 14px;
   text-align: center;
   cursor: pointer;
-  min-width: 70px;
+  min-width: 50px;
   transition: 0.3s;
 }
 
@@ -76,7 +78,6 @@ button:hover {
   margin: 3px;
   filter: drop-shadow(0 0 5px #00ffe7);
 }
-
 
 .contenedor-dinos {
   display: flex;
@@ -110,4 +111,77 @@ button:hover {
 
 .controles {
   margin: 10px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+/* =========== Адаптивность =========== */
+@media (max-width: 1024px) {
+  .zona {
+    padding: 50px 50px;
+    font-size: 13px;
+  }
+
+  .dino img {
+    width: 35px;
+    height: 35px;
+  }
+
+  #img-dado {
+    width: 25px;
+    height: 25px;
+  }
+}
+
+@media (max-width: 768px) {
+  .zona {
+    padding: 40px 40px;
+    font-size: 12px;
+  }
+
+  .dino img {
+    width: 30px;
+    height: 30px;
+  }
+
+  #img-dado {
+    width: 22px;
+    height: 22px;
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+    padding: 10px;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  h2 {
+    font-size: 1.2rem;
+  }
+
+  .zona {
+    padding: 30px 30px;
+    font-size: 11px;
+  }
+
+  .dino img {
+    width: 25px;
+    height: 25px;
+  }
+
+  #img-dado {
+    width: 20px;
+    height: 20px;
+  }
+
+  .controles {
+    flex-direction: column;
+    gap: 5px;
+  }
 }

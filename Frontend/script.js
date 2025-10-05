@@ -1,6 +1,6 @@
 // ==================== Draftosaurus — lógica completa ====================
 
-// 🦖 Tipos de dinosaurios
+//  Tipos de dinosaurios
 const tiposDeDinos = [
   { nombre: 'T-Rex', imagen: 'red.png', tipo: 'fósil' },
   { nombre: 'Triceratops', imagen: 'green.png', tipo: 'campo' },
@@ -10,7 +10,7 @@ const tiposDeDinos = [
   { nombre: 'Raptor', imagen: 'violet.png', tipo: 'ciudad' }
 ];
 
-// 🎲 Reglas del dado
+//  Reglas del dado
 const reglasDado = {
   1: ['moscu', 'cheliabinsk', 'montevideo', 'rivera', 'rio'],
   2: ['rivera', 'campo', 'montevideo', 'rio'],
@@ -101,9 +101,17 @@ function seleccionarDino(indice) {
 // ==================== Dado ====================
 function tirarDado() {
   ultimoDado = Math.floor(Math.random() * 6) + 1;
-  document.getElementById('valor-dado').textContent = `🎲 Cubo: ${ultimoDado}`;
+
+  const spanDado = document.getElementById('valor-dado');
+  const imgDado = document.getElementById('img-dado');
+
+  spanDado.childNodes[0].textContent = `🎲 Cubo: ${ultimoDado} `; // обновляем текст
+  imgDado.src = `../assets/dado${ultimoDado}.png`; // меняем картинку
+  imgDado.style.display = 'inline'; // делаем видимой картинку
+
   actualizarZonasValidas();
 }
+
 
 // ==================== Zonas ====================
 function actualizarZonasValidas() {
@@ -129,18 +137,18 @@ function colocarDinoEnZona(indice, zona) {
   if (!dino) return;
 
   if (ultimoDado === null) {
-    alert('🎲 Lanza el dado antes.');
+    alert(' Lanza el dado antes.');
     return;
   }
 
   const validas = reglasDado[ultimoDado];
   if (!validas.includes(zona)) {
-    alert('❌ Zona no permitida por el dado.');
+    alert(' Zona no permitida por el dado.');
     return;
   }
 
   if (!cumpleReglasZona(zona, dino)) {
-    alert('❌ No puedes colocar este dinosaurio aquí.');
+    alert(' No puedes colocar este dinosaurio aquí.');
     return;
   }
 
@@ -194,7 +202,7 @@ function cumpleReglasZona(zona, dino) {
    
     return !zoo[zona].some(d => d.nombre === 'T-Rex');
   }
-  
+
   if (zona === 'rio') return true;
 
   if (ultimoDado === 3 && dino.tipo === 'fósil' && zoo[zona].length > 0) return false;
@@ -203,8 +211,6 @@ function cumpleReglasZona(zona, dino) {
   if (dino.tipo === 'fósil' && zoo[zona].length !== 0) return false;
   if (dino.tipo === 'rusia' && !['moscu', 'cheliabinsk'].includes(zona)) return false;
   if (dino.tipo === 'campo' && !['campo', 'transiberiano'].includes(zona)) return false;
-  if (ultimoDado === 6 && zoo[zona].some(d => d.nombre === 'T-Rex')) return false;
-
   if (zona === 'moscu' && zoo.moscu.some(d => d.nombre === dino.nombre)) return false;
   if (zona === 'rivera' && zoo.rivera.length > 0 && zoo.rivera[0].nombre !== dino.nombre) return false;
   if (zona === 'campo' && zoo.campo.length >= 3) return false;
@@ -290,7 +296,7 @@ function actualizarPuntuacion() {
 
 // ==================== Final de partida ====================
 function finalizarPartida() {
-  let mensaje = `🏁 Fin de la partida!\n\n`;
+  let mensaje = ` Fin de la partida!\n\n`;
   let maxPuntos = -Infinity;
   let ganadores = [];
 
@@ -305,8 +311,8 @@ function finalizarPartida() {
     }
   }
 
-  if (ganadores.length === 1) mensaje += `\n🎉 ¡Jugador ${ganadores[0]} gana!`;
-  else mensaje += `\n🤝 ¡Empate entre jugadores ${ganadores.join(', ')}!`;
+  if (ganadores.length === 1) mensaje += `\n ¡Jugador ${ganadores[0]} gana!`;
+  else mensaje += `\n ¡Empate entre jugadores ${ganadores.join(', ')}!`;
 
   alert(mensaje);
 }
@@ -329,11 +335,11 @@ function agregarDropTargets() {
 // ==================== Eventos ====================
 document.getElementById('tirar-dado').addEventListener('click', tirarDado);
 
-// 🚀 Nuevo: botón Iniciar Juego
+//  Nuevo: botón Iniciar Juego
 document.getElementById('iniciar-juego').addEventListener('click', () => {
   const jugadores = parseInt(document.getElementById('num-jugadores').value);
   if (isNaN(jugadores) || jugadores < 2 || jugadores > 6) {
-    alert("❌ Número de jugadores inválido (elige 2-6).");
+    alert(" Número de jugadores inválido (elige 2-6).");
     return;
   }
 
