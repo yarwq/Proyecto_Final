@@ -8,7 +8,7 @@
 <body>
   <div class="container">
     <div class="logo-box">
-      <img src="assets/logo.png" alt="logo">
+      <img src="../assets/logo.png" alt="logo">
     </div>
 
     <h2 class="page-title">Iniciar <span>sesion</span></h2>
@@ -25,9 +25,8 @@
 
         const formData = new FormData(e.target);
         const data = Object.fromEntries(formData.entries());
-
         try {
-          const res = await fetch('/api/login', {
+          const res = await fetch('../Backend/login.php', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(data)
@@ -39,7 +38,7 @@
           if (json.success) {
             alert("Inicio de sesión exitoso");
             localStorage.setItem('token', json.token);
-            window.location.href = "game.html"; 
+            window.location.href = "menu_principal.html"; 
           } else {
             alert(json.error);
           }

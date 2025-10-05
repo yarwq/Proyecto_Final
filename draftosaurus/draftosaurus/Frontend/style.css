@@ -120,3 +120,29 @@ body {
 .terms:hover {
   text-decoration: underline;
 }
+
+#loginForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#loginForm .btn {
+  margin-top: 10px;
+  width: 100%;
+  max-width: 200px;
+  text-align: center;
+}
+
+#registerForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#registerForm .btn {
+  margin-top: 10px;
+  width: 100%;
+  max-width: 200px;
+  text-align: center;
+}
