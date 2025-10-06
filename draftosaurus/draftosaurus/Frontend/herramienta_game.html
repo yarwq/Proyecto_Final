@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Draftosaurus — Gira Mundial</title>
+    <link rel="stylesheet" href="gameherra.css">
+</head>
+<body>
+    <h1>🌍 Draftosaurus — Gira Mundial</h1>
+    <div id="juego">
+        <div id="mapa">
+            <img src="../assets/map_juega.png" id="mapa-fondo" alt="Mapa de juego">
+            <!-- Zonas -->
+            <div class="zona" data-zona="rivera" style="top:24%; left:22%;">Rivera</div>
+            <div class="zona" data-zona="transiberiano" style="top:20%; left:85%;">Transiberiano</div>
+            <div class="zona" data-zona="campo" style="top:47%; left:16%;">Campo</div>
+            <div class="zona" data-zona="moscu" style="top:48%; left:82%;">Moscú</div>
+            <div class="zona" data-zona="montevideo" style="top:85%; left:21%;">Montevideo</div>
+            <div class="zona" data-zona="rio" style="top:86%; left:57%;">Río</div>
+            <div class="zona" data-zona="cheliabinsk" style="top:88%; left:86%;">Cheliabinsk</div>
+        </div>
+
+        <div class="panel-controles">
+            <div id="mano">
+                <h2>Tu Mano</h2>
+                <div id="contenedor-mano" class="contenedor-dinos"></div>
+            </div>
+
+            <div class="controles">
+                <img id="imagen-dado" src="../assets/selectDino.png" alt="Seleccionar Dino">
+            </div>
+
+            <div class="seccion-info">
+                <button>Contar puntos</button>
+                <div id="puntuacion">Puntuación: 0</div>
+            </div>
+
+            <div id="reglas_del_dado" class="reglas_del_dado">
+                <img src="../assets/reglas_del_dado.png" alt="Reglas del dado">
+                <button id="menu">volver al menu principal</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="scriptHerra.js"></script>
+</body>
+</html>
