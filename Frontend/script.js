@@ -12,6 +12,11 @@ let buffer = {};
 document.getElementById('menu').addEventListener('click', () => {
   window.location.href = 'menu_principal.html';
 });
+document.getElementById('silenciar-musica').addEventListener('click', function() {
+  const audio = document.getElementById('musica');
+  audio.muted = !audio.muted;
+  this.textContent = audio.muted ? '🔇' : '🔈';
+});
 //  Tipos de dinosaurios
 const tiposDeDinos = [
   { nombre: 'T-Rex', imagen: 'red.png'},
