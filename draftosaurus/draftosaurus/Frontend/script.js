@@ -180,8 +180,14 @@ function seleccionarDino(indice) {
 function tirarDado() {
   ultimoDado = Math.floor(Math.random() * 6) + 1;
   document.getElementById('valor-dado').textContent = `🎲 Cubo: ${ultimoDado}`;
+
+  const imgDado = document.getElementById('imagen-dado');
+  imgDado.src = `../assets/dado${ultimoDado}.png`; //  dado1.png, dado2.png
+  imgDado.style.display = 'inline-block';
+
   actualizarZonasValidas();
 }
+
 
 //  Zonas 
 // Función que actualiza visualmente qué zonas son válidas para colocar un dinosaurio

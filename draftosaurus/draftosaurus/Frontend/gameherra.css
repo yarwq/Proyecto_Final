@@ -86,18 +86,24 @@ button:hover {
 }
 
 .dino {
-  background: #1e1e1e;
-  border: 2px solid #00ffe7;
-  border-radius: 8px;
+  width: 45px;
+  height: 45px;
+  margin: 5px;
   cursor: grab;
-  padding: 5px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 0 10px #00ffe7;
   transition: transform 0.2s;
 }
+.dino:active {
+  cursor: grabbing;
+  transform: scale(0.9);
+}
 
+.dino-zona {
+  width: 35px;
+  height: 35px;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
 .dino:hover { transform: scale(1.5); }
 .dino.selected { box-shadow: 0 0 15px lime; }
 
