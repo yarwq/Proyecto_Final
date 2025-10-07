@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Iniciar Sesion</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <div class="logo-box">
+      <img src="../assets/logo.png" alt="logo">
+    </div>
+
+    <h2 class="page-title">Iniciar <span>sesion</span></h2>
+
+    <form id="loginForm">
+      <input type="text" name="username" placeholder="Username" required>
+      <input type="password" name="password" placeholder="Contraseña" required>
+      <button type="submit" class="btn">Iniciar sesion</button>
+    </form>
+
+    <script>
+      document.getElementById('loginForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const formData = new FormData(e.target);
+        const data = Object.fromEntries(formData.entries());
+        try {
+          const res = await fetch('../Backend/login.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+          });
+
+          const json = await res.json(); 
+          console.log(json);
+
+          if (json.success) {
+            alert("Inicio de sesión exitoso");
+            localStorage.setItem('token', json.token);
+            window.location.href = "menu_principal.html"; 
+          } else {
+            alert(json.error);
+          }
+        } catch (err) {
+          console.error("Error al hacer login:", err);
+          alert("No se pudo conectar con el servidor");
+        }
+      });
+    </script>
+
+    <p class="switch">No tienes una cuenta? <a href="register.html">Registrate</a></p>
+  </div>
+</body>
+</html>

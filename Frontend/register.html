@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Registrarse</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <div class="logo-box">
+      <img src="../assets/logo.png" alt="logo">
+    </div>
+
+    <h2 class="page-title">Registr<span>arse</span></h2>
+
+<form id="registerForm">
+  <input type="email" name="email" placeholder="Email" required>
+  <input type="text" name="username" placeholder="username" required>
+  <input type="password" name="password" placeholder="Contraseña" required>
+  <input type="password" name="confirm" placeholder="Confirmar Contraseña" required>
+  <button type="submit" class="btn">Registrarse</button>
+</form>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const form = document.getElementById('registerForm');
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const formData = new FormData(e.target);
+        const data = Object.fromEntries(formData.entries());
+
+        const res = await fetch('../Backend/register.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        });
+        const json = await res.json();
+        console.log(json);
+        if (json.success) {
+            alert("Usuario registrado");
+            window.location.href = "login.html";
+        } else {
+            alert(json.error);
+        }
+    });
+});
+</script>
+
+
+    <p class="switch">Ya tienes una cuenta? <a href="login.html">Inicia sesion</a></p>
+  </div>
+</body>
+</html>
