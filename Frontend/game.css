@@ -103,7 +103,6 @@ button:hover {
   align-items: center;
   overflow: hidden;
   position: relative; 
-  border-radius: 10px;
 }
 
 .grid-item.zona > img {
@@ -203,6 +202,19 @@ button:hover {
 
 .controles {
   margin: 10px 0;
+}
+
+.dado-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    min-height: 40px;
+}
+
+.dado-imagen {
+    width: 40px;
+    height: 40px;
 }
 
 .panel-controles {
