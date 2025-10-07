@@ -5,55 +5,74 @@
   <meta charset="UTF-8">
   <title>Draftosaurus — Gira Mundial</title>
   <link rel="stylesheet" href="game.css">
-
 </head>
 
 <body>
-  <h1>🌍 Draftosaurus — Gira Mundial</h1>
+  <h1>DRAFTOSAURUS - JUEGO VIRTUAL</h1>
 
-  <!-- Pantalla de selección de jugadores -->
   <div id="seleccion-jugadores">
     <h2>Selecciona el número de jugadores (2-5)</h2>
     <input type="number" id="num-jugadores" min="2" max="5" value="2">
     <button id="iniciar-juego">Iniciar Juego</button>
   </div>
 
-  <!-- Contenedor del juego oculto al inicio -->
-   <audio id="musica" src="../assets/Rugidos del Pasado.mp3" loop autoplay></audio>
-  <div id="juego" style="display:none;">
-    <div id="mapa">
-      <img src="../assets/Mapa2.png" alt="Mapa del mundo" id="mapa-fondo">
-      <!-- Zonas -->
-      <div class="zona" data-zona="rivera" style="top:15%; left:18%;"></div>
-      <div class="zona" data-zona="transiberiano" style="top:15%; left:82%;"></div>
-      <div class="zona" data-zona="campo" style="top:48%; left:18%;"></div>
-      <div class="zona" data-zona="moscu" style="top:48%; left:82%;"></div>
-      <div class="zona" data-zona="montevideo" style="top:85%; left:18%;"></div>
-      <div class="zona" data-zona="rio" style="top:85%; left: 50%;"></div>
-      <div class="zona" data-zona="cheliabinsk" style="top:85%; left:82%;"></div>
-    </div>
-
-    <div class="panel-controles">
-    <div id="mano">
-      <h2>Tu Mano</h2>
-      <div id="contenedor-mano" class="contenedor-dinos"></div>
-    </div>
-
-    <div class="controles">
-      <button id="tirar-dado">Lanzar dado</button>
-      <span id="valor-dado">🎲 Cubo: —</span>
-    </div>
-<div class="seccion-info">
-    <p id="jugador">Jugador 1 — Turno 1</p>
-    <p id="puntuacion">Puntuación: 0</p> </div>
-    <button id="silenciar-musica">🔈</button>
-  </div>
+  <audio id="musica" src="../assets/Rugidos del Pasado.mp3" loop autoplay></audio>
   
-    <div id="reglas_del_dado" class="reglas_del_dado">
-      <img src="../assets/reglas_del_dado.png" alt="Reglas del dado">
-      <button id="menu">Volver al menu principal</button>
-    </div>
+  <div id="juego" style="display:none;">
+    <div class="layout-juego">
+      <div class="panel-controles">
+        <div id="mano">
+          <h2>Tu Mano</h2>
+          <div id="contenedor-mano" class="contenedor-dinos"></div>
+        </div>
+        <div class="controles">
+          <button id="tirar-dado">Lanzar dado</button>
+          <span id="valor-dado">🎲 Cubo: —</span>
+        </div>
+        <div class="seccion-info">
+          <p id="jugador">Jugador 1 — Turno 1</p>
+          <p id="puntuacion">Puntuación: 0</p>
+        </div>
+        <button id="silenciar-musica">🔈</button>
+      </div>
 
+      <div class="main-container-grid">
+        <div class="grid-container">
+          <div class="grid-item zona" id="rivera" data-zona="rivera">
+            <img src="../assets/RIVERA.png" alt="rivera">
+            <div class="dinos-en-zona"></div>
+          </div>
+          <div class="grid-item zona" id="campo" data-zona="campo">
+            <img src="../assets/CAMPO.png" alt="campo">
+            <div class="dinos-en-zona"></div>
+          </div>
+          <div class="grid-item zona" id="montevideo" data-zona="montevideo">
+            <img src="../assets/MONTEVIDEO.png" alt="montevideo">
+            <div class="dinos-en-zona"></div>
+          </div>
+          <div class="grid-item grid-item-central zona" id="rio" data-zona="rio">
+             <div class="dinos-en-zona"></div>
+          </div>
+          <div class="grid-item zona" id="transiberiano" data-zona="transiberiano">
+            <img src="../assets/TRANSIBERIANO.png" alt="transiberiano">
+            <div class="dinos-en-zona"></div>
+          </div>
+          <div class="grid-item zona" id="moscu" data-zona="moscu">
+            <img src="../assets/MOSKVA.png" alt="moscu">
+            <div class="dinos-en-zona"></div>
+          </div>
+          <div class="grid-item zona" id="cheliabinsk" data-zona="cheliabinsk">
+            <img src="../assets/CHELYABINSK.png" alt="cheliabinsk">
+            <div class="dinos-en-zona"></div>
+          </div>
+        </div>
+      </div>
+
+      <div id="reglas_del_dado" class="reglas_del_dado">
+        <img src="../assets/reglas_del_dado.png" alt="Reglas del dado">
+        <button id="menu">Volver al menu principal</button>
+      </div>
+    </div>
   </div>
 
   <script src="script.js"></script>
