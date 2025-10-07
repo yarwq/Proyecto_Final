@@ -39,7 +39,7 @@
           if (json.success) {
             alert("Inicio de sesión exitoso");
             localStorage.setItem('token', json.token);
-            window.location.href = "game.html"; 
+            window.location.href = "menu_principal.html"; 
           } else {
             alert(json.error);
           }
