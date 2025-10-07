@@ -105,7 +105,6 @@ function repartirDinos() {
   }
 }
 
-// UI: Mano
 function actualizarMano() {
   const contenedor = document.getElementById('contenedor-mano');
   contenedor.innerHTML = '';
@@ -123,7 +122,13 @@ function actualizarMano() {
     div.addEventListener('dragstart', e => {
       e.dataTransfer.setData('text/plain', indice);
       seleccionarDino(indice);
+      document.body.classList.add('is-dragging');
     });
+    
+    div.addEventListener('dragend', () => {
+        document.body.classList.remove('is-dragging');
+    });
+    
     div.addEventListener('click', () => seleccionarDino(indice));
     contenedor.appendChild(div);
   });
@@ -144,22 +149,36 @@ function tirarDado() {
   actualizarZonasValidas();
 }
 
-// Zonas
 function actualizarZonasValidas() {
-  document.querySelectorAll('.grid-item.zona').forEach(div => {
-    div.classList.remove('valid', 'invalid');
-    if (seleccionado === null || ultimoDado === null) return;
-    
-    const validas = reglasDado(ultimoDado);
-    const dino = manos[jugadorActual][seleccionado];
-    const zona = div.dataset.zona;
+  const todasLasZonas = document.querySelectorAll('.grid-item.zona');
+  todasLasZonas.forEach(div => div.classList.remove('valid', 'invalid'));
 
-    let cumple = validas.includes(zona) && cumpleReglasZona(zona, dino);
+  if (ultimoDado === null) return;
+
+  const zonasPermitidasPorDado = reglasDado(ultimoDado);
+
+  // console.log("Valor del Dado:", ultimoDado, "Zonas Permitidas:", zonasPermitidasPorDado);
+
+  todasLasZonas.forEach(div => {
+    const zonaActual = div.dataset.zona;
     
-    if (cumple) div.classList.add('valid');
-    else div.classList.add('invalid');
+    if (!zonasPermitidasPorDado.includes(zonaActual)) {
+      div.classList.add('invalid');
+      return; 
+    }
+
+    if (seleccionado !== null) {
+      const dinoSeleccionado = manos[jugadorActual][seleccionado];
+      
+      if (cumpleReglasZona(zonaActual, dinoSeleccionado)) {
+        div.classList.add('valid');
+      } else {
+        div.classList.add('invalid');
+      }
+    }
   });
 }
+
 
 function colocarDinoEnZona(indice, zona) {
   const dino = manos[jugadorActual][indice];
@@ -186,6 +205,7 @@ function colocarDinoEnZona(indice, zona) {
   buffer[jugadorActual] = [...manos[jugadorActual]];
 
   seleccionado = null;
+
   actualizarMano();
   actualizarZonas();
   actualizarPuntuacion();
@@ -204,7 +224,6 @@ function colocarDinoEnZona(indice, zona) {
       nuevasManos[siguiente] = buffer[j];
     }
     manos = nuevasManos;
-
     for (let j = 1; j <= numJugadores; j++) buffer[j] = [];
 
     turno++;
@@ -218,6 +237,7 @@ function colocarDinoEnZona(indice, zona) {
   actualizarMano();
   actualizarZonas();
   actualizarPuntuacion();
+  actualizarZonasValidas();
 }
 
 // Reglas de zonas
@@ -328,26 +348,21 @@ function finalizarPartida() {
   alert(mensaje);
 }
 
-// ===== CAMBIO #3: FUNCIÓN DE DRAG & DROP ACTUALIZADA =====
+// Drag & Drop
 function agregarDropTargets() {
   document.querySelectorAll('.grid-item.zona').forEach(div => {
-    // Evento para prevenir el comportamiento por defecto
     div.addEventListener('dragover', e => e.preventDefault());
     
-    // Evento para AÑADIR la clase de efecto visual cuando el dino entra en la zona
     div.addEventListener('dragenter', () => {
         div.classList.add('drag-over-effect');
     });
 
-    // Evento para QUITAR la clase de efecto visual cuando el dino sale de la zona
     div.addEventListener('dragleave', () => {
         div.classList.remove('drag-over-effect');
     });
 
-    // Evento para soltar el dinosaurio
     div.addEventListener('drop', e => {
       e.preventDefault();
-      // Limpiamos el efecto visual después de soltar
       div.classList.remove('drag-over-effect'); 
       
       const indice = e.dataTransfer.getData('text/plain');
@@ -357,7 +372,6 @@ function agregarDropTargets() {
       }
     });
     
-    // Evento para el clic (no necesita cambios)
     div.addEventListener('click', (e) => {
       if (seleccionado !== null) {
         const zonaTarget = e.target.closest('.grid-item.zona');

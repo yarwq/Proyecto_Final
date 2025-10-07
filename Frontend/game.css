@@ -30,6 +30,10 @@ body {
   text-shadow: 0 0 5px #00ffe7;
 }
 
+body.is-dragging .grid-item.zona * {
+    pointer-events: none;
+}
+
 h1,
 h2,
 p {
@@ -88,7 +92,7 @@ button:hover {
 
 .grid-item {
   background-color: rgba(0, 0, 0, 0.0);
-  border: 1px solid #00ffe7;
+  border: 2px solid #00ffe7;
   color: #00ffe7;
   text-shadow: 0 0 5px #00ffe7;
   font-size: 18px;
@@ -99,10 +103,9 @@ button:hover {
   align-items: center;
   overflow: hidden;
   position: relative; 
+  border-radius: 10px;
 }
 
-/* ===== CAMBIO #1: SELECTOR DE IMAGEN DE FONDO MÁS ESPECÍFICO ===== */
-/* Usamos el selector de hijo directo (>) para que solo afecte a la imagen del recinto */
 .grid-item.zona > img {
   width: 100%;
   height: 100%;
@@ -122,7 +125,6 @@ button:hover {
     padding: 5px;
 }
 
-/* Estilo para los dinos pequeños que se colocan en el tablero */
 .dino-colocado {
     width: 35px;
     height: 35px;
@@ -136,16 +138,24 @@ button:hover {
   transform: scale(1.05);
 }
 
-/* ===== CAMBIO #2: NUEVA CLASE PARA EL EFECTO DE ARRASTRE ===== */
 .grid-item.drag-over-effect {
   background-color: rgba(0,0,0,0.4);
   transform: scale(1.05);
+}
+
+.grid-item.zona.valid {
+    border-color: limegreen;
+}
+
+.grid-item.zona.invalid {
+    border-color: red;
 }
 
 .grid-item-central {
   background-color: rgba(0, 0, 0, 0.0);
   grid-column: 2;
   grid-row: 1 / -1;
+  border: none;
 }
 
 .grid-container>div:nth-child(1) { grid-row: 1; grid-column: 1; }
