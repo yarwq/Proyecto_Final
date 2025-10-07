@@ -2,7 +2,7 @@
 .layout-juego {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: space-evenly; /* Distribuye el espacio equitativamente */
   align-items: flex-start;
   gap: 30px;
   width: 100%;
@@ -16,8 +16,9 @@
     gap: 20px;
   }
   
-  .panel-controles, .reglas_del_dado {
+  .panel-controles, .reglas_del_dado, .main-container-grid {
       width: 90%;
+      max-width: 570px; /* Asegura que el mapa no sea demasiado grande en tablets */
   }
 }
 
@@ -61,17 +62,20 @@ button:hover {
 }
 
 .main-container-grid {
-  width: 570px;
-  height: 700px;
+  width: 100%;
+  max-width: 570px;
+  height: auto;
+  aspect-ratio: 1728 / 2112;
   position: relative;
-  margin: 0 auto;
+  margin: 0; /* Margin auto no es necesario en un flex container */
   background: url('../assets/mapa.png') no-repeat center center;
-  background-size: contain;
+  background-size: cover;
   background-color: rgba(0, 0, 0, 0.7);
   box-shadow: 0 0 20px #bb00ff;
   border: 2px solid #00ffe7;
   border-radius: 15px;
-  flex-grow: 0;
+  flex-grow: 0;   /* Evita que crezca desproporcionadamente */
+  flex-shrink: 1; /* Permite que se encoja */
 }
 
 .grid-container {
@@ -92,7 +96,7 @@ button:hover {
 
 .grid-item {
   background-color: rgba(0, 0, 0, 0.0);
-  border: 2px solid #00ffe7;
+  border: 2px solid #00ffe500;
   color: #00ffe7;
   text-shadow: 0 0 5px #00ffe7;
   font-size: 18px;
@@ -219,8 +223,9 @@ button:hover {
 }
 
 .panel-controles {
-  width: 400px;
-  flex-shrink: 0; 
+  width: 100%;
+  max-width: 400px;
+  flex-shrink: 1;
   background: rgba(0, 0, 0, 0.5);
   border: 2px solid #00ffe7;
   border-radius: 15px;
@@ -229,8 +234,9 @@ button:hover {
 }
 
 .reglas_del_dado {
-  width: 250px;
-  flex-shrink: 0;
+  width: 100%;
+  max-width: 250px;
+  flex-shrink: 1;
   background: rgba(0, 0, 0, 0.5);
   border: 2px solid #00ffe7;
   border-radius: 15px;
@@ -247,4 +253,8 @@ button:hover {
   box-shadow: 0 0 10px #00ffe7;
   border: none;
   background: transparent;
+}
+
+.reglas_del_dado button#menu {
+  margin-top: 20px;
 }
