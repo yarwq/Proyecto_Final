@@ -145,7 +145,8 @@ function seleccionarDino(indice) {
 // Dado
 function tirarDado() {
   ultimoDado = Math.floor(Math.random() * 6) + 1;
-  document.getElementById('valor-dado').textContent = `🎲 Cubo: ${ultimoDado}`;
+  const dadoContainer = document.getElementById('valor-dado');
+  dadoContainer.innerHTML = `🎲 Cubo: <img src="../assets/dado${ultimoDado}.png" alt="Dado ${ultimoDado}" class="dado-imagen">`;
   actualizarZonasValidas();
 }
 
@@ -156,8 +157,6 @@ function actualizarZonasValidas() {
   if (ultimoDado === null) return;
 
   const zonasPermitidasPorDado = reglasDado(ultimoDado);
-
-  // console.log("Valor del Dado:", ultimoDado, "Zonas Permitidas:", zonasPermitidasPorDado);
 
   todasLasZonas.forEach(div => {
     const zonaActual = div.dataset.zona;
@@ -178,7 +177,6 @@ function actualizarZonasValidas() {
     }
   });
 }
-
 
 function colocarDinoEnZona(indice, zona) {
   const dino = manos[jugadorActual][indice];
@@ -231,7 +229,7 @@ function colocarDinoEnZona(indice, zona) {
       alert(`✅ Ronda completada! Ahora comienza el turno ${turno}.`);
     }
     ultimoDado = null;
-    document.getElementById('valor-dado').textContent = `🎲 Cubo: —`;
+    document.getElementById('valor-dado').innerHTML = `🎲 Cubo: —`;
   }
 
   actualizarMano();
@@ -293,7 +291,7 @@ function calcularPuntos(zoo) {
     const conteoEspecies = {};
     for (let zona in zoo) {
       zoo[zona].forEach(d => {
-        conteoEspecies[d.nombre] = (conteoEspecies[d.nombre] || 0) + 1;
+        conteoEspecies[d.nombre] = (conteoEspecies[d].nombre || 0) + 1;
       });
     }
     let maxCantidad = 0;
