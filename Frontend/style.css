@@ -56,8 +56,11 @@ body {
   background-origin: border-box;
   background-clip: content-box, border-box;
   transition: 0.3s;
-  display: block;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   text-align: center;
+  width: 90%; /* Ancho del botón */
   text-decoration: none;
 }
 
@@ -75,14 +78,17 @@ body {
   -webkit-text-fill-color: transparent;
 }
 
-.form {
+/* --- CORRECCIÓN AQUÍ --- */
+form {
   display: flex;
   flex-direction: column;
+  align-items: center; /* Centra los inputs y el botón */
   gap: 15px;
   margin-bottom: 20px;
+  width: 100%;
 }
 
-.form input {
+form input {
   padding: 15px;
   border: none;
   border-radius: 30px;
@@ -95,6 +101,8 @@ body {
     linear-gradient(90deg, #ff00ff, #00ffe7);
   background-origin: border-box;
   background-clip: content-box, border-box;
+  width: 80%; /* Ancho de los campos de texto */
+  text-align: center;
 }
 
 .switch {
