@@ -1,3 +1,15 @@
+img.iconos {
+  width: 24px;
+  height: 24px;
+  display: inline-block;
+  vertical-align: middle;
+  margin: 4px;
+  object-fit: contain;
+  transition: transform 0.2s;
+}
+img.iconos:hover {
+  transform: scale(1.2);
+}
 body {
   margin: 0;
   padding: 0;
