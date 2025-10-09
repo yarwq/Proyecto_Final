@@ -14,7 +14,7 @@ document.getElementById('menu').addEventListener('click', () => {
   window.location.href = 'menu_principal.html';
 });
 
-document.getElementById('silenciar-musica').addEventListener('click', function() {
+document.getElementById('silenciar-musica').addEventListener('click', function () {
   const audio = document.getElementById('musica');
   audio.muted = !audio.muted;
   this.textContent = audio.muted ? '🔇' : '🔈';
@@ -22,28 +22,28 @@ document.getElementById('silenciar-musica').addEventListener('click', function()
 
 // Tipos de dinosaurios
 const tiposDeDinos = [
-  { nombre: 'T-Rex', imagen: 'red.png'},
-  { nombre: 'Triceratops', imagen: 'green.png'},
-  { nombre: 'Stego', imagen: 'light blue.png'},
-  { nombre: 'Ptera', imagen: 'blue.png'},
-  { nombre: 'Bronto', imagen: 'Yellow.png'},
-  { nombre: 'Raptor', imagen: 'violet.png'}
+  { nombre: 'T-Rex', imagen: 'red.png' },
+  { nombre: 'Triceratops', imagen: 'green.png' },
+  { nombre: 'Stego', imagen: 'light blue.png' },
+  { nombre: 'Ptera', imagen: 'blue.png' },
+  { nombre: 'Bronto', imagen: 'Yellow.png' },
+  { nombre: 'Raptor', imagen: 'violet.png' }
 ];
 
 const recintos = [
-  {nombre: 'montevideo', pais: 'uruguay', area: 'ciudad' },
-  {nombre: 'rivera', pais: 'uruguay', area: 'campo' },
-  {nombre: 'campo', pais: 'uruguay', area: 'campo' },
-  {nombre: 'moscu', pais: 'rusia', area: 'ciudad' },
-  {nombre: 'cheliabinsk', pais: 'rusia', area: 'ciudad' },
-  {nombre: 'transiberiano', pais: 'rusia', area: 'campo' },
-  {nombre: 'rio', pais: '', area: '' }
+  { nombre: 'montevideo', pais: 'uruguay', area: 'ciudad' },
+  { nombre: 'rivera', pais: 'uruguay', area: 'campo' },
+  { nombre: 'campo', pais: 'uruguay', area: 'campo' },
+  { nombre: 'moscu', pais: 'rusia', area: 'ciudad' },
+  { nombre: 'cheliabinsk', pais: 'rusia', area: 'ciudad' },
+  { nombre: 'transiberiano', pais: 'rusia', area: 'campo' },
+  { nombre: 'rio', pais: '', area: '' }
 ];
 
 const getRecintosPor = (propiedad, valor) => {
-    return recintos
-        .filter(recinto => recinto[propiedad] === valor)
-        .map(recinto => recinto.nombre);
+  return recintos
+    .filter(recinto => recinto[propiedad] === valor)
+    .map(recinto => recinto.nombre);
 };
 
 function reglasDado(valor) {
@@ -124,11 +124,11 @@ function actualizarMano() {
       seleccionarDino(indice);
       document.body.classList.add('is-dragging');
     });
-    
+
     div.addEventListener('dragend', () => {
-        document.body.classList.remove('is-dragging');
+      document.body.classList.remove('is-dragging');
     });
-    
+
     div.addEventListener('click', () => seleccionarDino(indice));
     contenedor.appendChild(div);
   });
@@ -160,15 +160,15 @@ function actualizarZonasValidas() {
 
   todasLasZonas.forEach(div => {
     const zonaActual = div.dataset.zona;
-    
+
     if (!zonasPermitidasPorDado.includes(zonaActual)) {
       div.classList.add('invalid');
-      return; 
+      return;
     }
 
     if (seleccionado !== null) {
       const dinoSeleccionado = manos[jugadorActual][seleccionado];
-      
+
       if (cumpleReglasZona(zonaActual, dinoSeleccionado)) {
         div.classList.add('valid');
       } else {
@@ -248,10 +248,10 @@ function cumpleReglasZona(zona, dino) {
   if (zona === 'montevideo' && zoo.montevideo.length >= 6) return false;
   if (zona === 'transiberiano' && zoo.transiberiano.length >= 1) return false;
   if (zona === 'cheliabinsk') {
-      if (zoo.cheliabinsk.length >= 1) return false;
-      for (let z in zoo) {
-          if (z !== 'cheliabinsk' && zoo[z].some(dd => dd.nombre === dino.nombre)) return false;
-      }
+    if (zoo.cheliabinsk.length >= 1) return false;
+    for (let z in zoo) {
+      if (z !== 'cheliabinsk' && zoo[z].some(dd => dd.nombre === dino.nombre)) return false;
+    }
   }
   return true;
 }
@@ -261,7 +261,7 @@ function actualizarZonas() {
   document.querySelectorAll('.grid-item.zona').forEach(div => {
     const zona = div.dataset.zona;
     const contenedorDinos = div.querySelector('.dinos-en-zona');
-    contenedorDinos.innerHTML = ''; 
+    contenedorDinos.innerHTML = '';
 
     zoologicos[jugadorActual][zona].forEach(dino => {
       const img = document.createElement('img');
@@ -276,6 +276,7 @@ function actualizarZonas() {
 // Puntuación
 function calcularPuntos(zoo) {
   let puntos = 0;
+
   if (zoo.campo.length === 3) puntos += 7;
 
   const pares = {};
@@ -291,7 +292,7 @@ function calcularPuntos(zoo) {
     const conteoEspecies = {};
     for (let zona in zoo) {
       zoo[zona].forEach(d => {
-        conteoEspecies[d.nombre] = (conteoEspecies[d].nombre || 0) + 1;
+        conteoEspecies[d.nombre] = (conteoEspecies[d.nombre] || 0) + 1;
       });
     }
     let maxCantidad = 0;
@@ -313,6 +314,7 @@ function calcularPuntos(zoo) {
 
   return puntos;
 }
+
 
 function actualizarPuntuacion() {
   let txt = "";
@@ -350,26 +352,26 @@ function finalizarPartida() {
 function agregarDropTargets() {
   document.querySelectorAll('.grid-item.zona').forEach(div => {
     div.addEventListener('dragover', e => e.preventDefault());
-    
+
     div.addEventListener('dragenter', () => {
-        div.classList.add('drag-over-effect');
+      div.classList.add('drag-over-effect');
     });
 
     div.addEventListener('dragleave', () => {
-        div.classList.remove('drag-over-effect');
+      div.classList.remove('drag-over-effect');
     });
 
     div.addEventListener('drop', e => {
       e.preventDefault();
-      div.classList.remove('drag-over-effect'); 
-      
+      div.classList.remove('drag-over-effect');
+
       const indice = e.dataTransfer.getData('text/plain');
       const zonaTarget = e.target.closest('.grid-item.zona');
       if (zonaTarget) {
-          colocarDinoEnZona(indice, zonaTarget.dataset.zona);
+        colocarDinoEnZona(indice, zonaTarget.dataset.zona);
       }
     });
-    
+
     div.addEventListener('click', (e) => {
       if (seleccionado !== null) {
         const zonaTarget = e.target.closest('.grid-item.zona');
@@ -380,6 +382,7 @@ function agregarDropTargets() {
     });
   });
 }
+
 
 // Eventos
 document.getElementById('tirar-dado').addEventListener('click', tirarDado);
@@ -396,4 +399,96 @@ document.getElementById('iniciar-juego').addEventListener('click', () => {
 
   inicializarJuego(jugadores);
   agregarDropTargets();
+});
+
+
+document.getElementById('guardar-partida').addEventListener('click', async () => {
+  const jugadoresID = [1, 2];
+
+  const data = {
+    numJugadores,
+    jugadorActual,
+    turno,
+    zoologicos,
+    manos,
+    jugadores: jugadoresID,
+    fecha: new Date().toISOString()
+  };
+
+  try {
+    const res = await fetch('http://localhost/JSandPHP/Backend/routes/api.php/saveMatch', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
+
+    const result = await res.json();
+    if (result.success) {
+      alert("✅ Partida guardada exitosamente!");
+    } else {
+      alert("⚠️ Error al guardar la partida: " + (result.error || ""));
+    }
+  } catch (err) {
+    alert("❌ No se pudo conectar con el servidor: " + err.message);
+  }
+});
+
+
+document.getElementById('cargar-partida').addEventListener('click', async () => {
+    const userId = 1;
+    try {
+        const res = await fetch(`http://localhost/JSandPHP/Backend/routes/api.php/getMatches/${userId}`);
+        const result = await res.json();
+
+        if (result.success) {
+            const select = document.getElementById('lista-partidas');
+            select.innerHTML = '';
+            result.matches.forEach(m => {
+                const option = document.createElement('option');
+                option.value = m.id;
+                option.textContent = `ID: ${m.id} | Fecha: ${m.fecha} | Turno: ${m.turno} | Jugadores: ${m.num_jugadores}`;
+                select.appendChild(option);
+            });
+            select.style.display = 'block';
+        } else {
+            alert("Error al cargar partidas: " + (result.error || ""));
+        }
+    } catch (err) {
+        alert("No se pudo conectar con el servidor: " + err.message);
+    }
+});
+
+
+document.getElementById('lista-partidas').addEventListener('change', async (e) => {
+    const matchId = e.target.value;
+    if (!matchId) return;
+
+    try {
+        const res = await fetch(`http://localhost/JSandPHP/Backend/routes/api.php/loadMatch/${matchId}`);
+        const result = await res.json();
+
+        if (result.success) {
+            const match = result.match;
+
+           
+            numJugadores = match.num_jugadores;
+            jugadorActual = match.jugador_actual;
+            turno = match.turno;
+            zoologicos = match.zoologicos;
+            manos = match.manos;
+            buffer = {};
+            for (let j = 1; j <= numJugadores; j++) buffer[j] = [];
+
+            actualizarMano();
+            actualizarZonas();
+            actualizarPuntuacion();
+            agregarDropTargets();
+
+            alert("✅ Partida cargada correctamente!");
+        } else {
+            alert("Error al cargar partida: " + (result.error || ""));
+        }
+    } catch (err) {
+        alert("No se pudo conectar con el servidor: " + err.message);
+    }
 });
