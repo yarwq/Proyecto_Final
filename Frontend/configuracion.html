@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Configuración — Draftosaurus</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="config-main">
+    <h1 class="config-title">⚙️ Configuración</h1>
+    <section class="config-section">
+      <div class="config-volumen">
+        <h2 class="config-subtitle">Volumen</h2>
+        <audio id="musica" src="../assets/Rugidos del Pasado.mp3" loop autoplay></audio>
+        <button id="silenciar-musica" class="btn config-vol-btn">🔈</button>
+      </div>
+      <div class="config-idioma">
+        <h2 class="config-subtitle">Idioma</h2>
+        <select id="idioma" class="btn config-select">
+          <option value="es" selected>Español</option>
+          <option value="en">English</option>
+        </select>
+      </div>
+    </section>
+  </main>
+  <script>
+    const btn = document.getElementById('silenciar-musica');
+    const audio = document.getElementById('musica');
+    btn.onclick = function() {
+      audio.muted = !audio.muted;
+      btn.textContent = audio.muted ? '🔇' : '🔈';
+    };
+  </script>
+</body>
+</html>

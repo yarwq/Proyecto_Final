@@ -1,3 +1,82 @@
+/* --- CONFIGURACION.HTML --- */
+.config-main {
+  width: 100vw;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-dark-bg);
+  text-align: center;
+  box-sizing: border-box;
+}
+.config-title {
+  margin-bottom: 2rem;
+  text-align: center;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.config-section {
+  width: 100%;
+  max-width: 400px;
+  background: rgba(0,0,0,0.7);
+  border-radius: 2rem;
+  padding: 2rem 1rem;
+  box-shadow: 0 0 32px #00ffe7;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+.config-volumen {
+  margin-bottom: 2em;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+.config-subtitle {
+  color: #00ffe7;
+  text-align: center;
+  width: 100%;
+  margin: 0 auto 0.5em auto;
+}
+.config-vol-btn {
+  margin-top: 1em;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+.config-idioma {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+.config-select {
+  width: 80%;
+  margin-top: 1em;
+  text-align: center;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+.config-idioma-info {
+  margin-top: 1em;
+  color: #00ffe7;
+  font-size: 0.95em;
+}
+.config-back {
+  margin-top: 2.5rem;
+  display: inline-block;
+}
 img.iconos {
   width: 70px;
   height: 70px;
