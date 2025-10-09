@@ -114,7 +114,7 @@ button:hover {
 .dinos-en-zona {
     position: absolute;
     top: 0;
-    left: 0;
+  font-family: 'Andalé Mono', monospace; /* Set font to Andalé Mono */
     width: 100%;
     height: 100%;
     display: flex;
