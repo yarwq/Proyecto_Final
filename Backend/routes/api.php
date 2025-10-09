@@ -10,15 +10,15 @@ header("Content-Type: application/json; charset=UTF-8");
 $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $method = $_SERVER['REQUEST_METHOD'];
 
-// Разделяем путь на сегменты
+
 $segments = explode('/', trim($path, '/'));
 
-// Ищем api.php в сегментах, чтобы дальше смотреть REST
+
 $apiIndex = array_search('api.php', $segments);
 
 $controller = null;
-$action = $segments[$apiIndex + 1] ?? null; // getMatches, loadMatch и т.д.
-$id = $segments[$apiIndex + 2] ?? null;     // user_id или match_id
+$action = $segments[$apiIndex + 1] ?? null; 
+$id = $segments[$apiIndex + 2] ?? null;     
 
 switch ($action) {
     case 'register':
