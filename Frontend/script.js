@@ -154,10 +154,17 @@ function seleccionarDino(indice) {
 
 // Dado
 function tirarDado() {
+  // Solo permitir tirar si no hay dado lanzado
+  if (ultimoDado !== null) {
+  mostrarAlertaDrafto('Espera a la siguiente ronda para lanzar el dado');
+    return;
+  }
   ultimoDado = Math.floor(Math.random() * 6) + 1;
   const dadoContainer = document.getElementById('valor-dado');
   dadoContainer.innerHTML = `🎲 Cubo: <img src="../assets/dado${ultimoDado}.png" alt="Dado ${ultimoDado}" class="dado-imagen">`;
   actualizarZonasValidas();
+  // Deshabilitar el botón hasta la siguiente ronda
+  document.getElementById('tirar-dado').disabled = true;
 }
 
 function actualizarZonasValidas() {
@@ -193,18 +200,18 @@ function colocarDinoEnZona(indice, zona) {
   if (!dino) return;
 
   if (ultimoDado === null) {
-    alert('🎲 Lanza el dado antes.');
+  mostrarAlertaDrafto('🎲 Lanza el dado antes.');
     return;
   }
 
   const validas = reglasDado(ultimoDado);
   if (!validas.includes(zona)) {
-    alert('❌ Zona no permitida por el dado.');
+  mostrarAlertaDrafto('❌ Zona no permitida por el dado.');
     return;
   }
 
   if (!cumpleReglasZona(zona, dino)) {
-    alert('❌ No puedes colocar este dinosaurio aquí.');
+  mostrarAlertaDrafto('❌ No puedes colocar este dinosaurio aquí.');
     return;
   }
 
@@ -236,10 +243,12 @@ function colocarDinoEnZona(indice, zona) {
 
     turno++;
     if (manos[1].length > 0) {
-      alert(`✅ Ronda completada! Ahora comienza el turno ${turno}.`);
+  mostrarAlertaDrafto(`✅ Ronda completada! Ahora comienza el turno ${turno}.`);
     }
     ultimoDado = null;
     document.getElementById('valor-dado').innerHTML = `🎲 Cubo: —`;
+    // Habilitar el botón para la nueva ronda
+    document.getElementById('tirar-dado').disabled = false;
   }
 
   actualizarMano();
@@ -353,7 +362,7 @@ function finalizarPartida() {
   if (ganadores.length === 1) mensaje += `\n🎉 ¡Jugador ${ganadores[0]} gana!`;
   else mensaje += `\n🤝 ¡Empate entre jugadores ${ganadores.join(', ')}!`;
 
-  alert(mensaje);
+  mostrarAlertaDrafto(mensaje);
 }
 
 // Drag & Drop
@@ -392,13 +401,42 @@ function agregarDropTargets() {
 }
 
 // Eventos
-document.getElementById('tirar-dado').addEventListener('click', tirarDado);
+const tirarDadoBtn = document.getElementById('tirar-dado');
+const tirarDadoOverlay = document.getElementById('tirar-dado-overlay');
+tirarDadoBtn.addEventListener('click', tirarDado);
+
+function actualizarBotonTirarDado() {
+  if (tirarDadoBtn.disabled) {
+    tirarDadoOverlay.style.display = 'block';
+  } else {
+    tirarDadoOverlay.style.display = 'none';
+  }
+}
+
+tirarDadoOverlay.addEventListener('click', function(e) {
+  mostrarAlertaDrafto('Espera a la siguiente ronda para lanzar el dado');
+  e.preventDefault();
+});
+
+// Actualizar overlay al deshabilitar/habilitar el botón
+tirarDadoBtn.addEventListener('disabled', actualizarBotonTirarDado);
+// Llamar al actualizarBotonTirarDado después de cada cambio de estado
+const originalDisable = Object.getOwnPropertyDescriptor(HTMLButtonElement.prototype, 'disabled');
+Object.defineProperty(tirarDadoBtn, 'disabled', {
+  set: function(val) {
+    originalDisable.set.call(this, val);
+    actualizarBotonTirarDado();
+  },
+  get: function() {
+    return originalDisable.get.call(this);
+  }
+});
 
 document.getElementById('iniciar-juego').addEventListener('click', () => {
   const seleccion = document.querySelector('.jugador-opcion.selected');
   const jugadores = seleccion ? parseInt(seleccion.dataset.value) : 2;
   if (isNaN(jugadores) || jugadores < 2 || jugadores > 5) {
-    alert("❌ Número de jugadores inválido (elige 2-5).");
+  mostrarAlertaDrafto("❌ Número de jugadores inválido (elige 2-5).");
     return;
   }
 

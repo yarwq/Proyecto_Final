@@ -1,3 +1,47 @@
+/* --- ALERTA POPUP NEÓN --- */
+.drafto-alert {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  min-width: 320px;
+  max-width: 90vw;
+  background: rgba(34, 34, 34, 0.95);
+  border: 2px solid #00ffe7;
+  border-radius: 1.5rem;
+  box-shadow: 0 0 32px #00ffe7, 0 0 64px #ff00ff;
+  color: #00ffe7;
+  font-family: 'Andale Mono', 'Andalé Mono', monospace;
+  font-size: 1.5rem;
+  text-align: center;
+  z-index: 9999;
+  padding: 2rem 2.5rem;
+  animation: popupFadeIn 0.3s;
+}
+
+@keyframes popupFadeIn {
+  from { opacity: 0; transform: translate(-50%, -60%) scale(0.9);}
+  to   { opacity: 1; transform: translate(-50%, -50%) scale(1);}
+}
+
+.drafto-alert button {
+  margin-top: 1.5rem;
+  padding: 0.5em 2em;
+  background: black;
+  color: #00ffe7;
+  border: 2px solid #00ffe7;
+  border-radius: 1em;
+  font-size: 1.1rem;
+  font-family: 'Andale Mono', 'Andalé Mono', monospace;
+  cursor: pointer;
+  box-shadow: 0 0 10px #00ffe7;
+  transition: background 0.2s, color 0.2s;
+}
+
+.drafto-alert button:hover {
+  background: #00ffe7;
+  color: black;
+}
 /* Centrado del bloque de selección de jugadores */
 #seleccion-jugadores {
   background: #222222cd;
@@ -433,3 +477,4 @@ button:hover {
 .reglas_del_dado button#menu {
   margin-top: 20px;
 }
+
