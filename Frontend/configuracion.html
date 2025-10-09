@@ -6,29 +6,46 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <main class="config-main">
+  <div class="container">
+    <div class="logo-box">
+      <img src="../assets/logo.png" alt="logo">
+    </div>
     <h1 class="config-title">⚙️ Configuración</h1>
-    <section class="config-section">
-      <div class="config-volumen">
-        <h2 class="config-subtitle">Volumen</h2>
-        <audio id="musica" src="../assets/Rugidos del Pasado.mp3" loop autoplay></audio>
-        <button id="silenciar-musica" class="btn config-vol-btn">🔈</button>
+    <div class="config-volumen">
+      <h2 class="config-subtitle">Volumen</h2>
+      <audio id="musica" src="../assets/Rugidos del Pasado.mp3" loop autoplay></audio>
+      <button id="silenciar-musica" class="btn config-vol-btn">🔈</button>
+    </div>
+    <div class="config-idioma">
+      <h2 class="config-subtitle">Idioma</h2>
+      <div class="idioma-btn-group">
+        <button id="btn-es" class="btn idioma-btn selected" data-idioma="es" title="Español">
+          <img src="../assets/spain.png" alt="Bandera España" class="idioma-flag"> Español
+        </button>
+        <button id="btn-en" class="btn idioma-btn" data-idioma="en" title="English">
+          <img src="../assets/usa.png" alt="Bandera USA" class="idioma-flag"> English
+        </button>
       </div>
-      <div class="config-idioma">
-        <h2 class="config-subtitle">Idioma</h2>
-        <select id="idioma" class="btn config-select">
-          <option value="es" selected>Español</option>
-          <option value="en">English</option>
-        </select>
-      </div>
-    </section>
-  </main>
+    </div>
+  </div>
   <script>
     const btn = document.getElementById('silenciar-musica');
     const audio = document.getElementById('musica');
     btn.onclick = function() {
       audio.muted = !audio.muted;
       btn.textContent = audio.muted ? '🔇' : '🔈';
+    };
+
+    // Lógica para seleccionar idioma
+    const btnEs = document.getElementById('btn-es');
+    const btnEn = document.getElementById('btn-en');
+    btnEs.onclick = function() {
+      btnEs.classList.add('selected');
+      btnEn.classList.remove('selected');
+    };
+    btnEn.onclick = function() {
+      btnEn.classList.add('selected');
+      btnEs.classList.remove('selected');
     };
   </script>
 </body>
