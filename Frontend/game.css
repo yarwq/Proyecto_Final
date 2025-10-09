@@ -307,12 +307,16 @@ button:hover {
   transform: scale(1.05);
 }
 
-.grid-item.zona.valid {
-    border-color: limegreen;
+.grid-item.zona:not(.grid-item-central).valid {
+  border: 3px solid limegreen !important;
+  box-shadow: 0 0 10px limegreen;
+  transition: border-color 0.2s, box-shadow 0.2s;
 }
 
-.grid-item.zona.invalid {
-    border-color: red;
+.grid-item.zona:not(.grid-item-central).invalid {
+  border: 3px solid red !important;
+  box-shadow: 0 0 10px red;
+  transition: border-color 0.2s, box-shadow 0.2s;
 }
 
 .grid-item-central {
