@@ -1,3 +1,13 @@
+// Selección visual de número de jugadores
+document.querySelectorAll('.jugador-opcion').forEach(el => {
+  el.addEventListener('click', function() {
+    document.querySelectorAll('.jugador-opcion').forEach(e => e.classList.remove('selected'));
+    this.classList.add('selected');
+    numJugadores = parseInt(this.dataset.value);
+  });
+});
+
+// Inicializar selección por defecto (2 jugadores)
 // Draftosaurus — lógica completa
 // Variables globales
 let numJugadores = 2;
@@ -385,7 +395,8 @@ function agregarDropTargets() {
 document.getElementById('tirar-dado').addEventListener('click', tirarDado);
 
 document.getElementById('iniciar-juego').addEventListener('click', () => {
-  const jugadores = parseInt(document.getElementById('num-jugadores').value);
+  const seleccion = document.querySelector('.jugador-opcion.selected');
+  const jugadores = seleccion ? parseInt(seleccion.dataset.value) : 2;
   if (isNaN(jugadores) || jugadores < 2 || jugadores > 5) {
     alert("❌ Número de jugadores inválido (elige 2-5).");
     return;
