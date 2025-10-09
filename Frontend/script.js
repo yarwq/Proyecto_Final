@@ -101,7 +101,7 @@ function obtenerDinoAleatorio() {
 function repartirDinos() {
   for (let j = 1; j <= numJugadores; j++) {
     manos[j] = [];
-    for (let i = 0; i < 5; i++) manos[j].push(obtenerDinoAleatorio());
+    for (let i = 0; i < 6; i++) manos[j].push(obtenerDinoAleatorio());
   }
 }
 
