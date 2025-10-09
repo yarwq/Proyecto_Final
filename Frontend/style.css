@@ -1,3 +1,124 @@
+/* --- Botones de idioma --- */
+.idioma-btn-group {
+  display: flex;
+  gap: 1.5em;
+  justify-content: center;
+  margin-top: 1em;
+}
+.idioma-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  padding: 0.7em 1.2em;
+  font-size: 1.1em;
+  border-radius: 2em;
+  border: 2px solid transparent;
+  background: black;
+  transition: 0.2s;
+  box-shadow: 0 0 8px #00ffe7;
+}
+.idioma-btn.selected {
+  border-color: #00ffe7;
+  background: linear-gradient(90deg, #00ffe7 0%, #ff00ff 100%);
+  color: black;
+}
+.idioma-btn img.idioma-flag {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  box-shadow: 0 0 6px #00ffe7;
+}
+/* --- CONFIGURACION.HTML --- */
+.config-main {
+  width: 100vw;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-dark-bg);
+  text-align: center;
+  box-sizing: border-box;
+}
+.config-title {
+  margin-bottom: 2rem;
+  text-align: center;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.config-section {
+  width: 100%;
+  max-width: 400px;
+  background: rgba(0,0,0,0.7);
+  border-radius: 2rem;
+  padding: 2rem 1rem;
+  box-shadow: 0 0 32px #00ffe7;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+.config-volumen {
+  margin-bottom: 2em;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+.config-subtitle {
+  color: #00ffe7;
+  text-align: center;
+  width: 100%;
+  margin: 0 auto 0.5em auto;
+}
+.config-vol-btn {
+  margin-top: 1em;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+.config-idioma {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+.config-select {
+  width: 80%;
+  margin-top: 1em;
+  text-align: center;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+.config-idioma-info {
+  margin-top: 1em;
+  color: #00ffe7;
+  font-size: 0.95em;
+}
+.config-back {
+  margin-top: 2.5rem;
+  display: inline-block;
+}
+img.iconos {
+  width: 70px;
+  height: 70px;
+  display: inline-block;
+  vertical-align: middle;
+  margin: 4px;
+  object-fit: contain;
+  transition: transform 0.2s;
+}
+img.iconos:hover {
+  transform: scale(1.2);
+}
 body {
   margin: 0;
   padding: 0;
@@ -17,6 +138,7 @@ body {
   padding: 20px;
   border-radius: 20px;
   background: linear-gradient(180deg, #0d0d0d, #1a1a1a);
+  box-shadow: 0 0 32px #00ffe7;
 }
 
 .logo {
@@ -127,4 +249,54 @@ form input {
 
 .terms:hover {
   text-decoration: underline;
+  position: relative;
+}
+/* Borde box-shadow gradiente animado para .container */
+.container {
+  box-shadow: 0 0 32px 8px #00ffe7, 0 0 32px 8px #00ffe7;
+  animation: glow-rotate 1s linear infinite;
+}
+
+@keyframes glow-rotate {
+  0% {
+    box-shadow: 0 0 32px 8px #00ffe7, 0 0 32px 8px #ff00ff;
+  }
+  40% {
+    box-shadow: 0 0 32px 8px #ff00ff, 0 0 32px 8px #00bfff;
+  }
+  100% {
+    box-shadow: 0 0 32px 8px #00ffe7, 0 0 32px 8px #ff00ff;
+  }
+}
+.container-juego {
+  text-align: center;
+  width: 100%;
+  max-width: 1600px;
+  padding: 48px 32px;
+  border-radius: 20px;
+  background: linear-gradient(180deg, #0d0d0d, #1a1a1a);
+  box-shadow: 0 0 32px #00ffe7;
+  margin: 40px auto;
+  box-sizing: border-box;
+  box-shadow: 0 0 32px 8px #00ffe7, 0 0 32px 8px #00ffe7;
+  animation: glow-rotate 1s linear infinite;
+}
+
+@keyframes glow-rotate {
+  0% {
+    box-shadow: 0 0 32px 8px #00ffe7, 0 0 32px 8px #ff00ff;
+  }
+  40% {
+    box-shadow: 0 0 32px 8px #ff00ff, 0 0 32px 8px #00bfff;
+  }
+  100% {
+    box-shadow: 0 0 32px 8px #00ffe7, 0 0 32px 8px #ff00ff;
+  }
+}
+@media (max-width: 1700px) {
+  .container-juego {
+    max-width: 98vw;
+    padding: 24px 8px;
+    margin: 16px auto;
+  }
 }
