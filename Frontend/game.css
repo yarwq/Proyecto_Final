@@ -297,9 +297,20 @@ button:hover {
 }
 
 
-.grid-item:hover {
-  background-color: rgba(0,0,0,0.4);
-  transform: scale(1.05);
+
+.grid-item.zona:not(.grid-item-central):hover {
+  transform: scale(1.06);
+  transition: transform 0.18s cubic-bezier(.4,2,.3,1);
+}
+
+.grid-item.zona:not(.grid-item-central).valid:hover {
+  transform: scale(1.06);
+  transition: transform 0.18s cubic-bezier(.4,2,.3,1);
+}
+
+.grid-item.zona:not(.grid-item-central).invalid:hover {
+  transform: scale(1.06);
+  transition: transform 0.18s cubic-bezier(.4,2,.3,1);
 }
 
 .grid-item.drag-over-effect {
