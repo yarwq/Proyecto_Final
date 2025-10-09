@@ -114,7 +114,7 @@ button:hover {
 .dinos-en-zona {
     position: absolute;
     top: 0;
-    left: 0;
+  font-family: 'Andalé Mono', monospace; /* Set font to Andalé Mono */
     width: 100%;
     height: 100%;
     display: flex;
@@ -214,8 +214,8 @@ button:hover {
   background: rgba(0, 0, 0, 0.5);
   border: 2px solid #00ffe7;
   border-radius: 15px;
-  padding: 25px;
-  box-shadow: 0 0 20px #bb00ff;
+    width: 80px;
+    height: 60px;
 }
 
 .reglas_del_dado {

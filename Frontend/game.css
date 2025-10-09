@@ -1,3 +1,206 @@
+/* --- ALERTA POPUP NEÓN --- */
+.drafto-alert {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  min-width: 320px;
+  max-width: 90vw;
+  background: rgba(34, 34, 34, 0.95);
+  border: 2px solid #00ffe7;
+  border-radius: 1.5rem;
+  box-shadow: 0 0 32px #00ffe7, 0 0 64px #ff00ff;
+  color: #00ffe7;
+  font-family: 'Andale Mono', 'Andalé Mono', monospace;
+  font-size: 1.5rem;
+  text-align: center;
+  z-index: 9999;
+  padding: 2rem 2.5rem;
+  animation: popupFadeIn 0.3s;
+}
+
+@keyframes popupFadeIn {
+  from { opacity: 0; transform: translate(-50%, -60%) scale(0.9);}
+  to   { opacity: 1; transform: translate(-50%, -50%) scale(1);}
+}
+
+.drafto-alert button {
+  margin-top: 1.5rem;
+  padding: 0.5em 2em;
+  background: black;
+  color: #00ffe7;
+  border: 2px solid #00ffe7;
+  border-radius: 1em;
+  font-size: 1.1rem;
+  font-family: 'Andale Mono', 'Andalé Mono', monospace;
+  cursor: pointer;
+  box-shadow: 0 0 10px #00ffe7;
+  transition: background 0.2s, color 0.2s;
+}
+
+.drafto-alert button:hover {
+  background: #00ffe7;
+  color: black;
+}
+/* Centrado del bloque de selección de jugadores */
+#seleccion-jugadores {
+  background: #222222cd;
+  border-radius: 2rem;
+  box-shadow: 0 0 32px #000a;
+  padding: 2rem 2rem 2rem 2rem;
+  width: fit-content;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 20vw;
+  min-height: 30vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 30vw;
+  min-height: 20vh;
+}
+/* Nítido y visible para número seleccionado */
+ .jugador-opcion.selected span {
+  filter: none !important;
+  scale: 0.8 !important;
+  transition: none !important;
+  filter: none !important;
+  opacity: 1 !important;
+  transition: none !important;
+  transform: scale(2.2) !important;
+  backdrop-filter: none !important;
+  box-shadow: none !important;
+  text-shadow: none !important;
+  -webkit-filter: none !important;
+ }
+/* --- SELECCIÓN DE JUGADORES ESTILO NEÓN --- */
+.jugadores-opciones {
+  font-size: 3rem;
+  display: flex;
+  flex-wrap: nowrap;
+  color: #fff;
+  border-radius: 2.5rem;
+  background: #181818;
+  box-shadow: 0 1px #00ffe7 inset;
+  justify-content: center;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  padding: 0.5rem 2.5rem;
+  width: auto;
+  box-sizing: border-box;
+}
+.jugador-opcion {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  padding: 4rem 1.5rem;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, transform 0.2s;
+  border-radius: 0.5rem;
+  margin: 0 0.5rem;
+  outline: none;
+}
+.jugador-opcion:focus-visible {
+  outline-color: #00ffe7;
+  outline-offset: 1rem;
+}
+.jugador-opcion span {
+  background: linear-gradient(90deg, #ff00ff, #00ffe7);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  scale: calc(var(--active, 0) + 0.5);
+  filter: blur(calc((1 - var(--active, 0)) * 1rem));
+  transition: scale calc(((1 - var(--active, 0)) + 0.2) * 1s), filter calc(((1 - var(--active, 0)) + 0.2) * 1s);
+}
+.jugador-opcion:first-of-type {
+  padding-left: 3rem;
+}
+.jugador-opcion:last-of-type {
+  padding-right: 3rem;
+}
+:root {
+  --lerp-0: 1;
+  --lerp-1: calc(sin(50deg));
+  --lerp-2: calc(sin(45deg));
+  --lerp-3: calc(sin(35deg));
+  --lerp-4: calc(sin(25deg));
+  --lerp-5: calc(sin(15deg));
+}
+.jugador-opcion:is(:hover, :focus-visible) {
+  --active: var(--lerp-0);
+}
+.jugador-opcion:is(:hover, :focus-visible) + .jugador-opcion,
+.jugador-opcion:has(+ .jugador-opcion:is(:hover, :focus-visible)) {
+  --active: var(--lerp-1);
+}
+.jugador-opcion:is(:hover, :focus-visible) + .jugador-opcion + .jugador-opcion,
+.jugador-opcion:has(+ .jugador-opcion + .jugador-opcion:is(:hover, :focus-visible)) {
+  --active: var(--lerp-2);
+}
+.jugador-opcion:is(:hover, :focus-visible) + .jugador-opcion + .jugador-opcion + .jugador-opcion,
+.jugador-opcion:has(+ .jugador-opcion + .jugador-opcion + .jugador-opcion:is(:hover, :focus-visible)) {
+  --active: var(--lerp-3);
+}
+.jugador-opcion:is(:hover, :focus-visible) + .jugador-opcion + .jugador-opcion + .jugador-opcion + .jugador-opcion,
+.jugador-opcion:has(+ .jugador-opcion + .jugador-opcion + .jugador-opcion + .jugador-opcion:is(:hover, :focus-visible)) {
+  --active: var(--lerp-4);
+}
+.jugador-opcion:is(:hover, :focus-visible) + .jugador-opcion + .jugador-opcion + .jugador-opcion + .jugador-opcion + .jugador-opcion,
+.jugador-opcion:has(+ .jugador-opcion + .jugador-opcion + .jugador-opcion + .jugador-opcion + .jugador-opcion:is(:hover, :focus-visible)) {
+  --active: var(--lerp-5);
+}
+.jugador-opcion.selected {
+  background: none !important;
+  color: #fff;
+  box-shadow: none !important;
+  border: none !important;
+  transform: scale(1.15);
+}
+/* --- FIN SELECCIÓN DE JUGADORES --- */
+/* Opciones de selección de jugadores estilo visual */
+.jugadores-opciones {
+  font-size: 2rem;
+  display: flex;
+  flex-wrap: nowrap;
+  color: #fff;
+  border-radius: 1rem;
+  background: #222;
+  justify-content: center;
+  box-shadow: 0 1px #fff2 inset;
+  margin: 2rem 0 1rem 0;
+  padding: 0;
+}
+.jugador-opcion {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  padding: 2rem 1.5rem;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, transform 0.2s;
+  border-radius: 0.5rem;
+  margin: 0 0.5rem;
+}
+.jugador-opcion:focus-visible,
+.jugador-opcion:hover {
+  background: none;
+  color: #fff;
+  outline: none;
+  transform: scale(1.1);
+}
+.jugador-opcion.selected {
+  background: #ff00ff;
+  color: #fff;
+  transform: scale(1.15);
+}
 /* Layout principal para evitar superposición */
 .layout-juego {
   display: flex;
@@ -23,7 +226,7 @@
 }
 
 body {
-  font-family: 'Orbitron', sans-serif;
+  font-family: 'Andale Mono', 'Andalé Mono', monospace;
   background: url('../assets/Recintos fondo.png') no-repeat center center fixed;
   color: #00ffe7;
   text-align: center;
@@ -101,7 +304,8 @@ button:hover {
   text-shadow: 0 0 5px #00ffe7;
   font-size: 18px;
   cursor: pointer;
-  transition: all 0.2s ease;
+    border: none;
+    background: none;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -137,9 +341,20 @@ button:hover {
 }
 
 
-.grid-item:hover {
-  background-color: rgba(0,0,0,0.4);
-  transform: scale(1.05);
+
+.grid-item.zona:not(.grid-item-central):hover {
+  transform: scale(1.06);
+  transition: transform 0.18s cubic-bezier(.4,2,.3,1);
+}
+
+.grid-item.zona:not(.grid-item-central).valid:hover {
+  transform: scale(1.06);
+  transition: transform 0.18s cubic-bezier(.4,2,.3,1);
+}
+
+.grid-item.zona:not(.grid-item-central).invalid:hover {
+  transform: scale(1.06);
+  transition: transform 0.18s cubic-bezier(.4,2,.3,1);
 }
 
 .grid-item.drag-over-effect {
@@ -147,12 +362,16 @@ button:hover {
   transform: scale(1.05);
 }
 
-.grid-item.zona.valid {
-    border-color: limegreen;
+.grid-item.zona:not(.grid-item-central).valid {
+  border: 3px solid limegreen !important;
+  box-shadow: 0 0 10px limegreen;
+  transition: border-color 0.2s, box-shadow 0.2s;
 }
 
-.grid-item.zona.invalid {
-    border-color: red;
+.grid-item.zona:not(.grid-item-central).invalid {
+  border: 3px solid red !important;
+  box-shadow: 0 0 10px red;
+  transition: border-color 0.2s, box-shadow 0.2s;
 }
 
 .grid-item-central {
@@ -258,3 +477,4 @@ button:hover {
 .reglas_del_dado button#menu {
   margin-top: 20px;
 }
+
