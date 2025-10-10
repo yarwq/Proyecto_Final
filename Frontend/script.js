@@ -435,19 +435,19 @@ Object.defineProperty(tirarDadoBtn, 'disabled', {
   }
 });
 
-document.getElementById('iniciar-juego').addEventListener('click', () => {
+document.getElementById('iniciar-juego').addEventListener('click', function () {
   const seleccion = document.querySelector('.jugador-opcion.selected');
-  const jugadores = seleccion ? parseInt(seleccion.dataset.value) : 2;
-  if (isNaN(jugadores) || jugadores < 2 || jugadores > 5) {
-  mostrarAlertaDrafto("❌ Número de jugadores inválido (elige 2-5).");
+  const cantidad = seleccion ? parseInt(seleccion.dataset.value) : null;
+  if (!cantidad) {
+    mostrarAlertaDrafto('Selecciona la cantidad de jugadores antes de iniciar.');
     return;
   }
-
-  document.getElementById('seleccion-jugadores').style.display = 'none';
-  document.getElementById('juego').style.display = 'block';
-
-  inicializarJuego(jugadores);
-  agregarDropTargets();
+  mostrarAlertaNombresJugadores(cantidad, function(nombres) {
+    window.nombresJugadores = nombres;
+    document.getElementById('seleccion-jugadores').style.display = 'none';
+    document.getElementById('juego').style.display = '';
+    inicializarJuego(cantidad); // Inicializa la mano y el tablero
+  });
 });
 
 
@@ -541,3 +541,58 @@ document.getElementById('lista-partidas').addEventListener('change', async (e) =
         alert("No se pudo conectar con el servidor: " + err.message);
     }
 });
+
+function mostrarAlertaNombresJugadores(cantidad, callback) {
+  // Elimina cualquier alerta previa
+  const alertaExistente = document.querySelector('.drafto-alert');
+  if (alertaExistente) alertaExistente.remove();
+
+  // Crea el popup
+  const popup = document.createElement('div');
+  popup.className = 'drafto-alert';
+
+  const titulo = document.createElement('h2');
+  titulo.textContent = 'Ingresa los nombres de los jugadores';
+  popup.appendChild(titulo);
+
+  const form = document.createElement('form');
+  form.style.display = 'flex';
+  form.style.flexDirection = 'column';
+  form.style.gap = '1rem';
+
+  const inputs = [];
+  for (let i = 0; i < cantidad; i++) {
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.placeholder = `Jugador ${i + 1}`;
+    input.className = 'nombre-jugador-input';
+    input.required = true;
+    input.style.fontSize = '1.2rem';
+    input.style.padding = '0.5em';
+    input.style.borderRadius = '0.5em';
+    input.style.border = '2px solid #00ffe7';
+    input.style.background = '#222';
+    input.style.color = '#00ffe7';
+    input.style.textAlign = 'center';
+    form.appendChild(input);
+    inputs.push(input);
+  }
+
+  const btnContinuar = document.createElement('button');
+  btnContinuar.type = 'submit';
+  btnContinuar.textContent = 'Continuar';
+  btnContinuar.className = 'btn';
+  btnContinuar.style.marginTop = '1.5rem';
+
+  form.appendChild(btnContinuar);
+  popup.appendChild(form);
+
+  document.body.appendChild(popup);
+
+  form.onsubmit = function(e) {
+    e.preventDefault();
+    const nombres = inputs.map(input => input.value.trim() || input.placeholder);
+    popup.remove();
+    callback(nombres);
+  };
+}
