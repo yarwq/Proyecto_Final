@@ -1,5 +1,8 @@
 // ==================== Draftosaurus — lógica con puntuación real ====================
-
+// Botón menú principal
+document.getElementById('menu').addEventListener('click', () => {
+  window.location.href = 'menu_principal.html';
+});
 // Tipos de dinosaurios
 const tiposDeDinos = [
   { nombre: "T-Rex", puntos: 6, imagen: "../assets/red.png" },
