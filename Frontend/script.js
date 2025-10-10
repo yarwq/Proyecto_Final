@@ -134,14 +134,15 @@ function actualizarMano() {
       seleccionarDino(indice);
       document.body.classList.add('is-dragging');
     });
-
+    
     div.addEventListener('dragend', () => {
-      document.body.classList.remove('is-dragging');
+        document.body.classList.remove('is-dragging');
     });
-
+    
     div.addEventListener('click', () => seleccionarDino(indice));
     contenedor.appendChild(div);
   });
+  agregarDropTargets(); // <-- Asegura que los eventos de drop estén activos
 }
 
 function seleccionarDino(indice) {
@@ -560,9 +561,7 @@ function mostrarAlertaNombresJugadores(cantidad, callback) {
   popup.appendChild(titulo);
 
   const form = document.createElement('form');
-  form.style.display = 'flex';
-  form.style.flexDirection = 'column';
-  form.style.gap = '1rem';
+  form.className = 'popup-nombres-form';
 
   const inputs = [];
   for (let i = 0; i < cantidad; i++) {
@@ -571,29 +570,40 @@ function mostrarAlertaNombresJugadores(cantidad, callback) {
     input.placeholder = `Jugador ${i + 1}`;
     input.className = 'nombre-jugador-input';
     input.required = true;
-    input.style.fontSize = '1.2rem';
-    input.style.padding = '0.5em';
-    input.style.borderRadius = '0.5em';
-    input.style.border = '2px solid #00ffe7';
-    input.style.background = '#222';
-    input.style.color = '#00ffe7';
-    input.style.textAlign = 'center';
     form.appendChild(input);
     inputs.push(input);
   }
 
+  popup.appendChild(form);
+
+  // Contenedor para el botón Continuar
+  const continuarContainer = document.createElement('div');
+  continuarContainer.className = 'popup-nombres-botones';
   const btnContinuar = document.createElement('button');
   btnContinuar.type = 'submit';
   btnContinuar.textContent = 'Continuar';
   btnContinuar.className = 'btn';
-  btnContinuar.style.marginTop = '1.5rem';
+  continuarContainer.appendChild(btnContinuar);
+  popup.appendChild(continuarContainer);
 
-  form.appendChild(btnContinuar);
-  popup.appendChild(form);
+  // Contenedor para el botón Volver
+  const volverContainer = document.createElement('div');
+  volverContainer.className = 'popup-nombres-botones';
+  const btnVolver = document.createElement('button');
+  btnVolver.type = 'button';
+  btnVolver.textContent = 'Volver';
+  btnVolver.className = 'btn';
+  btnVolver.onclick = function() {
+    popup.remove();
+    document.getElementById('seleccion-jugadores').style.display = '';
+  };
+  volverContainer.appendChild(btnVolver);
+  popup.appendChild(volverContainer);
 
   document.body.appendChild(popup);
 
-  form.onsubmit = function(e) {
+  // Mover el submit fuera del form, manejar el evento manualmente
+  btnContinuar.onclick = function(e) {
     e.preventDefault();
     const nombres = inputs.map(input => input.value.trim() || input.placeholder);
     popup.remove();
