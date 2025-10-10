@@ -341,7 +341,11 @@ function actualizarPuntuacion() {
     txt += `P${j}: ${calcularPuntos(zoologicos[j])} pts | `;
   }
   document.getElementById('puntuacion').textContent = txt.slice(0, -3);
-  document.getElementById('jugador').textContent = `Jugador ${jugadorActual} — Turno ${turno}`;
+  // Mostrar nombre si existe en window.nombresJugadores
+  let nombre = window.nombresJugadores && window.nombresJugadores[jugadorActual - 1]
+    ? window.nombresJugadores[jugadorActual - 1]
+    : `Jugador ${jugadorActual}`;
+  document.getElementById('jugador').textContent = `${nombre} — Turno ${turno}`;
 }
 
 // Final de partida
