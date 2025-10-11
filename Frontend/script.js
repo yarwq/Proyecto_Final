@@ -256,22 +256,7 @@ function inicializarJuego(jugadores) {
   ultimoDado = null;
   rondaActiva = false;
 
-  // debug banner
-  if (!document.getElementById('debug-banner')) {
-    const dbg = document.createElement('div');
-    dbg.id = 'debug-banner';
-    dbg.style.position = 'fixed';
-    dbg.style.right = '10px';
-    dbg.style.top = '10px';
-    dbg.style.background = 'rgba(0,0,0,0.7)';
-    dbg.style.color = '#fff';
-    dbg.style.padding = '6px 10px';
-    dbg.style.borderRadius = '6px';
-    dbg.style.zIndex = 9999;
-    dbg.style.fontSize = '13px';
-    document.body.appendChild(dbg);
-  }
-  updateDebugBanner();
+  
   repartirDinos();
   actualizarMano();
   actualizarZonas();
@@ -720,16 +705,30 @@ function mostrarAlertaNombresJugadores(cantidad, callback) {
   };
 }
 
+// funcion de mostrar alerta
 function mostrarAlertaDrafto(mensaje) {
-  // si tenés un elemento para alerts lo usamos; si no, console.log y alert
   const alerta = document.querySelector('.drafto-inline-alert');
   if (alerta) {
     alerta.textContent = mensaje;
     alerta.classList.add('visible');
     setTimeout(() => alerta.classList.remove('visible'), 3000);
   } else {
-    console.log('ALERTA:', mensaje);
-    // Comentado para no molestar siempre al usuario: alert(mensaje);
+    // Crear popup modal si no existe alerta inline
+    let popup = document.createElement('div');
+    popup.className = 'drafto-alert-popup';
+
+    let msg = document.createElement('div');
+    msg.textContent = mensaje;
+    msg.style.marginBottom = '16px';
+    popup.appendChild(msg);
+
+    let btn = document.createElement('button');
+    btn.textContent = 'OK';
+    btn.className = 'btn';
+    btn.onclick = () => popup.remove();
+    popup.appendChild(btn);
+
+    document.body.appendChild(popup);
   }
 }
 
