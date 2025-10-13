@@ -128,26 +128,35 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Guardar partida
-  const guardarBtn = document.getElementById('guardar-partida');
-  if (guardarBtn) {
-    guardarBtn.addEventListener('click', async () => {
-      // ejemplo simple, adaptar según backend
-      const data = { numJugadores, jugadorActual, turno, zoologicos, manos, fecha: new Date().toISOString() };
-      try {
-        const res = await fetch('http://localhost/JSandPHP/Backend/routes/api.php/saveMatch', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(data)
-        });
-        const result = await res.json();
-        if (result.success) alert("✅ Partida guardada exitosamente!");
-        else alert("⚠️ Error al guardar la partida: " + (result.error || ""));
-      } catch (err) {
-        alert("❌ No se pudo conectar con el servidor: " + err.message);
-      }
-    });
-  }
+const guardarBtn = document.getElementById('guardar-partida');
+if (guardarBtn) {
+  guardarBtn.addEventListener('click', async () => {
+    // Agregar array de jugadores (IDs del 1 al numJugadores)
+    const data = { 
+      numJugadores, 
+      jugadorActual, 
+      turno, 
+      zoologicos, 
+      manos, 
+      fecha: new Date().toISOString(),
+      jugadores: Array.from({length: numJugadores}, (_, i) => i + 1)
+    };
+
+    try {
+      const res = await fetch('http://localhost/JS and PHP/Backend/routes/api.php/saveMatch', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+      const result = await res.json();
+      if (result.success) alert("✅ Partida guardada exitosamente!");
+      else alert("⚠️ Error al guardar la partida: " + (result.error || ""));
+    } catch (err) {
+      alert("❌ No se pudo conectar con el servidor: " + err.message);
+    }
+  });
+}
+
 
   // Cargar partidas (lista)
   const cargarBtn = document.getElementById('cargar-partida');
