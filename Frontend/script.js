@@ -117,16 +117,62 @@ document.addEventListener('DOMContentLoaded', () => {
         mostrarAlertaDrafto('Selecciona la cantidad de jugadores antes de iniciar.');
         return;
       }
-      mostrarAlertaNombresJugadores(cantidad, function(nombres) {
-        window.nombresJugadores = nombres;
-        const selDiv = document.getElementById('seleccion-jugadores');
-        if (selDiv) selDiv.style.display = 'none';
-        const juegoDiv = document.getElementById('juego');
-        if (juegoDiv) juegoDiv.style.display = '';
-        inicializarJuego(cantidad);
-      });
+      
+      // Mostrar formulario de nombres cyberpunk
+      document.getElementById('seleccion-jugadores').style.display = 'none';
+      document.getElementById('registro-nombres').style.display = 'block';
+      generarCamposNombres(cantidad);
     });
   }
+
+  // Generar campos de nombre dinámicamente
+  function generarCamposNombres(numJugadores) {
+    const form = document.querySelector('.nombres-form');
+    if (!form) return;
+    form.innerHTML = '';
+    
+    for (let i = 1; i <= numJugadores; i++) {
+      const fieldContainer = document.createElement('div');
+      fieldContainer.className = 'nombres-input-field-container';
+      fieldContainer.innerHTML = `
+        <div class="nombres-input-label">Jugador ${i}</div>
+        <input type="text" class="nombres-holo-input" placeholder="Nombre" data-jugador="${i}">
+        <div class="nombres-input-border"></div>
+        <div class="nombres-holo-scan-line"></div>
+        <div class="nombres-input-glow"></div>
+      `;
+      form.appendChild(fieldContainer);
+    }
+  }
+
+  // Botón atrás en formulario de nombres
+  document.addEventListener('click', function(e) {
+    if (e.target.closest('.nombres-btn-back')) {
+      document.getElementById('registro-nombres').style.display = 'none';
+      document.getElementById('seleccion-jugadores').style.display = 'block';
+    }
+  });
+
+  // Botón continuar en formulario de nombres
+  document.addEventListener('click', function(e) {
+    if (e.target.closest('.nombres-btn-continue')) {
+      const inputs = document.querySelectorAll('.nombres-holo-input');
+      const nombres = [];
+      
+      inputs.forEach(input => {
+        if (input.value.trim() === '') {
+          nombres.push(`Jugador ${input.dataset.jugador}`);
+        } else {
+          nombres.push(input.value.trim());
+        }
+      });
+      
+      window.nombresJugadores = nombres;
+      document.getElementById('registro-nombres').style.display = 'none';
+      document.getElementById('juego').style.display = 'block';
+      inicializarJuego(nombres.length);
+    }
+  });
 
 const guardarBtn = document.getElementById('guardar-partida');
 if (guardarBtn) {
@@ -595,21 +641,31 @@ function actualizarPuntuacion() {
 }
 
 function finalizarPartida() {
-  let mensaje = `🏁 Fin de la partida!\n\n`;
+  let mensaje = `🏁 Fin de la partida!\n`;
   let maxPuntos = -Infinity;
   let ganadores = [];
+  let nombresGanadores = [];
+  
   for (let j = 1; j <= numJugadores; j++) {
     const pts = calcularPuntos(zoologicos[j]);
-    mensaje += `Jugador ${j}: ${pts} pts\n`;
+    const nombre = window.nombresJugadores && window.nombresJugadores[j - 1] 
+      ? window.nombresJugadores[j - 1] 
+      : `Jugador ${j}`;
+    
+    mensaje += `${nombre}: ${pts} pts\n`;
+    
     if (pts > maxPuntos) {
       maxPuntos = pts;
       ganadores = [j];
+      nombresGanadores = [nombre];
     } else if (pts === maxPuntos) {
       ganadores.push(j);
+      nombresGanadores.push(nombre);
     }
   }
-  if (ganadores.length === 1) mensaje += `\n🎉 ¡Jugador ${ganadores[0]} gana!`;
-  else mensaje += `\n🤝 ¡Empate entre jugadores ${ganadores.join(', ')}!`;
+  
+  if (ganadores.length === 1) mensaje += `🎉 ¡${nombresGanadores[0]} gana!`;
+  else mensaje += `🤝 ¡Empate entre ${nombresGanadores.join(', ')}!`;
   mostrarAlertaDrafto(mensaje);
 }
 

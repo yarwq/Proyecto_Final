@@ -441,8 +441,12 @@ button:hover {
 }
 
 .dado-imagen {
-    width: 100px;
-    height: 100px;
+    width: 120px;
+    height: 120px;
+}
+
+.dado-wrapper {
+    margin-top: 20px;
 }
 
 .panel-controles {
@@ -458,7 +462,7 @@ button:hover {
 
 .reglas_del_dado {
   width: 100%;
-  max-width: 250px;
+  max-width: 400px;
   flex-shrink: 1;
   background: rgba(0, 0, 0, 0.5);
   border: 2px solid #00ffe7;
@@ -517,4 +521,235 @@ button:hover {
 
 #lista-partidas {
   display: none;
+}
+
+/* --- FORMULARIO DE REGISTRO DE NOMBRES CYBERPUNK --- */
+#registro-nombres {
+  background: #222222cd;
+  border-radius: 2rem;
+  box-shadow: 0 0 32px #000a;
+  padding: 2rem 2rem 2rem 2rem;
+  width: fit-content;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 30vw;
+  min-height: 20vh;
+  box-sizing: border-box;
+  max-width: 95%;
+  z-index: 1;
+}
+
+#registro-nombres h2 {
+  margin-top: 0;
+  margin-bottom: 35px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  background: linear-gradient(90deg, #ff00e6, #00f6ff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: 0 0 15px rgba(255, 0, 230, 0.5);
+}
+
+.nombres-form {
+  display: flex;
+  flex-direction: column;
+  gap: 45px;
+  margin-bottom: 30px;
+}
+
+.nombres-input-field-container {
+  position: relative;
+  width: 100%;
+}
+
+.nombres-holo-input {
+  width: 100%;
+  height: 60px;
+  background: rgba(0, 12, 36, 0.7);
+  border: none;
+  outline: none;
+  padding: 0 20px;
+  color: #00f6ff;
+  font-family: "Orbitron", sans-serif;
+  font-size: 18px;
+  letter-spacing: 1px;
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  border-radius: 4px;
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.8);
+  transition: all 0.3s ease;
+  text-shadow: 0 0 5px rgba(0, 246, 255, 0.7);
+  z-index: 1;
+  box-sizing: border-box;
+  border: 1px solid transparent;
+  background-clip: padding-box;
+}
+
+.nombres-holo-input::placeholder {
+  color: rgba(255, 0, 230, 0.3);
+  transition: all 0.3s ease;
+}
+
+.nombres-input-border {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  border-radius: 4px;
+  z-index: 2;
+  padding: 1px;
+  background: linear-gradient(45deg, rgba(0, 246, 255, 0.4), rgba(255, 0, 230, 0.4));
+  -webkit-mask: 
+    linear-gradient(#fff 0 0) content-box, 
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+}
+
+.nombres-holo-scan-line {
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    #ff00e6 20%,
+    #fff 50%,
+    #00f6ff 80%,
+    transparent 100%
+  );
+  top: 0;
+  left: 0;
+  opacity: 0;
+  filter: blur(1px);
+  z-index: 3;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.nombres-input-glow {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(0, 246, 255, 0.15) 0%,
+    transparent 70%
+  );
+  opacity: 0;
+  border-radius: 4px;
+  z-index: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.nombres-input-label {
+  position: absolute;
+  top: -25px;
+  left: 5px;
+  background: linear-gradient(90deg, #ff00e6, #00f6ff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  opacity: 0.8;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+  pointer-events: none;
+}
+
+@keyframes nombres-scan-animation {
+  0% { top: 0; opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { top: 100%; opacity: 0; }
+}
+
+.nombres-holo-input:focus {
+  background: rgba(18, 0, 36, 0.8);
+  box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.9);
+  color: #ff00e6;
+}
+
+.nombres-holo-input:focus ~ .nombres-input-border {
+  background: linear-gradient(45deg, #00f6ff, #ff00e6);
+}
+
+.nombres-holo-input:focus ~ .nombres-holo-scan-line {
+  opacity: 1;
+  animation: nombres-scan-animation 2s infinite ease-in-out;
+}
+
+.nombres-holo-input:focus ~ .nombres-input-glow {
+  opacity: 1;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(255, 0, 230, 0.2),
+    transparent 70%
+  );
+}
+
+.nombres-holo-input:focus ~ .nombres-input-label {
+  opacity: 1;
+  transform: translateY(-5px);
+  text-shadow: 0 0 10px rgba(0, 246, 255, 0.7);
+}
+
+.nombres-holo-input:hover {
+  background: rgba(20, 5, 40, 0.75);
+}
+
+.nombres-button-container {
+  display: flex;
+  gap: 15px;
+  margin-top: 10px;
+}
+
+.nombres-btn {
+  flex-grow: 1;
+  flex-basis: 0;
+  background: black;
+  border: 2px solid #00ffe7;
+  color: #00ffe7;
+  padding: 10px 20px;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 8px;
+  text-shadow: 0 0 10px #00ffe7;
+  box-shadow: 0 0 10px #00ffe7;
+  transition: all 0.3s ease-in-out;
+  font-family: 'Andale Mono', 'Andalé Mono', monospace;
+  font-size: 16px;
+  text-transform: none;
+  letter-spacing: normal;
+}
+
+.nombres-btn:hover {
+  background: #00ffe7;
+  color: black;
+  box-shadow: 0 0 20px #00ffe7, 0 0 30px #00ffe7;
+}
+
+.nombres-btn:active {
+  transform: scale(0.98);
+}
+
+@media (max-width: 450px) {
+  .nombres-button-container {
+    flex-direction: column;
+  }
+  #registro-nombres {
+    padding: 25px;
+  }
 }
