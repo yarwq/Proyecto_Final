@@ -43,27 +43,42 @@ const getRecintosPor = (propiedad, valor) => {
 };
 
 function reglasDado(valor, jugador = jugadorActual) {
+  let zonasPermitidas = [];
+  
   switch (valor) {
     case 1: // Area 'ciudad'
-      return getRecintosPor('area', 'ciudad');
+      zonasPermitidas = getRecintosPor('area', 'ciudad');
+      break;
     case 2: // País 'uruguay'
-      return getRecintosPor('pais', 'uruguay');
+      zonasPermitidas = getRecintosPor('pais', 'uruguay');
+      break;
     case 3: // Solo recintos vacíos excepto 'rio'
-      return recintos
+      zonasPermitidas = recintos
         .filter(r => r.nombre !== 'rio')
         .filter(r => zoologicos[jugador] && zoologicos[jugador][r.nombre].length === 0)
         .map(r => r.nombre);
+      break;
     case 4: // País 'rusia'
-      return getRecintosPor('pais', 'rusia');
+      zonasPermitidas = getRecintosPor('pais', 'rusia');
+      break;
     case 5: // Area 'campo'
-      return getRecintosPor('area', 'campo');
+      zonasPermitidas = getRecintosPor('area', 'campo');
+      break;
     case 6: // Solo recintos sin T-Rex
-      return recintos
+      zonasPermitidas = recintos
         .filter(r => zoologicos[jugador] && !zoologicos[jugador][r.nombre].some(d => d.nombre === 'T-Rex'))
         .map(r => r.nombre);
+      break;
     default:
-      return [];
+      zonasPermitidas = [];
   }
+  
+  // SIEMPRE AGREGAR RIO (si no está ya incluido)
+  if (!zonasPermitidas.includes('rio')) {
+    zonasPermitidas.push('rio');
+  }
+  
+  return zonasPermitidas;
 }
 
 // --------------------
@@ -782,16 +797,29 @@ function mostrarAlertaDrafto(mensaje) {
     let popup = document.createElement('div');
     popup.className = 'drafto-alert-popup';
 
+    // Contenedor interno para el contenido
+    let content = document.createElement('div');
+    content.className = 'drafto-alert-content';
+
     let msg = document.createElement('div');
     msg.textContent = mensaje;
     msg.style.marginBottom = '16px';
-    popup.appendChild(msg);
+    content.appendChild(msg);
 
     let btn = document.createElement('button');
     btn.textContent = 'OK';
     btn.className = 'btn';
     btn.onclick = () => popup.remove();
-    popup.appendChild(btn);
+    content.appendChild(btn);
+
+    popup.appendChild(content);
+
+    // Cerrar al hacer clic fuera del contenedor
+    popup.onclick = (e) => {
+      if (e.target === popup) {
+        popup.remove();
+      }
+    };
 
     document.body.appendChild(popup);
   }
