@@ -710,7 +710,7 @@ function finalizarPartida() {
     
     if (ganadores.length === 1) mensaje += `🎉 ¡${nombresGanadores[0]} gana!`;
     else mensaje += `🤝 ¡Empate entre ${nombresGanadores.join(', ')}!`;
-    mostrarAlertaDrafto(mensaje);
+    mostrarAlertaFinPartida(mensaje);
   }
 }
 
@@ -853,6 +853,37 @@ function mostrarAlertaDrafto(mensaje) {
 
     document.body.appendChild(popup);
   }
+}
+
+// funcion especial para mostrar alerta de fin de partida
+function mostrarAlertaFinPartida(mensaje) {
+  // Crear popup modal para fin de partida
+  let popup = document.createElement('div');
+  popup.className = 'drafto-alert-popup';
+
+  // Contenedor interno para el contenido
+  let content = document.createElement('div');
+  content.className = 'drafto-alert-content';
+
+  let msg = document.createElement('div');
+  msg.textContent = mensaje;
+  msg.style.marginBottom = '16px';
+  content.appendChild(msg);
+
+  let btn = document.createElement('button');
+  btn.textContent = 'Menú Principal';
+  btn.className = 'btn';
+  btn.onclick = () => {
+    window.location.href = 'menu_principal.html';
+  };
+  content.appendChild(btn);
+
+  popup.appendChild(content);
+
+  // NO permitir cerrar haciendo clic fuera para el fin de partida
+  // Solo se puede cerrar con el botón Menú Principal
+
+  document.body.appendChild(popup);
 }
 
 function actualizarBotonTirarDado() {
