@@ -388,10 +388,35 @@ button:hover {
 }
 
 .grid-item-central {
-  background-color: rgba(0, 0, 0, 0.0);
+  /* Propiedades del contenedor principal */
   grid-column: 2;
   grid-row: 1 / -1;
   border: none;
+  
+  /* Esencial para posicionar el pseudo-elemento y contener la rotación */
+  position: relative; 
+  overflow: hidden; /* Evita que la imagen girada se salga del contenedor */
+  z-index: 1; /* Asegura que el contenido esté por encima de la marca de agua */
+}
+
+.grid-item-central::before {
+  /* Creación de la capa para la imagen */
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  /* Estilos de la imagen */
+  background-image: url('../assets/rio.gif');
+  background-position: center;
+  background-size: cover; /* O 'contain', según lo que necesites */
+  background-repeat: no-repeat;
+  opacity: 0.3; /* Ajusta la opacidad para que sea una marca de agua */ 
+  transform: rotate(90deg); /* Rota la imagen 90 grados */
+  z-index: -1; /* Asegura que esté detrás del contenido */
+  pointer-events: none; /* Permite hacer clic a través de la imagen */
 }
 
 .grid-container>div:nth-child(1) { grid-row: 1; grid-column: 1; }
