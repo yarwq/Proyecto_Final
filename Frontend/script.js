@@ -328,6 +328,9 @@ function inicializarJuego(jugadores) {
   ultimoDado = null;
   rondaActiva = false;
 
+  // Inicializar el dado con imagen dado0.png
+  const dadoContainer = document.getElementById('valor-dado');
+  if (dadoContainer) dadoContainer.innerHTML = `<img src="../assets/dado0.png" alt="Dado sin tirar" class="dado-imagen">`;
   
   repartirDinos();
   actualizarMano();
@@ -503,7 +506,7 @@ function terminarRonda() {
   ultimoDado = null;
   rondaActiva = false;
   const dadoContainer = document.getElementById('valor-dado');
-  if (dadoContainer) dadoContainer.innerHTML = `🎲 Cubo: —`;
+  if (dadoContainer) dadoContainer.innerHTML = `<img src="../assets/dado0.png" alt="Dado sin tirar" class="dado-imagen">`;
   const tirarBtn = document.getElementById('tirar-dado');
   if (tirarBtn) tirarBtn.disabled = false;
 
