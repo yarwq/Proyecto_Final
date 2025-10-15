@@ -120,15 +120,15 @@ img.iconos:hover {
   transform: scale(1.2);
 }
 body {
-  margin: 0;
-  padding: 0;
-  font-family: 'Orbitron', sans-serif;
-  background: linear-gradient(to bottom, #0d0d0d, #1c1c1c);
-  color: #fff;
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
+  background: #111;
+  color: #fff;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  font-size: 1.1rem;
+  margin: 0;
 }
 
 .container {
@@ -399,4 +399,63 @@ form input {
   font-size: 1.3em !important;
   outline: none !important;
   transition: border-color 0.2s !important;
+}
+
+/* --- Estilos de tipos de dinosaurios --- */
+.dino-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2em;
+  margin: 2em 0;
+}
+.dino-item {
+  display: flex;
+  align-items: center;
+  gap: 2em;
+}
+.dino-icon {
+  width: 80px;
+  height: 80px;
+  border-radius: 16px;
+  border: 2px solid #fff;
+  box-shadow: 0 0 12px #00ffe7, 0 0 8px #ff00ff;
+  background: #181a20;
+  object-fit: contain;
+}
+.dino-name {
+  font-size: 2em;
+  color: #fff;
+  font-family: 'Orbitron', sans-serif;
+}
+.dino-red { box-shadow: 0 0 16px #ff003c, 0 0 8px #00ffe7; }
+.dino-cyan { box-shadow: 0 0 16px #00ffe7, 0 0 8px #ff00ff; }
+.dino-green { box-shadow: 0 0 16px #00ff6a, 0 0 8px #ff00ff; }
+.dino-yellow { box-shadow: 0 0 16px #ffe700, 0 0 8px #00ffe7; }
+.dino-blue { box-shadow: 0 0 16px #005cff, 0 0 8px #ff00ff; }
+.dino-pink { box-shadow: 0 0 16px #ff00ff, 0 0 8px #00ffe7; }
+/* --- Fin estilos de tipos de dinosaurios --- */
+
+/* --- Estilos globales para las clases de recinto --- */
+.recinto-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1em;
+  margin: 2em 0;
+}
+.recinto-item {
+  display: flex;
+  align-items: center;
+  gap: 0.1rem;
+}
+.recinto-icon {
+  width: 100px;
+  height: 100px;
+  border-radius: 16px;
+  background: #181a20;
+  object-fit: contain;
+}
+.recinto-nombre {
+  font-size: 1.1rem;
+  color: #fff;
+  font-family: 'Orbitron', sans-serif;
 }
