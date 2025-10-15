@@ -437,11 +437,12 @@ button:hover {
     justify-content: center;
     gap: 10px;
     min-height: 40px;
+    font-size: 3em;
 }
 
 .dado-imagen {
-    width: 40px;
-    height: 40px;
+    width: 100px;
+    height: 100px;
 }
 
 .panel-controles {

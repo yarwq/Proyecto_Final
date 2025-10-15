@@ -344,7 +344,7 @@ function tirarDado() {
 
   ultimoDado = Math.floor(Math.random() * 6) + 1;
   const dadoContainer = document.getElementById('valor-dado');
-  if (dadoContainer) dadoContainer.innerHTML = `🎲 Cubo: <img src="../assets/dado${ultimoDado}.png" alt="Dado ${ultimoDado}" class="dado-imagen">`;
+  if (dadoContainer) dadoContainer.innerHTML = `<img src="../assets/dado${ultimoDado}.png" alt="Dado ${ultimoDado}" class="dado-imagen">`;
   actualizarZonasValidas();
   rondaActiva = true;
   const tirarBtn = document.getElementById('tirar-dado');
