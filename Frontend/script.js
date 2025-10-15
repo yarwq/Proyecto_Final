@@ -204,7 +204,7 @@ if (guardarBtn) {
     };
 
     try {
-      const res = await fetch('http://localhost/JS and PHP/Backend/routes/api.php/saveMatch', {
+      const res = await fetch('http://localhost/JSandPHP/Backend/routes/api.php/saveMatch', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)
@@ -213,7 +213,7 @@ if (guardarBtn) {
       if (result.success) alert("✅ Partida guardada exitosamente!");
       else alert("⚠️ Error al guardar la partida: " + (result.error || ""));
     } catch (err) {
-      alert("❌ No se pudo conectar con el servidor: " + err.message);
+      alert("No se pudo conectar con el servidor: " + err.message);
     }
   });
 }
@@ -334,15 +334,18 @@ function inicializarJuego(jugadores) {
 }
 
 function obtenerDinoAleatorio() {
-  return tiposDeDinos[Math.floor(Math.random() * tiposDeDinos.length)];
+  return crearDinoRandom(); // classes.js
 }
 
 function repartirDinos() {
   for (let j = 1; j <= numJugadores; j++) {
     manos[j] = [];
-    for (let i = 0; i < 6; i++) manos[j].push(obtenerDinoAleatorio());
+    for (let i = 0; i < 6; i++) {
+      manos[j].push(obtenerDinoAleatorio());
+    }
   }
 }
+
 
 function actualizarMano() {
   const contenedor = document.getElementById('contenedor-mano');
