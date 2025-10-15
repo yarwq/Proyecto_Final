@@ -6,6 +6,7 @@
 let numJugadores = 2;
 let jugadorActual = 1;
 let turno = 1;
+let rondaPartida = 1; // Nueva variable para controlar ronda 1 o 2
 let seleccionado = null;
 let ultimoDado = null;
 
@@ -323,6 +324,7 @@ function inicializarJuego(jugadores) {
 
   jugadorActual = 1;
   turno = 1;
+  rondaPartida = 1; // Inicializar en ronda 1
   ultimoDado = null;
   rondaActiva = false;
 
@@ -652,36 +654,61 @@ function actualizarPuntuacion() {
     ? window.nombresJugadores[jugadorActual - 1]
     : `Jugador ${jugadorActual}`;
   const jugadorEl = document.getElementById('jugador');
-  if (jugadorEl) jugadorEl.textContent = `${nombre} — Turno ${turno}`;
+  if (jugadorEl) jugadorEl.textContent = `${nombre} — Ronda ${rondaPartida} - Turno ${turno}`;
 }
 
 function finalizarPartida() {
-  let mensaje = `🏁 Fin de la partida!\n`;
-  let maxPuntos = -Infinity;
-  let ganadores = [];
-  let nombresGanadores = [];
-  
-  for (let j = 1; j <= numJugadores; j++) {
-    const pts = calcularPuntos(zoologicos[j]);
-    const nombre = window.nombresJugadores && window.nombresJugadores[j - 1] 
-      ? window.nombresJugadores[j - 1] 
-      : `Jugador ${j}`;
+  if (rondaPartida === 1) {
+    // Terminar ronda 1, iniciar ronda 2
+    rondaPartida = 2;
+    turno = 1;
+    jugadorActual = 1;
+    ultimoDado = null;
+    rondaActiva = false;
+    jugadoresQueColocaron = new Set();
     
-    mensaje += `${nombre}: ${pts} pts\n`;
+    // Repartir 6 dinosaurios adicionales manteniendo los ya colocados
+    repartirDinos();
     
-    if (pts > maxPuntos) {
-      maxPuntos = pts;
-      ganadores = [j];
-      nombresGanadores = [nombre];
-    } else if (pts === maxPuntos) {
-      ganadores.push(j);
-      nombresGanadores.push(nombre);
+    const tirarBtn = document.getElementById('tirar-dado');
+    if (tirarBtn) tirarBtn.disabled = false;
+    
+    mostrarAlertaDrafto(`🎯 ¡Ronda 2!\nSe reparten 6 dinosaurios adicionales.`);
+    
+    actualizarMano();
+    actualizarZonas();
+    actualizarPuntuacion();
+    actualizarZonasValidas();
+    if (typeof updateDebugBanner === 'function') updateDebugBanner();
+  } else {
+    // Terminar ronda 2, mostrar resultado final
+    let mensaje = `🏁 Fin de la partida!\n`;
+    let maxPuntos = -Infinity;
+    let ganadores = [];
+    let nombresGanadores = [];
+    
+    for (let j = 1; j <= numJugadores; j++) {
+      const pts = calcularPuntos(zoologicos[j]);
+      const nombre = window.nombresJugadores && window.nombresJugadores[j - 1] 
+        ? window.nombresJugadores[j - 1] 
+        : `Jugador ${j}`;
+      
+      mensaje += `${nombre}: ${pts} pts\n`;
+      
+      if (pts > maxPuntos) {
+        maxPuntos = pts;
+        ganadores = [j];
+        nombresGanadores = [nombre];
+      } else if (pts === maxPuntos) {
+        ganadores.push(j);
+        nombresGanadores.push(nombre);
+      }
     }
+    
+    if (ganadores.length === 1) mensaje += `🎉 ¡${nombresGanadores[0]} gana!`;
+    else mensaje += `🤝 ¡Empate entre ${nombresGanadores.join(', ')}!`;
+    mostrarAlertaDrafto(mensaje);
   }
-  
-  if (ganadores.length === 1) mensaje += `🎉 ¡${nombresGanadores[0]} gana!`;
-  else mensaje += `🤝 ¡Empate entre ${nombresGanadores.join(', ')}!`;
-  mostrarAlertaDrafto(mensaje);
 }
 
 // Drag & Drop: se evita re-registrar listeners usando dataset flag
