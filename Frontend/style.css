@@ -151,9 +151,7 @@ body {
 }
 
 .logo-box img {
-  width: 100px;
-  margin-bottom: 20px;
-  filter: drop-shadow(0 0 20px #ff00ff);
+  width: 300px;
 }
 
 .buttons {
