@@ -21,6 +21,19 @@
     <button id="iniciar-juego">Iniciar Juego</button>
   </div>
 
+  <div id="registro-nombres" style="display:none;">
+    <h2>Nombre de jugadores</h2>
+    
+    <form class="nombres-form">
+      <!-- Los campos se generarán dinámicamente según el número de jugadores -->
+    </form>
+
+    <div class="nombres-button-container">
+      <button class="nombres-btn nombres-btn-back"><span>Atrás</span></button>
+      <button class="nombres-btn nombres-btn-continue"><span>Continuar</span></button>
+    </div>
+  </div>
+
   <audio id="musica" src="../assets/Rugidos del Pasado.mp3" loop autoplay></audio>
 
   <div id="juego" style="display:none;">
@@ -34,7 +47,9 @@
           <div style="position:relative;display:inline-block;">
             <button id="tirar-dado">Lanzar dado</button>
           </div>
-          <div id="valor-dado" class="dado-container">—</div>
+          <div class="dado-wrapper">
+            <div id="valor-dado" class="dado-container">—</div>
+          </div>
         </div>
         <div class="controles">
           <button id="guardar-partida">💾 Guardar Partida</button>
