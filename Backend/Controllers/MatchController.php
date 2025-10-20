@@ -11,7 +11,7 @@ class MatchController {
     public function __construct() {
         $this->repository = new MatchRepository();
     }
-
+    
     public function saveMatch() {
         header("Access-Control-Allow-Origin: *");
         header("Access-Control-Allow-Methods: POST, OPTIONS");
@@ -24,10 +24,21 @@ class MatchController {
 
         $data = json_decode(file_get_contents("php://input"), true);
 
-        if (!$data || !isset($data['jugadores']) || !is_array($data['jugadores'])) {
+        if (!$data) {
             http_response_code(400);
             echo json_encode(["error" => "Datos inválidos"]);
             return;
+        }
+
+        // Обеспечиваем массив игроков
+        if (!isset($data['jugadores']) || !is_array($data['jugadores'])) {
+            $data['jugadores'] = [];
+        }
+
+        // Добавляем текущего пользователя, если его нет
+        $currentUserId = $data['userId'] ?? null;
+        if ($currentUserId && !in_array($currentUserId, $data['jugadores'])) {
+            $data['jugadores'][] = $currentUserId;
         }
 
         try {

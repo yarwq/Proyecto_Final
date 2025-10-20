@@ -5,7 +5,7 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
   const data = Object.fromEntries(formData.entries());
 
   try {
-    const res = await fetch('../Backend/login.php', {
+    const res = await fetch('../Backend/routes/api.php/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data)
@@ -17,6 +17,7 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
     if (json.success) {
       alert("Inicio de sesión exitoso");
       localStorage.setItem('token', json.token);
+      localStorage.setItem('userId', json.user.id);
       window.location.href = "menu_principal.html";
     } else {
       alert(json.error);
