@@ -85,6 +85,17 @@ function reglasDado(valor, jugador = jugadorActual) {
 // --------------------
 // DOM ready bootstrap
 // --------------------
+
+document.addEventListener('DOMContentLoaded', () => {
+  if (window.location.search.includes('load=true')) {
+    const selJugadores = document.getElementById('seleccion-jugadores');
+    if (selJugadores) selJugadores.style.display = 'none';
+    const registroNombres = document.getElementById('registro-nombres');
+    if (registroNombres) registroNombres.style.display = 'none';
+  }
+});
+
+
 document.addEventListener('DOMContentLoaded', () => {
   // Selección visual de número de jugadores
   document.querySelectorAll('.jugador-opcion').forEach(el => {
@@ -220,32 +231,32 @@ if (guardarBtn) {
 }
 
 
-  // Cargar partidas (lista)
-  const cargarBtn = document.getElementById('cargar-partida');
-  if (cargarBtn) {
-    cargarBtn.addEventListener('click', async () => {
-      try {
-        const res = await fetch(`http://localhost/JSandPHP/Backend/routes/api.php/getMatches/1`);
-        const result = await res.json();
-        if (result.success) {
-          const select = document.getElementById('lista-partidas');
-          if (!select) return;
-          select.innerHTML = '';
-          result.matches.forEach(m => {
-            const option = document.createElement('option');
-            option.value = m.id;
-            option.textContent = `ID: ${m.id} | Fecha: ${m.fecha} | Turno: ${m.turno} | Jugadores: ${m.num_jugadores}`;
-            select.appendChild(option);
-          });
-          select.style.display = 'block';
-        } else {
-          alert("Error al cargar partidas: " + (result.error || ""));
-        }
-      } catch (err) {
-        alert("No se pudo conectar con el servidor: " + err.message);
-      }
-    });
-  }
+  // // Cargar partidas (lista)
+  // const cargarBtn = document.getElementById('cargar-partida');
+  // if (cargarBtn) {
+  //   cargarBtn.addEventListener('click', async () => {
+  //     try {
+  //       const res = await fetch(`http://localhost/JSandPHP/Backend/routes/api.php/getMatches/1`);
+  //       const result = await res.json();
+  //       if (result.success) {
+  //         const select = document.getElementById('lista-partidas');
+  //         if (!select) return;
+  //         select.innerHTML = '';
+  //         result.matches.forEach(m => {
+  //           const option = document.createElement('option');
+  //           option.value = m.id;
+  //           option.textContent = `ID: ${m.id} | Fecha: ${m.fecha} | Turno: ${m.turno} | Jugadores: ${m.num_jugadores}`;
+  //           select.appendChild(option);
+  //         });
+  //         select.style.display = 'block';
+  //       } else {
+  //         alert("Error al cargar partidas: " + (result.error || ""));
+  //       }
+  //     } catch (err) {
+  //       alert("No se pudo conectar con el servidor: " + err.message);
+  //     }
+  //   });
+  // }
 
   // Cambio en select de lista partidas
   const listaPartidas = document.getElementById('lista-partidas');
@@ -263,6 +274,7 @@ if (guardarBtn) {
           turno = match.turno || 1;
           zoologicos = match.zoologicos || {};
           manos = match.manos || {};
+          window.nombresJugadores = match.nombres || Array.from({length: match.num_jugadores}, (_, i) => `Jugador ${i+1}`);
           buffer = {};
           for (let j = 1; j <= numJugadores; j++) buffer[j] = manos[j] ? [...manos[j]] : [];
           jugadoresQueColocaron = new Set();

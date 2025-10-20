@@ -47,36 +47,43 @@ public function register() {
     }
 }
 
-    public function login() {
-        header("Access-Control-Allow-Origin: *");
-        header("Access-Control-Allow-Methods: POST, OPTIONS");
-        header("Access-Control-Allow-Headers: Content-Type");
+public function login() {
+    header("Access-Control-Allow-Origin: *");
+    header("Access-Control-Allow-Methods: POST, OPTIONS");
+    header("Access-Control-Allow-Headers: Content-Type");
 
-        if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
-            http_response_code(200);
-            exit;
-        }
+    if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+        http_response_code(200);
+        exit;
+    }
 
-        $data = json_decode(file_get_contents("php://input"), true);
-        $username = trim($data['username'] ?? "");
-        $password = trim($data['password'] ?? "");
+    $data = json_decode(file_get_contents("php://input"), true);
+    $username = trim($data['username'] ?? "");
+    $password = trim($data['password'] ?? "");
 
-        if (!isset($data['username'], $data['password'])) {
-            http_response_code(400);
-            echo json_encode(["error" => "Faltan datos"]);
-            return;
-        }
+    if (empty($username) || empty($password)) {
+        http_response_code(400);
+        echo json_encode(["error" => "Faltan datos"]);
+        return;
+    }
 
-        $user = new User();
-       // $token = $user->login($data['username'], $data['password']);
-        $token = $this->userService->loginUser($username, $password);
+    try {
+        $result = $this->userService->loginUser($username, $password);
 
-
-        if ($token) {
-            echo json_encode(["success" => true, "token" => $token]);
+        if ($result) {
+            echo json_encode([
+                "success" => true,
+                "token" => $result["token"],
+                "user" => $result["user"]
+            ]);
         } else {
             http_response_code(401);
             echo json_encode(["error" => "Credenciales inválidas"]);
         }
+    } catch (\Exception $e) {
+        http_response_code(500);
+        echo json_encode(["error" => $e->getMessage()]);
     }
+}
+
 }

@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const formData = new FormData(e.target);
         const data = Object.fromEntries(formData.entries());
 
-        const res = await fetch('../Backend/register.php', {
+        const res = await fetch('../Backend/routes/api.php/register', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(data)

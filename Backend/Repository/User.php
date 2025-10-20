@@ -25,22 +25,31 @@ public function register($username, $hashedPassword, $email) {
 
     
 
-    public function login($username, $password) {
-        try {
-            $pdo = getDBConnection();
+public function login($username, $password) {
+    try {
+        $pdo = getDBConnection();
 
-            $stmt = $pdo->prepare("SELECT id, password FROM users WHERE username = ?");
-            $stmt->execute([$username]);
-            $user = $stmt->fetch(\PDO::FETCH_ASSOC);
+        $stmt = $pdo->prepare("SELECT id, username, email, password FROM users WHERE username = ?");
+        $stmt->execute([$username]);
+        $user = $stmt->fetch(\PDO::FETCH_ASSOC);
 
-            if ($user && password_verify($password, $user['password'])) {
-                $token = bin2hex(random_bytes(16));
-                return $token;
-            }
-            return false;
-        } catch (\PDOException $e) {
-            error_log($e->getMessage());
-            return false;
+        if ($user && password_verify($password, $user['password'])) {
+            $token = bin2hex(random_bytes(16));
+
+            return [
+                "token" => $token,
+                "user" => [
+                    "id" => $user["id"],
+                    "username" => $user["username"],
+                    "email" => $user["email"]
+                ]
+            ];
         }
+        return false;
+    } catch (\PDOException $e) {
+        error_log($e->getMessage());
+        return false;
     }
+}
+
 }
