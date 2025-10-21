@@ -5,6 +5,12 @@ require_once __DIR__ . '/../config/db.php';
 
 class MatchRepository {
 
+
+        public function getMatchesByUser($userId) {
+        $stmt = $this->conn->prepare("SELECT * FROM matches WHERE user_id = ?");
+        $stmt->execute([$userId]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
     // -----------------------------
     // Guardar una partida
     // -----------------------------
