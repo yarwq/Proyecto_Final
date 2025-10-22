@@ -1,5 +1,5 @@
 <?php
-namespace Models;
+namespace Repository;
 
 require_once __DIR__ . '/../config/db.php';
 
@@ -10,31 +10,24 @@ class RankingModel {
         $this->pdo = getDBConnection();
     }
 
-    public function insert($userId, $score) {
-        $stmt = $this->pdo->prepare("INSERT INTO ranking (user_id, score) VALUES (?, ?)");
+    public function addScore($userId, $score) {
+        $stmt = $this->pdo->prepare("
+            INSERT INTO ranking (user_id, score)
+            VALUES (?, ?)
+            ON DUPLICATE KEY UPDATE
+            score = score + VALUES(score)
+        ");
         $stmt->execute([$userId, $score]);
     }
 
-    public function getAll() {
+    public function getTop() {
         $stmt = $this->pdo->query("
-            SELECT r.*, u.username 
-            FROM ranking r 
+            SELECT u.username, r.score 
+            FROM ranking r
             JOIN users u ON r.user_id = u.id
             ORDER BY r.score DESC
             LIMIT 10
         ");
-        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
-    }
-
-    public function getByUser($userId) {
-        $stmt = $this->pdo->prepare("
-            SELECT r.*, u.username 
-            FROM ranking r 
-            JOIN users u ON r.user_id = u.id
-            WHERE r.user_id = ?
-            ORDER BY r.score DESC
-        ");
-        $stmt->execute([$userId]);
         return $stmt->fetchAll(\PDO::FETCH_ASSOC);
     }
 }

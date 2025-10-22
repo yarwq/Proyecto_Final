@@ -1,5 +1,5 @@
 <?php
-namespace Services;
+namespace Servicio;
 
 require_once __DIR__ . '/../Repository/RankingModel.php';
 use Repository\RankingModel;
@@ -12,14 +12,10 @@ class RankingService {
     }
 
     public function addRanking($userId, $score) {
-        $this->model->insert($userId, $score);
+        $this->model->addScore($userId, $score);
     }
 
     public function getRanking() {
-        return $this->model->getAll();
-    }
-
-    public function getUserRanking($userId) {
-        return $this->model->getByUser($userId);
+        return $this->model->getTop();
     }
 }

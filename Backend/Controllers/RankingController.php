@@ -2,7 +2,7 @@
 namespace Controllers;
 
 require_once __DIR__ . '/../Servicio/RankingService.php';
-use Services\RankingService;
+use Servicio\RankingService;
 
 class RankingController {
     private $service;

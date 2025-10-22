@@ -4,21 +4,26 @@ use Controllers\MatchController;
 
 require_once __DIR__ . "/../controllers/UserController.php";
 require_once __DIR__ . "/../controllers/MatchController.php";
+require_once __DIR__ . "/../controllers/RankingController.php";
+use Controllers\RankingController;
+
 
 header("Content-Type: application/json; charset=UTF-8");
 
 $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-$method = $_SERVER['REQUEST_METHOD'];
+$method = $_SERVER['REQUEST_METHOD'];   
 
+if (strpos($path, 'api.php') !== false) {
+    $relativePath = explode('api.php', $path)[1]; 
+    $segments = explode('/', trim($relativePath, '/'));
+} else {
+    $segments = [];
+}
 
-$segments = explode('/', trim($path, '/'));
+$action = $_GET['action'] ?? ($segments[0] ?? null);
 
+$id = $segments[1] ?? null;
 
-$apiIndex = array_search('api.php', $segments);
-
-$controller = null;
-$action = $segments[$apiIndex + 1] ?? null; 
-$id = $segments[$apiIndex + 2] ?? null;     
 
 
 // ------------------------
@@ -46,6 +51,23 @@ switch ($action) {
     case 'login':
         if (in_array($method, ['POST','OPTIONS'])) {
             (new UserController())->login();
+        }
+        break;
+    case 'addRanking':
+        if (in_array($method, ['POST', 'OPTIONS'])) {
+            (new RankingController())->addRanking();
+        }
+        break;
+
+    case 'getRanking':
+        if ($method === 'GET') {
+            (new RankingController())->getRanking();
+        }
+        break;
+
+    case 'getUserRanking':
+        if ($method === 'GET' && $id) {
+            (new RankingController())->getUserRanking($id);
         }
         break;
 
