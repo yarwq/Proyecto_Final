@@ -23,10 +23,10 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         listaPartidas.style.display = 'block';
       } else {
-        alert("❌ Error al cargar partidas: " + (result.error || ""));
+        alert("  Error al cargar partidas: " + (result.error || ""));
       }
     } catch (err) {
-      alert("❌ No se pudo conectar con el servidor: " + err.message);
+      alert("  No se pudo conectar con el servidor: " + err.message);
     }
   });
 

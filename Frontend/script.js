@@ -86,14 +86,14 @@ function reglasDado(valor, jugador = jugadorActual) {
 // DOM ready bootstrap
 // --------------------
 
-document.addEventListener('DOMContentLoaded', () => {
-  if (window.location.search.includes('load=true')) {
-    const selJugadores = document.getElementById('seleccion-jugadores');
-    if (selJugadores) selJugadores.style.display = 'none';
-    const registroNombres = document.getElementById('registro-nombres');
-    if (registroNombres) registroNombres.style.display = 'none';
-  }
-});
+// document.addEventListener('DOMContentLoaded', () => {
+//   if (window.location.search.includes('load=true')) {
+//     const selJugadores = document.getElementById('seleccion-jugadores');
+//     if (selJugadores) selJugadores.style.display = 'none';
+//     const registroNombres = document.getElementById('registro-nombres');
+//     if (registroNombres) registroNombres.style.display = 'none';
+//   }
+// });
 
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -469,12 +469,12 @@ function colocarDinoEnZona(indice, zona) {
 
   const validas = reglasDado(ultimoDado);
   if (!validas.includes(zona)) {
-    mostrarAlertaDrafto('❌ Zona no permitida por el dado.');
+    mostrarAlertaDrafto('  Zona no permitida por el dado.');
     return;
   }
 
   if (!cumpleReglasZona(zona, dino)) {
-    mostrarAlertaDrafto('❌ No puedes colocar este dinosaurio aquí.');
+    mostrarAlertaDrafto('  No puedes colocar este dinosaurio aquí.');
     return;
   }
 
