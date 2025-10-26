@@ -12,18 +12,36 @@ class RankingController {
     }
 
     // POST /api.php/addRanking
-    public function addRanking() {
-        $data = json_decode(file_get_contents("php://input"), true);
+public function addRanking() {
+    header("Content-Type: application/json; charset=UTF-8");
 
-        if (empty($data['user_id']) || empty($data['score'])) {
-            http_response_code(400);
-            echo json_encode(["error" => "Missing fields"]);
-            return;
-        }
+    $input = json_decode(file_get_contents("php://input"), true);
 
-        $this->service->addRanking($data['user_id'], $data['score']);
-        echo json_encode(["message" => "Ranking entry added"]);
+    if (!$input) {
+        echo json_encode(["error" => "JSON inválido"]);
+        return;
     }
+
+    $user_id = $input['user_id'] ?? null;
+    $score = $input['score'] ?? null;
+
+    if (!$user_id || $score === null) {
+        echo json_encode(["error" => "Datos incompletos"]);
+        return;
+    }
+
+    try {
+        $this->service->addRanking($user_id, $score);
+        echo json_encode(["success" => true, "user_id" => $user_id, "score" => $score]);
+    } catch (\Throwable $e) {
+        echo json_encode([
+            "error" => "Error al guardar ranking",
+            "details" => $e->getMessage()
+        ]);
+    }
+}
+
+
 
     // GET /api.php/getRanking
     public function getRanking() {

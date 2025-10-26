@@ -45,7 +45,7 @@ const getRecintosPor = (propiedad, valor) => {
 
 function reglasDado(valor, jugador = jugadorActual) {
   let zonasPermitidas = [];
-  
+
   switch (valor) {
     case 1: // Area 'ciudad'
       zonasPermitidas = getRecintosPor('area', 'ciudad');
@@ -73,12 +73,12 @@ function reglasDado(valor, jugador = jugadorActual) {
     default:
       zonasPermitidas = [];
   }
-  
+
   // SIEMPRE AGREGAR RIO (si no está ya incluido)
   if (!zonasPermitidas.includes('rio')) {
     zonasPermitidas.push('rio');
   }
-  
+
   return zonasPermitidas;
 }
 
@@ -99,7 +99,7 @@ function reglasDado(valor, jugador = jugadorActual) {
 document.addEventListener('DOMContentLoaded', () => {
   // Selección visual de número de jugadores
   document.querySelectorAll('.jugador-opcion').forEach(el => {
-    el.addEventListener('click', function() {
+    el.addEventListener('click', function () {
       document.querySelectorAll('.jugador-opcion').forEach(e => e.classList.remove('selected'));
       this.classList.add('selected');
       numJugadores = parseInt(this.dataset.value);
@@ -128,7 +128,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Overlay tiro dado
   const tirarDadoOverlay = document.getElementById('tirar-dado-overlay');
   if (tirarDadoOverlay) {
-    tirarDadoOverlay.addEventListener('click', function(e) {
+    tirarDadoOverlay.addEventListener('click', function (e) {
       mostrarAlertaDrafto('Espera a la siguiente ronda para lanzar el dado');
       e.preventDefault();
     });
@@ -144,7 +144,7 @@ document.addEventListener('DOMContentLoaded', () => {
         mostrarAlertaDrafto('Selecciona la cantidad de jugadores antes de iniciar.');
         return;
       }
-      
+
       // Mostrar formulario de nombres cyberpunk
       document.getElementById('seleccion-jugadores').style.display = 'none';
       document.getElementById('registro-nombres').style.display = 'block';
@@ -157,7 +157,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const form = document.querySelector('.nombres-form');
     if (!form) return;
     form.innerHTML = '';
-    
+
     for (let i = 1; i <= numJugadores; i++) {
       const fieldContainer = document.createElement('div');
       fieldContainer.className = 'nombres-input-field-container';
@@ -173,7 +173,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // Botón atrás en formulario de nombres
-  document.addEventListener('click', function(e) {
+  document.addEventListener('click', function (e) {
     if (e.target.closest('.nombres-btn-back')) {
       document.getElementById('registro-nombres').style.display = 'none';
       document.getElementById('seleccion-jugadores').style.display = 'block';
@@ -181,11 +181,11 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // Botón continuar en formulario de nombres
-  document.addEventListener('click', function(e) {
+  document.addEventListener('click', function (e) {
     if (e.target.closest('.nombres-btn-continue')) {
       const inputs = document.querySelectorAll('.nombres-holo-input');
       const nombres = [];
-      
+
       inputs.forEach(input => {
         if (input.value.trim() === '') {
           nombres.push(`Jugador ${input.dataset.jugador}`);
@@ -193,7 +193,7 @@ document.addEventListener('DOMContentLoaded', () => {
           nombres.push(input.value.trim());
         }
       });
-      
+
       window.nombresJugadores = nombres;
       document.getElementById('registro-nombres').style.display = 'none';
       document.getElementById('juego').style.display = 'block';
@@ -201,34 +201,34 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-const guardarBtn = document.getElementById('guardar-partida');
-if (guardarBtn) {
-  guardarBtn.addEventListener('click', async () => {
-    // Agregar array de jugadores (IDs del 1 al numJugadores)
-    const data = { 
-      numJugadores, 
-      jugadorActual, 
-      turno, 
-      zoologicos, 
-      manos, 
-      fecha: new Date().toISOString(),
-      jugadores: Array.from({length: numJugadores}, (_, i) => i + 1)
-    };
+  const guardarBtn = document.getElementById('guardar-partida');
+  if (guardarBtn) {
+    guardarBtn.addEventListener('click', async () => {
+      // Agregar array de jugadores (IDs del 1 al numJugadores)
+      const data = {
+        numJugadores,
+        jugadorActual,
+        turno,
+        zoologicos,
+        manos,
+        fecha: new Date().toISOString(),
+        jugadores: Array.from({ length: numJugadores }, (_, i) => i + 1)
+      };
 
-    try {
-      const res = await fetch('http://localhost/JSandPHP/Backend/routes/api.php/saveMatch', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
-      });
-      const result = await res.json();
-      if (result.success) alert("✅ Partida guardada exitosamente!");
-      else alert("⚠️ Error al guardar la partida: " + (result.error || ""));
-    } catch (err) {
-      alert("No se pudo conectar con el servidor: " + err.message);
-    }
-  });
-}
+      try {
+        const res = await fetch('http://localhost/JSandPHP/Backend/routes/api.php/saveMatch', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+        const result = await res.json();
+        if (result.success) alert("✅ Partida guardada exitosamente!");
+        else alert("⚠️ Error al guardar la partida: " + (result.error || ""));
+      } catch (err) {
+        alert("No se pudo conectar con el servidor: " + err.message);
+      }
+    });
+  }
 
 
   // // Cargar partidas (lista)
@@ -274,7 +274,7 @@ if (guardarBtn) {
           turno = match.turno || 1;
           zoologicos = match.zoologicos || {};
           manos = match.manos || {};
-          window.nombresJugadores = match.nombres || Array.from({length: match.num_jugadores}, (_, i) => `Jugador ${i+1}`);
+          window.nombresJugadores = match.nombres || Array.from({ length: match.num_jugadores }, (_, i) => `Jugador ${i + 1}`);
           buffer = {};
           for (let j = 1; j <= numJugadores; j++) buffer[j] = manos[j] ? [...manos[j]] : [];
           jugadoresQueColocaron = new Set();
@@ -302,11 +302,11 @@ if (guardarBtn) {
     const originalDisable = Object.getOwnPropertyDescriptor(HTMLButtonElement.prototype, 'disabled');
     if (originalDisable && originalDisable.set && originalDisable.get) {
       Object.defineProperty(tirarDadoBtn2, 'disabled', {
-        set: function(val) {
+        set: function (val) {
           originalDisable.set.call(this, val);
           actualizarBotonTirarDado();
         },
-        get: function() {
+        get: function () {
           return originalDisable.get.call(this);
         }
       });
@@ -343,7 +343,7 @@ function inicializarJuego(jugadores) {
   // Inicializar el dado con imagen dado0.png
   const dadoContainer = document.getElementById('valor-dado');
   if (dadoContainer) dadoContainer.innerHTML = `<img src="../assets/dado0.png" alt="Dado sin tirar" class="dado-imagen">`;
-  
+
   repartirDinos();
   actualizarMano();
   actualizarZonas();
@@ -578,7 +578,7 @@ function avanzarAlSiguienteJugadorNoColocado() {
 function updateDebugBanner() {
   let b = document.getElementById('debug-banner');
   if (!b) return;
-  b.textContent = `Turno:${turno} JugadorActual:${jugadorActual} RondaAct:${rondaActiva} Colocados:[${Array.from(jugadoresQueColocaron)}] ManoSizes:[${Object.values(manos).map(m=>m.length)}]`;
+  b.textContent = `Turno:${turno} JugadorActual:${jugadorActual} RondaAct:${rondaActiva} Colocados:[${Array.from(jugadoresQueColocaron)}] ManoSizes:[${Object.values(manos).map(m => m.length)}]`;
 }
 
 // Reglas y UI (se mantienen tus validaciones)
@@ -675,7 +675,7 @@ function actualizarPuntuacion() {
   if (jugadorEl) jugadorEl.textContent = `${nombre} — Ronda ${rondaPartida} - Turno ${turno}`;
 }
 
-function finalizarPartida() {
+async function finalizarPartida() {
   if (rondaPartida === 1) {
     // Terminar ronda 1, iniciar ronda 2
     rondaPartida = 2;
@@ -684,15 +684,15 @@ function finalizarPartida() {
     ultimoDado = null;
     rondaActiva = false;
     jugadoresQueColocaron = new Set();
-    
+
     // Repartir 6 dinosaurios adicionales manteniendo los ya colocados
     repartirDinos();
-    
+
     const tirarBtn = document.getElementById('tirar-dado');
     if (tirarBtn) tirarBtn.disabled = false;
-    
+
     mostrarAlertaDrafto(`🎯 ¡Ronda 2!\nSe reparten 6 dinosaurios adicionales.`);
-    
+
     actualizarMano();
     actualizarZonas();
     actualizarPuntuacion();
@@ -704,15 +704,15 @@ function finalizarPartida() {
     let maxPuntos = -Infinity;
     let ganadores = [];
     let nombresGanadores = [];
-    
+
     for (let j = 1; j <= numJugadores; j++) {
       const pts = calcularPuntos(zoologicos[j]);
-      const nombre = window.nombresJugadores && window.nombresJugadores[j - 1] 
-        ? window.nombresJugadores[j - 1] 
+      const nombre = window.nombresJugadores && window.nombresJugadores[j - 1]
+        ? window.nombresJugadores[j - 1]
         : `Jugador ${j}`;
-      
+
       mensaje += `${nombre}: ${pts} pts\n`;
-      
+
       if (pts > maxPuntos) {
         maxPuntos = pts;
         ganadores = [j];
@@ -722,10 +722,29 @@ function finalizarPartida() {
         nombresGanadores.push(nombre);
       }
     }
-    
+
     if (ganadores.length === 1) mensaje += `🎉 ¡${nombresGanadores[0]} gana!`;
     else mensaje += `🤝 ¡Empate entre ${nombresGanadores.join(', ')}!`;
     mostrarAlertaFinPartida(mensaje);
+    for (let j = 1; j <= numJugadores; j++) {
+      const body = { user_id: j, score: calcularPuntos(zoologicos[j]) };
+      console.log("📤 Отправляем:", body);
+
+      try {
+        const res = await fetch('../Backend/routes/api.php?action=addRanking', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(body)
+        });
+
+        const data = await res.json();
+        console.log("📥 Ответ:", data);
+        alert(JSON.stringify(data)); // временно
+      } catch (error) {
+        alert("Ошибка: " + error.message);
+      }
+    }
+
   }
 }
 
@@ -812,7 +831,7 @@ function mostrarAlertaNombresJugadores(cantidad, callback) {
   btnVolver.type = 'button';
   btnVolver.textContent = 'Volver';
   btnVolver.className = 'btn';
-  btnVolver.onclick = function() {
+  btnVolver.onclick = function () {
     popup.remove();
     const sel = document.getElementById('seleccion-jugadores');
     if (sel) sel.style.display = '';
@@ -822,7 +841,7 @@ function mostrarAlertaNombresJugadores(cantidad, callback) {
 
   document.body.appendChild(popup);
 
-  btnContinuar.onclick = function(e) {
+  btnContinuar.onclick = function (e) {
     e.preventDefault();
     const nombres = inputs.map(input => input.value.trim() || input.placeholder);
     popup.remove();
