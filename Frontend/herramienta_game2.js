@@ -69,7 +69,15 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('juego').style.display = 'block';
 });
 
-
+ const silenciar = document.getElementById('silenciar-musica');
+  if (silenciar) {
+    silenciar.addEventListener('click', function () {
+      const audio = document.getElementById('musica');
+      if (!audio) return;
+      audio.muted = !audio.muted;
+      this.textContent = audio.muted ? '🔇' : '🔈';
+    });
+  }
 
 
   // Botón iniciar juego
