@@ -44,14 +44,14 @@ CREATE TABLE `users` (
 --
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
--- CORRECCIÓN: Se rellenaron usernames vacíos y se corrigió el duplicado '111111'
+-- CORRECCIÓN: Se rellenaron usernames vacíos y se corrigió el duplicado '111111' y '12341234'
 INSERT INTO `users` VALUES 
 (1,'yarwq05@gmail.com','yarwq05@gmail.com','$2y$10$4z.18WePRRX1BKKv0F6CNeebAvBgINIncJOgNcHp2h4kPSBlTEv.S','2025-09-09 18:47:30'),
 (2,'yarwg05@gmail.com','yarwg05@gmail.com','$2y$10$OuzzFHxm8eemFM1BC/N5hO4AYTwOU0Zmmz66e4.IlytF3CwwU4l/e','2025-09-09 18:50:20'),
 (3,'saidfnasu@gmail.com','saidfnasu@gmail.com','$2y$10$QdrANBgjlW5eiFNAlK2VCeFmPOJqLMaauYu7opl7A73qbYt6Gs2JW','2025-09-09 21:40:40'),
 (4,'saidfnasusaidfnasu@gmail.com','12341234','$2y$10$mQ38X7WywtVBGwV9.3wgzOtKXyi8xl4sZ1anOLy.EEu771IWvbpIi','2025-09-10 19:11:47'),
 (5,'SDFGSDGSDFG5@gmail.com','JEFF','$2y$10$CSx4SJ5uezDx5rnQ5kNPRuKGQc8pnODdZ3sF2evzGCUzOaNxFFpW2','2025-09-11 02:25:16'),
-(6,'ysrdf@dfgksn.cmop','1234234','$2y$10$XJQrHEo197VodZv.iuNBmeMOPZi8WscHlICVAGoet8HC1G0/feX1S','2025-09-14 19:34:43'),
+(6,'ysrdf@dfgksn.cmop','ysrdf@dfgksn.cmop','$2y$10$XJQrHEo197VodZv.iuNBmeMOPZi8WscHlICVAGoet8HC1G0/feX1S','2025-09-14 19:34:43'),
 (7,'asdf@gand.com','11111111','$2y$10$OKQ8HrVCRoaqlfidKvDl3OGnGXF9DYbzKxqA0yT4O.HYFaO9Pzc6a','2025-09-14 19:36:12'),
 (8,'sddfsd@gmail.com','sddfsd@gmail.comsddfsd@gmail.com','$2y$10$C.6OUgxXKvjHsczcVGDjLO6tZYvAOITRnqRLTYQ/13DpGM.w.ZOnC','2025-09-14 19:59:37'),
 (9,'234su@gmail.com','234su@gmail.com234su@gmail.com','$2y$10$fn7R0OcaT0wz8FElRD5vH.shjQjvh6Te.BvwQrNavg8hsCSqPGQ9i','2025-09-14 20:01:13'),
@@ -138,11 +138,11 @@ DROP TABLE IF EXISTS `ranking`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `ranking` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `user_id` int(10) unsigned NOT NULL, -- CORRECCIÓN: Cambiado de NULL a NOT NULL
-  `score` int(11) DEFAULT 0,
+  `username` varchar(50) NOT NULL,
+  `score` int(11) NOT NULL DEFAULT 0,
+  `fecha` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `unique_user` (`user_id`),
-  CONSTRAINT `ranking_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
+  KEY `score_index` (`score`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -151,7 +151,13 @@ CREATE TABLE `ranking` (
 --
 LOCK TABLES `ranking` WRITE;
 /*!40000 ALTER TABLE `ranking` DISABLE KEYS */;
-INSERT INTO `ranking` VALUES (1,23,10),(2,1,23),(3,2,26);
+
+-- CORRECCIÓN: Se especifican las columnas y se usan los 'username' en lugar de los 'user_id'
+INSERT INTO `ranking` (username, score) VALUES
+('qwe12@gmail.com', 10),
+('yarwq05@gmail.com', 23),
+('yarwg05@gmail.com', 26);
+
 /*!40000 ALTER TABLE `ranking` ENABLE KEYS */;
 UNLOCK TABLES;
 

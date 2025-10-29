@@ -181,20 +181,21 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // Botón continuar en formulario de nombres
-  document.addEventListener('click', function (e) {
-    if (e.target.closest('.nombres-btn-continue')) {
-      const inputs = document.querySelectorAll('.nombres-holo-input');
-      const nombres = [];
-
-      inputs.forEach(input => {
-        if (input.value.trim() === '') {
-          nombres.push(`Jugador ${input.dataset.jugador}`);
-        } else {
-          nombres.push(input.value.trim());
-        }
-      });
-
+ document.addEventListener('click', function(e) {
+  if (e.target.closest('.nombres-btn-continue')) {
+    const inputs = document.querySelectorAll('.nombres-holo-input');
+    const nombres = [];
+    
+    inputs.forEach(input => {
+      // Si el campo está vacío, usa "Jugador X", si no, usa lo que escribió
+      if (input.value.trim() === '') {
+        nombres.push(`Jugador ${input.dataset.jugador}`);
+      } else {
+        nombres.push(input.value.trim()); // <-- Aquí guarda el nombre introducido
+      }
+    });
       window.nombresJugadores = nombres;
+      
       document.getElementById('registro-nombres').style.display = 'none';
       document.getElementById('juego').style.display = 'block';
       inicializarJuego(nombres.length);
@@ -712,7 +713,7 @@ async function finalizarPartida() {
         : `Jugador ${j}`;
 
       mensaje += `${nombre}: ${pts} pts\n`;
-
+      guardarRankingAPI(nombre, pts);
       if (pts > maxPuntos) {
         maxPuntos = pts;
         ganadores = [j];
@@ -747,7 +748,7 @@ async function finalizarPartida() {
 
   }
 }
-
+  
 // Drag & Drop: se evita re-registrar listeners usando dataset flag
 function agregarDropTargets() {
   document.querySelectorAll('.grid-item.zona').forEach(div => {
@@ -926,4 +927,21 @@ function actualizarBotonTirarDado() {
   if (!tirarDadoBtn || !tirarDadoOverlay) return;
   if (tirarDadoBtn.disabled) tirarDadoOverlay.style.display = 'block';
   else tirarDadoOverlay.style.display = 'none';
+}
+
+// En script.js (Archivo 23)
+async function guardarRankingAPI(username, score) { // <-- Recibe el 'nombre' como 'username'
+  if (!username || typeof score === 'undefined') return;
+
+  try {
+    const res = await fetch('http://localhost/JSandPHP/Backend/routes/api.php/addRanking', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      // Envía el nombre recibido en el campo 'username' del JSON
+      body: JSON.stringify({ username: username, score: score }) 
+    });
+    // ... manejo de la respuesta ...
+  } catch (err) {
+    // ... manejo de errores ...
+  }
 }
