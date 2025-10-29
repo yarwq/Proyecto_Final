@@ -32,18 +32,23 @@ public function register() {
     $confirm = trim($data['confirm'] ?? "");
 
     try {
-        $ok = $this->userService->registerUser($username, $password, $confirm, $email);
+        // $result ahora será 'true' (éxito) o un string (mensaje de error)
+        $result = $this->userService->registerUser($username, $password, $confirm, $email);
+
+        if ($result === true) {
+            // Éxito
+            echo json_encode(["success" => true]);
+        } else {
+            // Si $result no es 'true', es un mensaje de error
+            http_response_code(400);
+            echo json_encode(["error" => $result]); // Devolvemos el mensaje claro
+        }
+        
     } catch (\Exception $e) {
+        // Error inesperado del servidor
         http_response_code(500);
         echo json_encode(['error' => $e->getMessage()]);
         exit;
-    }
-
-    if ($ok) {
-        echo json_encode(["success" => true]);
-    } else {
-        http_response_code(400);
-        echo json_encode(["error" => "No se pudo registrar"]);
     }
 }
 
