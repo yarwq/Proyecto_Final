@@ -727,24 +727,24 @@ async function finalizarPartida() {
     if (ganadores.length === 1) mensaje += `🎉 ¡${nombresGanadores[0]} gana!`;
     else mensaje += `🤝 ¡Empate entre ${nombresGanadores.join(', ')}!`;
     mostrarAlertaFinPartida(mensaje);
-    for (let j = 1; j <= numJugadores; j++) {
-      const body = { user_id: j, score: calcularPuntos(zoologicos[j]) };
-      console.log("📤 Отправляем:", body);
+    // for (let j = 1; j <= numJugadores; j++) {
+    //   const body = { user_id: j, score: calcularPuntos(zoologicos[j]) };
+    //   console.log("📤 Отправляем:", body);
 
-      try {
-        const res = await fetch('../Backend/routes/api.php?action=addRanking', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(body)
-        });
+    //   try {
+    //     const res = await fetch('../Backend/routes/api.php?action=addRanking', {
+    //       method: 'POST',
+    //       headers: { 'Content-Type': 'application/json' },
+    //       body: JSON.stringify(body)
+    //     });
 
-        const data = await res.json();
-        console.log("📥 Ответ:", data);
-        alert(JSON.stringify(data)); // временно
-      } catch (error) {
-        alert("Ошибка: " + error.message);
-      }
-    }
+    //     const data = await res.json();
+    //     console.log("📥 Ответ:", data);
+    //     alert(JSON.stringify(data)); // временно
+    //   } catch (error) {
+    //     alert("Ошибка: " + error.message);
+    //   }
+    // }
 
   }
 }
@@ -940,6 +940,7 @@ async function guardarRankingAPI(username, score) { // <-- Recibe el 'nombre' co
       // Envía el nombre recibido en el campo 'username' del JSON
       body: JSON.stringify({ username: username, score: score }) 
     });
+    console.log(JSON.stringify({ username: username, score: score }));
     // ... manejo de la respuesta ...
   } catch (err) {
     // ... manejo de errores ...
