@@ -3,7 +3,7 @@
 //   const userId = Number(localStorage.getItem('userId') || 1); 
 
 //   try {
-//     const res = await fetch(`../Backend/routes/api.php/getMatches/${userId}`);
+//     const res = await fetch(`..../../Backend/routes/api.php/getMatches/${userId}`);
 //     const result = await res.json();
 
 //     if (result.success) {
@@ -64,7 +64,7 @@
 //     if (!matchId) return;
 
 //     try {
-//       const res = await fetch(`../Backend/routes/api.php/loadMatch/${matchId}`);
+//       const res = await fetch(`..../../Backend/routes/api.php/loadMatch/${matchId}`);
 //       const result = await res.json();
 
 //       if (result.success) {
@@ -107,7 +107,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (verRankingBtn && tabla) {
         verRankingBtn.addEventListener('click', async () => {
             try {
-                const res = await fetch("../Backend/routes/api.php?action=getRanking");
+                const res = await fetch("..../../Backend/routes/api.php?action=getRanking");
                 const data = await res.json();
 
                 contenedor.style.display = 'block';

@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
     alert(`UserID: ${userId}`);
 
     try {
-      const res = await fetch(`../Backend/routes/api.php/getMatches/${userId}`);
+      const res = await fetch(`..../../Backend/routes/api.php/getMatches/${userId}`);
       const result = await res.json();
 
       if (result.success) {
@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!matchId) return;
 
     try {
-      const res = await fetch(`../Backend/routes/api.php/loadMatch/${matchId}`);
+      const res = await fetch(`..../../Backend/routes/api.php/loadMatch/${matchId}`);
       const result = await res.json();
 
       if (result.success) {
@@ -88,7 +88,7 @@ document.addEventListener('DOMContentLoaded', () => {
       };
 
       try {
-        const res = await fetch('../Backend/routes/api.php/saveMatch', {
+        const res = await fetch('..../../Backend/routes/api.php/saveMatch', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload)

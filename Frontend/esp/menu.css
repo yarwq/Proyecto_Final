@@ -23,7 +23,7 @@
 
 body {
   font-family: 'Orbitron', sans-serif;
-  background: url('../assets/Recintos fondo.png') no-repeat center center fixed;
+  background: url('../../assets/Recintos fondo.png') no-repeat center center fixed;
   color: #00ffe7;
   text-align: center;
   padding: 20px;
@@ -65,7 +65,7 @@ button:hover {
   height: 700px;
   position: relative;
   margin: 0 auto;
-  background: url('../assets/mapa.png') no-repeat center center;
+  background: url('../../assets/mapa.png') no-repeat center center;
   background-size: contain;
   background-color: rgba(0, 0, 0, 0.7);
   box-shadow: 0 0 20px #bb00ff;

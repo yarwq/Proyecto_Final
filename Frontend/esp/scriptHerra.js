@@ -5,12 +5,12 @@ document.getElementById('menu').addEventListener('click', () => {
 });
 // Tipos de dinosaurios
 const tiposDeDinos = [
-  { nombre: "T-Rex", puntos: 6, imagen: "../assets/red.png" },
-  { nombre: "Triceratops", puntos: 5, imagen: "../assets/green.png" },
-  { nombre: "Stego", puntos: 4, imagen: "../assets/light blue.png" },
-  { nombre: "Ptera", puntos: 3, imagen: "../assets/blue.png" },
-  { nombre: "Bronto", puntos: 2, imagen: "../assets/Yellow.png" },
-  { nombre: "Raptor", puntos: 1, imagen: "../assets/violet.png" },
+  { nombre: "T-Rex", puntos: 6, imagen: "../../assets/red.png" },
+  { nombre: "Triceratops", puntos: 5, imagen: "../../assets/green.png" },
+  { nombre: "Stego", puntos: 4, imagen: "../../assets/light blue.png" },
+  { nombre: "Ptera", puntos: 3, imagen: "../../assets/blue.png" },
+  { nombre: "Bronto", puntos: 2, imagen: "../../assets/Yellow.png" },
+  { nombre: "Raptor", puntos: 1, imagen: "../../assets/violet.png" },
 ];
 
 // Objeto principal del zoológico

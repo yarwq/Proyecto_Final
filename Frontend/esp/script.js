@@ -217,7 +217,7 @@ document.addEventListener('DOMContentLoaded', () => {
       };
 
       try {
-        const res = await fetch('http://localhost/JSandPHP/Backend/routes/api.php/saveMatch', {
+        const res = await fetch('http://localhost/JSandPHP../../Backend/routes/api.php/saveMatch', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(data)
@@ -237,7 +237,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // if (cargarBtn) {
   //   cargarBtn.addEventListener('click', async () => {
   //     try {
-  //       const res = await fetch(`http://localhost/JSandPHP/Backend/routes/api.php/getMatches/1`);
+  //       const res = await fetch(`http://localhost/JSandPHP../../Backend/routes/api.php/getMatches/1`);
   //       const result = await res.json();
   //       if (result.success) {
   //         const select = document.getElementById('lista-partidas');
@@ -266,7 +266,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const matchId = e.target.value;
       if (!matchId) return;
       try {
-        const res = await fetch(`http://localhost/JSandPHP/Backend/routes/api.php/loadMatch/${matchId}`);
+        const res = await fetch(`http://localhost/JSandPHP../../Backend/routes/api.php/loadMatch/${matchId}`);
         const result = await res.json();
         if (result.success) {
           const match = result.match;
@@ -343,7 +343,7 @@ function inicializarJuego(jugadores) {
 
   // Inicializar el dado con imagen dado0.png
   const dadoContainer = document.getElementById('valor-dado');
-  if (dadoContainer) dadoContainer.innerHTML = `<img src="../assets/dado0.png" alt="Dado sin tirar" class="dado-imagen">`;
+  if (dadoContainer) dadoContainer.innerHTML = `<img src="../../assets/dado0.png" alt="Dado sin tirar" class="dado-imagen">`;
 
   repartirDinos();
   actualizarMano();
@@ -379,7 +379,7 @@ function actualizarMano() {
     div.dataset.index = indice;
 
     const img = document.createElement('img');
-    img.src = '../assets/' + dino.imagen;
+    img.src = '../../assets/' + dino.imagen;
     img.alt = dino.nombre;
     div.appendChild(img);
 
@@ -426,7 +426,7 @@ function tirarDado() {
 
   ultimoDado = Math.floor(Math.random() * 6) + 1;
   const dadoContainer = document.getElementById('valor-dado');
-  if (dadoContainer) dadoContainer.innerHTML = `<img src="../assets/dado${ultimoDado}.png" alt="Dado ${ultimoDado}" class="dado-imagen">`;
+  if (dadoContainer) dadoContainer.innerHTML = `<img src="../../assets/dado${ultimoDado}.png" alt="Dado ${ultimoDado}" class="dado-imagen">`;
   actualizarZonasValidas();
   rondaActiva = true;
   const tirarBtn = document.getElementById('tirar-dado');
@@ -522,7 +522,7 @@ function terminarRonda() {
   ultimoDado = null;
   rondaActiva = false;
   const dadoContainer = document.getElementById('valor-dado');
-  if (dadoContainer) dadoContainer.innerHTML = `<img src="../assets/dado0.png" alt="Dado sin tirar" class="dado-imagen">`;
+  if (dadoContainer) dadoContainer.innerHTML = `<img src="../../assets/dado0.png" alt="Dado sin tirar" class="dado-imagen">`;
   const tirarBtn = document.getElementById('tirar-dado');
   if (tirarBtn) tirarBtn.disabled = false;
 
@@ -612,7 +612,7 @@ function actualizarZonas() {
     if (!zoo) return;
     (zoo[zona] || []).forEach(dino => {
       const img = document.createElement('img');
-      img.src = '../assets/' + dino.imagen;
+      img.src = '../../assets/' + dino.imagen;
       img.alt = dino.nombre;
       img.className = 'dino-colocado';
       contenedorDinos.appendChild(img);
@@ -732,7 +732,7 @@ async function finalizarPartida() {
     //   console.log("📤 Отправляем:", body);
 
     //   try {
-    //     const res = await fetch('../Backend/routes/api.php?action=addRanking', {
+    //     const res = await fetch('..../../Backend/routes/api.php?action=addRanking', {
     //       method: 'POST',
     //       headers: { 'Content-Type': 'application/json' },
     //       body: JSON.stringify(body)
@@ -934,7 +934,7 @@ async function guardarRankingAPI(username, score) { // <-- Recibe el 'nombre' co
   if (!username || typeof score === 'undefined') return;
 
   try {
-    const res = await fetch('http://localhost/JSandPHP/Backend/routes/api.php/addRanking', {
+    const res = await fetch('http://localhost/JSandPHP../../Backend/routes/api.php/addRanking', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       // Envía el nombre recibido en el campo 'username' del JSON
