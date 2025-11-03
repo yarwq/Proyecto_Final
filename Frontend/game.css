@@ -1,0 +1,800 @@
+
+
+
+/* --- ALERTA POPUP NEÓN --- */
+.drafto-alert {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  min-width: 320px;
+  max-width: 90vw;
+  background: rgba(34, 34, 34, 0.95);
+  border: 2px solid #00ffe7;
+  border-radius: 1.5rem;
+  box-shadow: 0 0 32px #00ffe7, 0 0 64px #ff00ff;
+  color: #00ffe7;
+  font-family: 'Andale Mono', 'Andalé Mono', monospace;
+  font-size: 1.5rem;
+  text-align: center;
+  z-index: 9999;
+  padding: 2rem 2.5rem;
+  animation: popupFadeIn 0.3s;
+}
+
+@keyframes popupFadeIn {
+  from { opacity: 0; transform: translate(-50%, -60%) scale(0.9);}
+  to   { opacity: 1; transform: translate(-50%, -50%) scale(1);}
+}
+
+.drafto-alert button {
+  margin-top: 1.5rem;
+  padding: 0.5em 2em;
+  background: black;
+  color: #00ffe7;
+  border: 2px solid #00ffe7;
+  border-radius: 1em;
+  font-size: 1.1rem;
+  font-family: 'Andale Mono', 'Andalé Mono', monospace;
+  cursor: pointer;
+  box-shadow: 0 0 10px #00ffe7;
+  transition: background 0.2s, color 0.2s;
+}
+
+.drafto-alert button:hover {
+  background: #00ffe7;
+  color: black;
+}
+/* Centrado del bloque de selección de jugadores */
+#seleccion-jugadores {
+  background: #222222cd;
+  border-radius: 2rem;
+  box-shadow: 0 0 32px #000a;
+  padding: 2rem 2rem 2rem 2rem;
+  width: fit-content;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 20vw;
+  min-height: 30vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 30vw;
+  min-height: 20vh;
+}
+/* Nítido y visible para número seleccionado */
+ .jugador-opcion.selected span {
+  filter: none !important;
+  scale: 0.8 !important;
+  transition: none !important;
+  filter: none !important;
+  opacity: 1 !important;
+  transition: none !important;
+  transform: scale(2.2) !important;
+  backdrop-filter: none !important;
+  box-shadow: none !important;
+  text-shadow: none !important;
+  -webkit-filter: none !important;
+ }
+/* --- SELECCIÓN DE JUGADORES ESTILO NEÓN --- */
+.jugadores-opciones {
+  font-size: 3rem;
+  display: flex;
+  flex-wrap: nowrap;
+  color: #fff;
+  border-radius: 2.5rem;
+  background: #181818;
+  box-shadow: 0 1px #00ffe7 inset;
+  justify-content: center;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  padding: 0.5rem 2.5rem;
+  width: auto;
+  box-sizing: border-box;
+}
+.jugador-opcion {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  padding: 4rem 1.5rem;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, transform 0.2s;
+  border-radius: 0.5rem;
+  margin: 0 0.5rem;
+  outline: none;
+}
+.jugador-opcion:focus-visible {
+  outline-color: #00ffe7;
+  outline-offset: 1rem;
+}
+.jugador-opcion span {
+  background: linear-gradient(90deg, #ff00ff, #00ffe7);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  scale: calc(var(--active, 0) + 0.5);
+  filter: blur(calc((1 - var(--active, 0)) * 1rem));
+  transition: scale calc(((1 - var(--active, 0)) + 0.2) * 1s), filter calc(((1 - var(--active, 0)) + 0.2) * 1s);
+}
+.jugador-opcion:first-of-type {
+  padding-left: 3rem;
+}
+.jugador-opcion:last-of-type {
+  padding-right: 3rem;
+}
+:root {
+  --lerp-0: 1;
+  --lerp-1: calc(sin(50deg));
+  --lerp-2: calc(sin(45deg));
+  --lerp-3: calc(sin(35deg));
+  --lerp-4: calc(sin(25deg));
+  --lerp-5: calc(sin(15deg));
+}
+.jugador-opcion:is(:hover, :focus-visible) {
+  --active: var(--lerp-0);
+}
+.jugador-opcion:is(:hover, :focus-visible) + .jugador-opcion,
+.jugador-opcion:has(+ .jugador-opcion:is(:hover, :focus-visible)) {
+  --active: var(--lerp-1);
+}
+.jugador-opcion:is(:hover, :focus-visible) + .jugador-opcion + .jugador-opcion,
+.jugador-opcion:has(+ .jugador-opcion + .jugador-opcion:is(:hover, :focus-visible)) {
+  --active: var(--lerp-2);
+}
+.jugador-opcion:is(:hover, :focus-visible) + .jugador-opcion + .jugador-opcion + .jugador-opcion,
+.jugador-opcion:has(+ .jugador-opcion + .jugador-opcion + .jugador-opcion:is(:hover, :focus-visible)) {
+  --active: var(--lerp-3);
+}
+.jugador-opcion:is(:hover, :focus-visible) + .jugador-opcion + .jugador-opcion + .jugador-opcion + .jugador-opcion,
+.jugador-opcion:has(+ .jugador-opcion + .jugador-opcion + .jugador-opcion + .jugador-opcion:is(:hover, :focus-visible)) {
+  --active: var(--lerp-4);
+}
+.jugador-opcion:is(:hover, :focus-visible) + .jugador-opcion + .jugador-opcion + .jugador-opcion + .jugador-opcion + .jugador-opcion,
+.jugador-opcion:has(+ .jugador-opcion + .jugador-opcion + .jugador-opcion + .jugador-opcion + .jugador-opcion:is(:hover, :focus-visible)) {
+  --active: var(--lerp-5);
+}
+.jugador-opcion.selected {
+  background: none !important;
+  color: #fff;
+  box-shadow: none !important;
+  border: none !important;
+  transform: scale(1.15);
+}
+/* --- FIN SELECCIÓN DE JUGADORES --- */
+/* Opciones de selección de jugadores estilo visual */
+.jugadores-opciones {
+  font-size: 2rem;
+  display: flex;
+  flex-wrap: nowrap;
+  color: #fff;
+  border-radius: 1rem;
+  background: #222;
+  justify-content: center;
+  box-shadow: 0 1px #fff2 inset;
+  margin: 2rem 0 1rem 0;
+  padding: 0;
+}
+.jugador-opcion {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  padding: 2rem 1.5rem;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, transform 0.2s;
+  border-radius: 0.5rem;
+  margin: 0 0.5rem;
+}
+.jugador-opcion:focus-visible,
+.jugador-opcion:hover {
+  background: none;
+  color: #fff;
+  outline: none;
+  transform: scale(1.1);
+}
+.jugador-opcion.selected {
+  background: #ff00ff;
+  color: #fff;
+  transform: scale(1.15);
+}
+/* Layout principal para evitar superposición */
+.layout-juego {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly; /* Distribuye el espacio equitativamente */
+  align-items: flex-start;
+  gap: 30px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+@media (max-width: 1100px) {
+  .layout-juego {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+  
+  .panel-controles, .reglas_del_dado, .main-container-grid {
+      width: 90%;
+      max-width: 570px; /* Asegura que el mapa no sea demasiado grande en tablets */
+  }
+}
+
+body {
+  font-family: 'Andale Mono', 'Andalé Mono', monospace;
+  background: url('../assets/Recintos fondo.png') no-repeat center center fixed;
+  color: #00ffe7;
+  text-align: center;
+  padding: 20px;
+  text-shadow: 0 0 5px #00ffe7;
+}
+
+body.is-dragging .grid-item.zona * {
+    pointer-events: none;
+}
+
+h1,
+h2,
+p {
+  color: #00ffe7;
+  text-shadow: 0 0 10px #00ffe7, 0 0 20px #00ffe7;
+}
+
+button {
+  background: black;
+  border: 2px solid #00ffe7;
+  color: #00ffe7;
+  padding: 10px 20px;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 8px;
+  text-shadow: 0 0 10px #00ffe7;
+  box-shadow: 0 0 10px #00ffe7;
+  transition: all 0.3s ease-in-out;
+}
+
+button:hover {
+  background: #00ffe7;
+  color: black;
+  box-shadow: 0 0 20px #00ffe7, 0 0 30px #00ffe7;
+}
+
+.main-container-grid {
+  width: 100%;
+  max-width: 570px;
+  height: auto;
+  aspect-ratio: 1728 / 2112;
+  position: relative;
+  margin: 0; /* Margin auto no es necesario en un flex container */
+  background-color: rgba(0, 0, 0, 0);
+  box-shadow: 0 0 20px #bb00ff;
+  border: 2px solid #00ffe7;
+  border-radius: 15px;
+  flex-grow: 0;   /* Evita que crezca desproporcionadamente */
+  flex-shrink: 1; /* Permite que se encoja */
+  overflow: hidden; /* Para que el video se recorte correctamente */
+}
+
+.main-container-grid video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -1;
+  border-radius: 13px; /* Ligeramente menor que el contenedor para ajustarse al borde */
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: 2fr 100px 2fr;
+  grid-template-rows: repeat(3, 1fr);
+  padding: 0;
+  margin: 0;
+  width: 95%;
+  height: 95%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  gap: 15px;
+  background: none;
+}
+
+.grid-item {
+  background-color: rgba(0, 0, 0, 0.0);
+  border: 2px solid #00ffe500;
+  color: #00ffe7;
+  text-shadow: 0 0 5px #00ffe7;
+  font-size: 18px;
+  cursor: pointer;
+    border: none;
+    background: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  position: relative;
+  border-radius: 10px; 
+}
+
+.grid-item.zona > img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.dinos-en-zona {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+}
+
+.dino-colocado {
+    width: 35px;
+    height: 35px;
+    margin: 2px;
+    filter: drop-shadow(0 0 4px black);
+}
+
+
+
+.grid-item.zona:not(.grid-item-central):hover {
+  transform: scale(1.06);
+  transition: transform 0.18s cubic-bezier(.4,2,.3,1);
+}
+
+.grid-item.zona:not(.grid-item-central).valid:hover {
+  transform: scale(1.06);
+  transition: transform 0.18s cubic-bezier(.4,2,.3,1);
+}
+
+.grid-item.zona:not(.grid-item-central).invalid:hover {
+  transform: scale(1.06);
+  transition: transform 0.18s cubic-bezier(.4,2,.3,1);
+}
+
+.grid-item.drag-over-effect {
+  background-color: rgba(0,0,0,0.4);
+  transform: scale(1.05);
+}
+
+.grid-item.zona:not(.grid-item-central).valid {
+  border: 3px solid limegreen !important;
+  box-shadow: 0 0 10px limegreen;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.grid-item.zona:not(.grid-item-central).invalid {
+  border: 3px solid red !important;
+  box-shadow: 0 0 10px red;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.grid-item-central {
+  /* Propiedades del contenedor principal */
+  grid-column: 2;
+  grid-row: 1 / -1;
+  border: none;
+  
+  /* Esencial para posicionar el pseudo-elemento y contener la rotación */
+  position: relative; 
+  overflow: hidden; /* Evita que la imagen girada se salga del contenedor */
+  z-index: 1; /* Asegura que el contenido esté por encima de la marca de agua */
+}
+
+.grid-item-central::before {
+  /* Creación de la capa para la imagen */
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  /* Estilos de la imagen */
+  background-image: url('../assets/rio.gif');
+  background-position: center;
+  background-size: cover; /* O 'contain', según lo que necesites */
+  background-repeat: no-repeat;
+  opacity: 0.3; /* Ajusta la opacidad para que sea una marca de agua */ 
+  transform: rotate(90deg); /* Rota la imagen 90 grados */
+  z-index: -1; /* Asegura que esté detrás del contenido */
+  pointer-events: none; /* Permite hacer clic a través de la imagen */
+}
+
+.grid-container>div:nth-child(1) { grid-row: 1; grid-column: 1; }
+.grid-container>div:nth-child(2) { grid-row: 2; grid-column: 1; }
+.grid-container>div:nth-child(3) { grid-row: 3; grid-column: 1; }
+.grid-container>div:nth-child(5) { grid-row: 1; grid-column: 3; }
+.grid-container>div:nth-child(6) { grid-row: 2; grid-column: 3; }
+.grid-container>div:nth-child(7) { grid-row: 3; grid-column: 3; }
+
+.contenedor-dinos {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.dino {
+  background: #1e1e1e;
+  border: 2px solid #00ffe7;
+  border-radius: 8px;
+  cursor: grab;
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 10px #00ffe7;
+  transition: transform 0.2s;
+}
+
+.dino:hover {
+  transform: scale(1.1);
+}
+
+.dino.selected {
+  border-color: lime;
+  box-shadow: 0 0 15px lime;
+}
+
+.dino img {
+  width: 110px;
+  height: 80px;
+  display: block;
+  filter: drop-shadow(0 0 10px #00ffe7);
+}
+
+.controles {
+  margin: 10px 0;
+}
+
+.dado-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    min-height: 40px;
+    font-size: 3em;
+}
+
+.dado-imagen {
+    width: 120px;
+    height: 120px;
+}
+
+.dado-wrapper {
+    margin-top: 20px;
+}
+
+.panel-controles {
+  width: 100%;
+  max-width: 400px;
+  flex-shrink: 1;
+  background: rgba(0, 0, 0, 0.5);
+  border: 2px solid #00ffe7;
+  border-radius: 15px;
+  padding: 25px;
+  box-shadow: 0 0 20px #bb00ff;
+}
+
+.reglas_del_dado {
+  width: 100%;
+  max-width: 400px;
+  flex-shrink: 1;
+  background: rgba(0, 0, 0, 0.5);
+  border: 2px solid #00ffe7;
+  border-radius: 15px;
+  padding: 25px;
+  box-shadow: 0 0 20px #00ffe7;
+  display: block;
+}
+
+.reglas_del_dado img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 12px;
+  box-shadow: 0 0 10px #00ffe7;
+  border: none;
+  background: transparent;
+}
+
+.reglas_del_dado button#menu {
+  margin-top: 20px;
+}
+
+.drafto-alert-popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 99999;
+}
+
+.drafto-alert-content {
+  background: #000000;
+  color: #00ffff;
+  padding: 24px 32px;
+  border-radius: 10px;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.25);
+  text-align: center;
+  max-width: 800px;
+  margin: 20px;
+}
+.drafto-alert-msg {
+  margin-bottom: 16px;
+}
+
+.tirar-dado-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+#tirar-dado-overlay {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  cursor: not-allowed;
+}
+
+#lista-partidas {
+  display: none;
+}
+
+/* --- FORMULARIO DE REGISTRO DE NOMBRES CYBERPUNK --- */
+#registro-nombres {
+  background: #222222cd;
+  border-radius: 2rem;
+  box-shadow: 0 0 32px #000a;
+  padding: 2rem 2rem 2rem 2rem;
+  width: fit-content;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 30vw;
+  min-height: 20vh;
+  box-sizing: border-box;
+  max-width: 95%;
+  z-index: 1;
+}
+
+#registro-nombres h2 {
+  margin-top: 0;
+  margin-bottom: 35px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  background: linear-gradient(90deg, #ff00e6, #00f6ff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: 0 0 15px rgba(255, 0, 230, 0.5);
+}
+
+.nombres-form {
+  display: flex;
+  flex-direction: column;
+  gap: 45px;
+  margin-bottom: 30px;
+}
+
+.nombres-input-field-container {
+  position: relative;
+  width: 100%;
+}
+
+.nombres-holo-input {
+  width: 100%;
+  height: 60px;
+  background: rgba(0, 12, 36, 0.7);
+  border: none;
+  outline: none;
+  padding: 0 20px;
+  color: #00f6ff;
+  font-family: "Orbitron", sans-serif;
+  font-size: 18px;
+  letter-spacing: 1px;
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  border-radius: 4px;
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.8);
+  transition: all 0.3s ease;
+  text-shadow: 0 0 5px rgba(0, 246, 255, 0.7);
+  z-index: 1;
+  box-sizing: border-box;
+  border: 1px solid transparent;
+  background-clip: padding-box;
+}
+
+.nombres-holo-input::placeholder {
+  color: rgba(255, 0, 230, 0.3);
+  transition: all 0.3s ease;
+}
+
+.nombres-input-border {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  border-radius: 4px;
+  z-index: 2;
+  padding: 1px;
+  background: linear-gradient(45deg, rgba(0, 246, 255, 0.4), rgba(255, 0, 230, 0.4));
+  -webkit-mask: 
+    linear-gradient(#fff 0 0) content-box, 
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+}
+
+.nombres-holo-scan-line {
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    #ff00e6 20%,
+    #fff 50%,
+    #00f6ff 80%,
+    transparent 100%
+  );
+  top: 0;
+  left: 0;
+  opacity: 0;
+  filter: blur(1px);
+  z-index: 3;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.nombres-input-glow {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(0, 246, 255, 0.15) 0%,
+    transparent 70%
+  );
+  opacity: 0;
+  border-radius: 4px;
+  z-index: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.nombres-input-label {
+  position: absolute;
+  top: -25px;
+  left: 5px;
+  background: linear-gradient(90deg, #ff00e6, #00f6ff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  opacity: 0.8;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+  pointer-events: none;
+}
+
+@keyframes nombres-scan-animation {
+  0% { top: 0; opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { top: 100%; opacity: 0; }
+}
+
+.nombres-holo-input:focus {
+  background: rgba(18, 0, 36, 0.8);
+  box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.9);
+  color: #ff00e6;
+}
+
+.nombres-holo-input:focus ~ .nombres-input-border {
+  background: linear-gradient(45deg, #00f6ff, #ff00e6);
+}
+
+.nombres-holo-input:focus ~ .nombres-holo-scan-line {
+  opacity: 1;
+  animation: nombres-scan-animation 2s infinite ease-in-out;
+}
+
+.nombres-holo-input:focus ~ .nombres-input-glow {
+  opacity: 1;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(255, 0, 230, 0.2),
+    transparent 70%
+  );
+}
+
+.nombres-holo-input:focus ~ .nombres-input-label {
+  opacity: 1;
+  transform: translateY(-5px);
+  text-shadow: 0 0 10px rgba(0, 246, 255, 0.7);
+}
+
+.nombres-holo-input:hover {
+  background: rgba(20, 5, 40, 0.75);
+}
+
+.nombres-button-container {
+  display: flex;
+  gap: 15px;
+  margin-top: 10px;
+}
+
+.nombres-btn {
+  flex-grow: 1;
+  flex-basis: 0;
+  background: black;
+  border: 2px solid #00ffe7;
+  color: #00ffe7;
+  padding: 10px 20px;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 8px;
+  text-shadow: 0 0 10px #00ffe7;
+  box-shadow: 0 0 10px #00ffe7;
+  transition: all 0.3s ease-in-out;
+  font-family: 'Andale Mono', 'Andalé Mono', monospace;
+  font-size: 16px;
+  text-transform: none;
+  letter-spacing: normal;
+}
+
+.nombres-btn:hover {
+  background: #00ffe7;
+  color: black;
+  box-shadow: 0 0 20px #00ffe7, 0 0 30px #00ffe7;
+}
+
+.nombres-btn:active {
+  transform: scale(0.98);
+}
+
+@media (max-width: 450px) {
+  .nombres-button-container {
+    flex-direction: column;
+  }
+  #registro-nombres {
+    padding: 25px;
+  }
+}

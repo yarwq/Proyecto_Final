@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Draftosaurus — Gira Mundial</title>
+    <link rel="stylesheet" href="game.css">
+</head>
+<body>
+        <h1>DRAFTOSAURUS - HERRAMIENTA DE APOYO</h1>
+        <div id="juego">
+            <div class="layout-juego">
+                <div class="panel-controles">
+                    <div id="mano">
+                        <h2>Tu Mano</h2>
+                        <div id="contenedor-mano" class="contenedor-dinos"></div>
+                    </div>
+                    <div class="controles">
+                        <img id="imagen-dado" src="../assets/selectDino.png" alt="Seleccionar Dino">
+                    </div>
+                    <div class="seccion-info">
+                        <button>Contar puntos</button>
+                        <div id="puntuacion">Puntuación: 0</div>
+                    </div>
+                </div>
+                <div class="main-container-grid">
+                    <div class="grid-container">
+                        <div class="grid-item zona" id="rivera" data-zona="rivera">
+                            <img src="../assets/RIVERA.png" alt="rivera">
+                            <div class="dinos-en-zona"></div>
+                        </div>
+                        <div class="grid-item zona" id="campo" data-zona="campo">
+                            <img src="../assets/CAMPO.png" alt="campo">
+                            <div class="dinos-en-zona"></div>
+                        </div>
+                        <div class="grid-item zona" id="montevideo" data-zona="montevideo">
+                            <img src="../assets/MONTEVIDEO.png" alt="montevideo">
+                            <div class="dinos-en-zona"></div>
+                        </div>
+                        <div class="grid-item grid-item-central zona" id="rio" data-zona="rio">
+                            <div class="dinos-en-zona"></div>
+                        </div>
+                        <div class="grid-item zona" id="transiberiano" data-zona="transiberiano">
+                            <img src="../assets/TRANSIBERIANO.png" alt="transiberiano">
+                            <div class="dinos-en-zona"></div>
+                        </div>
+                        <div class="grid-item zona" id="moscu" data-zona="moscu">
+                            <img src="../assets/MOSKVA.png" alt="moscu">
+                            <div class="dinos-en-zona"></div>
+                        </div>
+                        <div class="grid-item zona" id="cheliabinsk" data-zona="cheliabinsk">
+                            <img src="../assets/CHELYABINSK.png" alt="cheliabinsk">
+                            <div class="dinos-en-zona"></div>
+                        </div>
+                    </div>
+                </div>
+                <div id="reglas_del_dado" class="reglas_del_dado">
+                    <img src="../assets/reglas_del_dado.png" alt="Reglas del dado">
+                    <button id="menu">Volver al menu principal</button>
+                </div>
+            </div>
+        </div>
+
+    <script src="scriptHerra.js"></script>
+</body>
+</html>
